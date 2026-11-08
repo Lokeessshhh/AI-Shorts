@@ -22,6 +22,9 @@ class Settings:
     pexels_api_key: str = field(
         default_factory=lambda: os.getenv("PEXELS_API_KEY", "")
     )
+    supadata_api_key: str = field(
+        default_factory=lambda: os.getenv("SUPADATA_API_KEY", "")
+    )
 
     # Audio & Voice Defaults
     default_voice: str = field(

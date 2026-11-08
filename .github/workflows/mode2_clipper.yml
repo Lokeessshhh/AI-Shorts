@@ -52,6 +52,7 @@ jobs:
         env:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
           PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+          SUPADATA_API_KEY: ${{ secrets.SUPADATA_API_KEY }}
           INSTAGRAM_USERNAME: ${{ secrets.INSTAGRAM_USERNAME }}
           INSTAGRAM_PASSWORD: ${{ secrets.INSTAGRAM_PASSWORD }}
           YOUTUBE_CLIENT_SECRET_B64: ${{ secrets.YOUTUBE_CLIENT_SECRET_B64 }}
@@ -90,6 +91,7 @@ jobs:
           with open('.env', 'w', encoding='utf-8') as f:
               f.write(f'OPENROUTER_API_KEY={os.environ.get(\"OPENROUTER_API_KEY\", \"\")}\n')
               f.write(f'PEXELS_API_KEY={os.environ.get(\"PEXELS_API_KEY\", \"\")}\n')
+              f.write(f'SUPADATA_API_KEY={os.environ.get(\"SUPADATA_API_KEY\", \"\")}\n')
               f.write(f'INSTAGRAM_USERNAME={os.environ.get(\"INSTAGRAM_USERNAME\", \"\")}\n')
               f.write(f'INSTAGRAM_PASSWORD={os.environ.get(\"INSTAGRAM_PASSWORD\", \"\")}\n')
           print('[Configured] Runtime .env created')

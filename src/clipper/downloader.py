@@ -157,41 +157,68 @@ class VideoDownloader:
         video_id = meta["id"]
 
         raw_snippets = None
-        try:
-            from youtube_transcript_api import YouTubeTranscriptApi
-            api = YouTubeTranscriptApi()
-            if hasattr(api, "fetch"):
-                fetched = api.fetch(video_id, languages=["en", "en-US", "en-GB"])
-                raw_snippets = [
-                    {"text": s.text, "start": float(s.start), "duration": float(s.duration)}
-                    for s in fetched
-                ]
-            elif hasattr(YouTubeTranscriptApi, "get_transcript"):
-                raw_snippets = YouTubeTranscriptApi.get_transcript(video_id, languages=["en", "en-US", "en-GB"])
-        except Exception as e:
-            print(f"[Clipper] Direct caption fetch skipped ({e}), attempting list_transcripts...")
+
+        # Tier 1: Supadata Managed API (Bypasses all cloud datacenter IP blocks)
+        supadata_key = getattr(config, "supadata_api_key", "") or os.environ.get("SUPADATA_API_KEY", "").strip()
+        if supadata_key and self.is_url(source):
+            try:
+                import urllib.request
+                import json
+                s_url = f"https://api.supadata.ai/v1/youtube/transcript?videoId={video_id}"
+                req = urllib.request.Request(s_url, headers={"x-api-key": supadata_key, "User-Agent": "AI-Shorts/1.0"})
+                with urllib.request.urlopen(req, timeout=12) as resp:
+                    s_data = json.loads(resp.read().decode("utf-8"))
+                    content = s_data.get("content")
+                    if isinstance(content, list) and len(content) > 0:
+                        raw_snippets = [
+                            {
+                                "text": str(c.get("text", "")),
+                                "start": round(float(c.get("offset", 0)) / 1000.0, 3),
+                                "duration": max(0.2, round(float(c.get("duration", 0)) / 1000.0, 3)),
+                            }
+                            for c in content
+                        ]
+                        print(f"[Clipper] Supadata API: Successfully retrieved {len(raw_snippets)} caption snippets for {video_id}!")
+            except Exception as e_supa:
+                print(f"[Clipper] Supadata transcript notice: {e_supa}. Falling back to standard caption retrieval...")
+
+        # Tier 2: youtube-transcript-api (Direct extraction)
+        if not raw_snippets:
             try:
                 from youtube_transcript_api import YouTubeTranscriptApi
-                if hasattr(YouTubeTranscriptApi, "list_transcripts"):
-                    tlist = YouTubeTranscriptApi.list_transcripts(video_id)
-                    t = None
-                    try:
-                        t = tlist.find_transcript(["en", "en-US", "en-GB"])
-                    except Exception:
+                api = YouTubeTranscriptApi()
+                if hasattr(api, "fetch"):
+                    fetched = api.fetch(video_id, languages=["en", "en-US", "en-GB"])
+                    raw_snippets = [
+                        {"text": s.text, "start": float(s.start), "duration": float(s.duration)}
+                        for s in fetched
+                    ]
+                elif hasattr(YouTubeTranscriptApi, "get_transcript"):
+                    raw_snippets = YouTubeTranscriptApi.get_transcript(video_id, languages=["en", "en-US", "en-GB"])
+            except Exception as e:
+                print(f"[Clipper] Direct caption fetch skipped ({e}), attempting list_transcripts...")
+                try:
+                    from youtube_transcript_api import YouTubeTranscriptApi
+                    if hasattr(YouTubeTranscriptApi, "list_transcripts"):
+                        tlist = YouTubeTranscriptApi.list_transcripts(video_id)
+                        t = None
                         try:
-                            t = tlist.find_generated_transcript(["en"])
+                            t = tlist.find_transcript(["en", "en-US", "en-GB"])
                         except Exception:
-                            pass
-                    if t:
-                        fetched = t.fetch()
-                        raw_snippets = [
-                            {"text": s.get("text", s.text if hasattr(s, "text") else ""),
-                             "start": float(s.get("start", s.start if hasattr(s, "start") else 0)),
-                             "duration": float(s.get("duration", s.duration if hasattr(s, "duration") else 1))}
-                            for s in fetched
-                        ]
-            except Exception as e2:
-                print(f"[Clipper] youtube-transcript-api unavailable: {e2}")
+                            try:
+                                t = tlist.find_generated_transcript(["en"])
+                            except Exception:
+                                pass
+                        if t:
+                            fetched = t.fetch()
+                            raw_snippets = [
+                                {"text": s.get("text", s.text if hasattr(s, "text") else ""),
+                                 "start": float(s.get("start", s.start if hasattr(s, "start") else 0)),
+                                 "duration": float(s.get("duration", s.duration if hasattr(s, "duration") else 1))}
+                                for s in fetched
+                            ]
+                except Exception as e2:
+                    print(f"[Clipper] youtube-transcript-api unavailable: {e2}")
 
         if raw_snippets:
             all_words: List[Dict[str, Any]] = []
@@ -266,7 +293,7 @@ class VideoDownloader:
         print(f"[Clipper] Sourcing audio-only track: {meta['title']} ({video_id})...")
 
         ydl_opts: Dict[str, Any] = {
-            "format": "ba/bestaudio",
+            "format": "18/ba/bestaudio/best[height<=360]/best",
             "outtmpl": str(raw_audio),
             "ffmpeg_location": self.ffmpeg_path,
             "quiet": True,
@@ -312,7 +339,7 @@ class VideoDownloader:
         cmd = [
             sys.executable, "-m", "yt_dlp",
             "--extractor-args", "youtube:player_client=tv,android",
-            "-f", "bestvideo[height<=1080]+bestaudio/best[height<=1080]/best",
+            "-f", "18/bestvideo[height<=720]+bestaudio/best[height<=720]/best",
             "--download-sections", f"*{start_time:.2f}-{end_time:.2f}",
             "--force-keyframes-at-cuts",
             "--merge-output-format", "mp4",
