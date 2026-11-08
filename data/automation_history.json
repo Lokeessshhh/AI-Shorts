@@ -4,7 +4,8 @@
     "why caching is like library card catalog system",
     "the surprising connection between stock market cycles and human emotion",
     "the surprising connection between sports fans and superstitions",
-    "the hidden science of team colors and fan psychology"
+    "the hidden science of team colors and fan psychology",
+    "the hidden science behind why we root for underdogs in sports"
   ],
   "clipped_youtube_ids": [],
   "batch_history": [
@@ -166,19 +167,57 @@
         "Mode 2 Clipper Failed: yt-dlp slice download failed: WARNING: [youtube] No title found in player responses; falling back to title from initial data. Other metadata may also be missing\nERROR: [youtube] yUdg7drjrZY: Sign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies\n"
       ],
       "total_batch_seconds": 143.1
+    },
+    {
+      "batch_id": "batch_20261108_185539",
+      "timestamp": "2026-11-08T18:55:39.325901",
+      "batch_dir": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261108_185539",
+      "modes_completed": [
+        "mode2_fallback"
+      ],
+      "total_videos": 1,
+      "mode1": {},
+      "mode2": {
+        "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261108_185539/mode2_fallback/the_hidden_science_behind_why_we_root_fo_1794164250.mp4",
+        "title": "The Hidden Science Behind Underdogs in Sports",
+        "source_title": "The Hidden Science Behind Underdogs in Sports",
+        "source_channel": "Google Trends RSS",
+        "source_url": "N/A",
+        "duration": 22.8,
+        "viral_score": 90,
+        "status": "SUCCESS",
+        "hook_sentence": "",
+        "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261108_185539/mode2_fallback/the_hidden_science_behind_why_we_root_fo_1794164250_metadata.txt",
+        "is_fallback": true,
+        "topic": "The Hidden Science Behind Why We Root for Underdogs in Sports",
+        "clips_count": 1,
+        "selected_clip": {
+          "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261108_185539/mode2_fallback/the_hidden_science_behind_why_we_root_fo_1794164250.mp4",
+          "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261108_185539/mode2_fallback/the_hidden_science_behind_why_we_root_fo_1794164250_metadata.txt",
+          "title": "The Hidden Science Behind Underdogs in Sports",
+          "rank": 1,
+          "composite_upload_score": 95.0
+        },
+        "clips": [],
+        "execution_seconds": 0.0
+      },
+      "errors": [
+        "Mode 2 Clipper Failed: yt-dlp slice download failed: WARNING: [youtube] No title found in player responses; falling back to title from initial data. Other metadata may also be missing\nERROR: [youtube] dNIef2fGLQY: Sign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies\n"
+      ],
+      "total_batch_seconds": 142.0
     }
   ],
-  "last_updated": "2026-11-08T18:48:31.151725",
+  "last_updated": "2026-11-08T18:58:01.337411",
   "topic_logs": [
     {
-      "timestamp": "2026-11-08T18:48:31.149899",
+      "timestamp": "2026-11-08T18:58:01.333230",
       "mode": "mode1_facts",
-      "topic": "The Hidden Science of Team Colors and Fan Psychology",
-      "normalized": "the hidden science of team colors and fan psychology",
+      "topic": "The Hidden Science Behind Why We Root for Underdogs in Sports",
+      "normalized": "the hidden science behind why we root for underdogs in sports",
       "metadata": {
-        "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261108_184608/mode2_fallback/the_hidden_science_of_team_colors_and_fa_1794163684.mp4",
-        "duration": 25.176,
-        "title": "The Hidden Science of Team Colors and Fan Psychology"
+        "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261108_185539/mode2_fallback/the_hidden_science_behind_why_we_root_fo_1794164250.mp4",
+        "duration": 22.848,
+        "title": "The Hidden Science Behind Underdogs in Sports"
       }
     }
   ]
