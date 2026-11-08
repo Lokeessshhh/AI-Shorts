@@ -42,10 +42,12 @@ class AutonomousShortsOrchestrator:
     def run_autonomous_batch(
         self,
         num_clipper_shorts: int = 3,
+        skip_mode2: bool = False,
         skip_mode3: bool = False,
+        modes: Optional[List[str]] = None,
     ) -> Dict[str, Any]:
         """
-        Executes Modes 1, 2, and 3 sequentially with zero manual intervention.
+        Executes configured modes (Mode 1, Mode 2, and/or Mode 3) with zero manual intervention.
         Consolidates all rendered videos and social metadata into a dedicated batch folder.
         """
         batch_start_time = time.time()
@@ -64,6 +66,27 @@ class AutonomousShortsOrchestrator:
         print(f"    Batch Directory: {batch_dir}")
         print("=" * 70)
 
+        # Determine active modes
+        if modes:
+            active_modes = set()
+            for m in modes:
+                m_norm = m.lower().strip()
+                if m_norm in ("mode1", "facts", "1"):
+                    active_modes.add("mode1")
+                elif m_norm in ("mode2", "story", "dev_claude", "2"):
+                    active_modes.add("mode2")
+                elif m_norm in ("mode3", "clipper", "3"):
+                    active_modes.add("mode3")
+        else:
+            active_modes = {"mode1", "mode2", "mode3"}
+
+        if skip_mode2:
+            active_modes.discard("mode2")
+        if skip_mode3:
+            active_modes.discard("mode3")
+
+        print(f"[ENGINE] Active Modes: {sorted(list(active_modes))}")
+
         manifest: Dict[str, Any] = {
             "batch_id": batch_id,
             "timestamp": datetime.now().isoformat(),
@@ -79,114 +102,118 @@ class AutonomousShortsOrchestrator:
         # -------------------------------------------------------------
         # STEP 1: AUTONOMOUS TREND & CONTENT SCOUTING
         # -------------------------------------------------------------
-        print("\n[STEP 1/4] AUTONOMOUS TREND SCOUTING & TOPIC REASONING")
+        print("\n[STEP 1] AUTONOMOUS TREND SCOUTING & TOPIC REASONING")
         print("-" * 70)
-        topic_m1 = self.scout.scout_mode1_topic()
-        topic_m2 = self.scout.scout_mode2_topic()
-        podcast_m3 = self.scout.scout_mode3_podcast() if not skip_mode3 else None
+        topic_m1 = self.scout.scout_mode1_topic() if "mode1" in active_modes else None
+        topic_m2 = self.scout.scout_mode2_topic() if "mode2" in active_modes else None
+        podcast_m3 = self.scout.scout_mode3_podcast() if "mode3" in active_modes else None
 
         print("\n[SCOUT SUMMARY]")
-        print(f"  * Mode 1 (Facts):      \"{topic_m1}\"")
-        print(f"  * Mode 2 (Dev vs AI):  \"{topic_m2}\"")
+        if topic_m1:
+            print(f"  * Mode 1 (Facts):      \"{topic_m1}\"")
+        if topic_m2:
+            print(f"  * Mode 2 (Dev vs AI):  \"{topic_m2}\"")
         if podcast_m3:
             print(f"  * Mode 3 (Podcast):    \"{podcast_m3['title']}\" ({podcast_m3['channel']})")
 
         # -------------------------------------------------------------
         # STEP 2: MODE 1 (FACELESS NARRATIVE & FACTS)
         # -------------------------------------------------------------
-        print("\n" + "=" * 70)
-        print("[STEP 2/4] EXECUTING MODE 1: FACELESS NARRATIVE & FACTS")
-        print("=" * 70)
-        m1_start = time.time()
-        try:
-            mode1_dir.mkdir(parents=True, exist_ok=True)
-            agent_m1 = FacelessShortsAgent()
-            res_m1 = agent_m1.create_short(topic=topic_m1)
+        if "mode1" in active_modes and topic_m1:
+            print("\n" + "=" * 70)
+            print("[STEP 2] EXECUTING MODE 1: FACELESS NARRATIVE & FACTS")
+            print("=" * 70)
+            m1_start = time.time()
+            try:
+                mode1_dir.mkdir(parents=True, exist_ok=True)
+                agent_m1 = FacelessShortsAgent()
+                res_m1 = agent_m1.create_short(topic=topic_m1)
 
-            # Copy to batch directory
-            batch_video_m1 = mode1_dir / res_m1.video_path.name
-            shutil.copy2(res_m1.video_path, batch_video_m1)
-            batch_meta_m1 = None
-            if res_m1.metadata_path and res_m1.metadata_path.exists():
-                batch_meta_m1 = mode1_dir / res_m1.metadata_path.name
-                shutil.copy2(res_m1.metadata_path, batch_meta_m1)
+                # Copy to batch directory
+                batch_video_m1 = mode1_dir / res_m1.video_path.name
+                shutil.copy2(res_m1.video_path, batch_video_m1)
+                batch_meta_m1 = None
+                if res_m1.metadata_path and res_m1.metadata_path.exists():
+                    batch_meta_m1 = mode1_dir / res_m1.metadata_path.name
+                    shutil.copy2(res_m1.metadata_path, batch_meta_m1)
 
-            # Mark state
-            self.state.mark_topic_done(
-                topic_m1,
-                mode="facts",
-                metadata={"title": res_m1.title, "video": batch_video_m1.name},
-            )
+                # Mark state
+                self.state.mark_topic_done(
+                    topic_m1,
+                    mode="facts",
+                    metadata={"title": res_m1.title, "video": batch_video_m1.name},
+                )
 
-            manifest["mode1"] = {
-                "status": "SUCCESS",
-                "topic": topic_m1,
-                "title": res_m1.title,
-                "video_path": str(batch_video_m1),
-                "metadata_path": str(batch_meta_m1) if batch_meta_m1 else None,
-                "duration": round(res_m1.duration_seconds, 2),
-                "execution_seconds": round(time.time() - m1_start, 1),
-            }
-            manifest["modes_completed"].append("mode1_facts")
-            manifest["total_videos"] += 1
-            print(f"[SUCCESS/Mode 1] Rendered: {batch_video_m1.name}")
+                manifest["mode1"] = {
+                    "status": "SUCCESS",
+                    "topic": topic_m1,
+                    "title": res_m1.title,
+                    "video_path": str(batch_video_m1),
+                    "metadata_path": str(batch_meta_m1) if batch_meta_m1 else None,
+                    "duration": round(res_m1.duration_seconds, 2),
+                    "execution_seconds": round(time.time() - m1_start, 1),
+                }
+                manifest["modes_completed"].append("mode1_facts")
+                manifest["total_videos"] += 1
+                print(f"[SUCCESS/Mode 1] Rendered: {batch_video_m1.name}")
 
-        except Exception as e:
-            err_msg = f"Mode 1 Generation Failed: {e}"
-            print(f"[ERROR/Mode 1] {err_msg}")
-            manifest["mode1"] = {"status": "FAILED", "error": str(e), "topic": topic_m1}
-            manifest["errors"].append(err_msg)
+            except Exception as e:
+                err_msg = f"Mode 1 Generation Failed: {e}"
+                print(f"[ERROR/Mode 1] {err_msg}")
+                manifest["mode1"] = {"status": "FAILED", "error": str(e), "topic": topic_m1}
+                manifest["errors"].append(err_msg)
 
         # -------------------------------------------------------------
         # STEP 3: MODE 2 (DEVELOPER VS CLAUDE DIALOGUE & GAMEPLAY)
         # -------------------------------------------------------------
-        print("\n" + "=" * 70)
-        print("[STEP 3/4] EXECUTING MODE 2: DEVELOPER VS CLAUDE DIALOGUE")
-        print("=" * 70)
-        m2_start = time.time()
-        try:
-            mode2_dir.mkdir(parents=True, exist_ok=True)
-            pipeline_m2 = DevClaudePipeline()
-            res_m2 = pipeline_m2.run(topic=topic_m2, gameplay_style="random")
+        if "mode2" in active_modes and topic_m2:
+            print("\n" + "=" * 70)
+            print("[STEP 3] EXECUTING MODE 2: DEVELOPER VS CLAUDE DIALOGUE")
+            print("=" * 70)
+            m2_start = time.time()
+            try:
+                mode2_dir.mkdir(parents=True, exist_ok=True)
+                pipeline_m2 = DevClaudePipeline()
+                res_m2 = pipeline_m2.run(topic=topic_m2, gameplay_style="random")
 
-            vpath_m2 = Path(res_m2["video_path"])
-            mpath_m2 = Path(res_m2["metadata_path"])
+                vpath_m2 = Path(res_m2["video_path"])
+                mpath_m2 = Path(res_m2["metadata_path"])
 
-            batch_video_m2 = mode2_dir / vpath_m2.name
-            shutil.copy2(vpath_m2, batch_video_m2)
-            batch_meta_m2 = mode2_dir / mpath_m2.name
-            shutil.copy2(mpath_m2, batch_meta_m2)
+                batch_video_m2 = mode2_dir / vpath_m2.name
+                shutil.copy2(vpath_m2, batch_video_m2)
+                batch_meta_m2 = mode2_dir / mpath_m2.name
+                shutil.copy2(mpath_m2, batch_meta_m2)
 
-            # Mark state
-            self.state.mark_topic_done(
-                topic_m2,
-                mode="dev_claude",
-                metadata={"title": res_m2["title"], "video": batch_video_m2.name},
-            )
+                # Mark state
+                self.state.mark_topic_done(
+                    topic_m2,
+                    mode="dev_claude",
+                    metadata={"title": res_m2["title"], "video": batch_video_m2.name},
+                )
 
-            manifest["mode2"] = {
-                "status": "SUCCESS",
-                "topic": topic_m2,
-                "title": res_m2["title"],
-                "video_path": str(batch_video_m2),
-                "metadata_path": str(batch_meta_m2),
-                "duration": res_m2.get("duration", 0.0),
-                "execution_seconds": round(time.time() - m2_start, 1),
-            }
-            manifest["modes_completed"].append("mode2_dev_claude")
-            manifest["total_videos"] += 1
-            print(f"[SUCCESS/Mode 2] Rendered: {batch_video_m2.name}")
+                manifest["mode2"] = {
+                    "status": "SUCCESS",
+                    "topic": topic_m2,
+                    "title": res_m2["title"],
+                    "video_path": str(batch_video_m2),
+                    "metadata_path": str(batch_meta_m2),
+                    "duration": res_m2.get("duration", 0.0),
+                    "execution_seconds": round(time.time() - m2_start, 1),
+                }
+                manifest["modes_completed"].append("mode2_dev_claude")
+                manifest["total_videos"] += 1
+                print(f"[SUCCESS/Mode 2] Rendered: {batch_video_m2.name}")
 
-        except Exception as e:
-            err_msg = f"Mode 2 Generation Failed: {e}"
-            print(f"[ERROR/Mode 2] {err_msg}")
-            manifest["mode2"] = {"status": "FAILED", "error": str(e), "topic": topic_m2}
-            manifest["errors"].append(err_msg)
+            except Exception as e:
+                err_msg = f"Mode 2 Generation Failed: {e}"
+                print(f"[ERROR/Mode 2] {err_msg}")
+                manifest["mode2"] = {"status": "FAILED", "error": str(e), "topic": topic_m2}
+                manifest["errors"].append(err_msg)
 
         # -------------------------------------------------------------
         # STEP 4: MODE 3 (PODCAST & LONG-FORM SMART CLIPPER)
         # -------------------------------------------------------------
-        if not skip_mode3 and podcast_m3:
+        if "mode3" in active_modes and podcast_m3:
             print("\n" + "=" * 70)
             print("[STEP 4/4] EXECUTING MODE 3: PODCAST SMART CLIPPER")
             print("=" * 70)

@@ -1,10 +1,10 @@
-name: Daily AI Shorts Automation (6 Videos Daily)
+name: Daily AI Shorts Automation (Mode 1: Faceless Facts)
 
 on:
   schedule:
     # 9:00 AM IST = 03:30 UTC
     # 5:00 PM IST = 11:30 UTC
-    # Runs twice daily -> 3 shorts per run = 6 shorts daily across YouTube & Instagram
+    # Runs twice daily -> publishes Mode 1 AI Shorts across YouTube & Instagram
     - cron: '30 3,11 * * *'
   workflow_dispatch:
     inputs:
@@ -82,11 +82,11 @@ jobs:
           print('[Configured] Runtime .env created')
           "
 
-      - name: Execute Autonomous Shorts Batch & Multi-Platform Publisher
+      - name: Execute Autonomous Mode 1 Shorts & Multi-Platform Publisher
         run: |
-          # Executes Mode 1, Mode 2, Mode 3 (scores 3, uploads top 1)
+          # Executes Mode 1 (AI Faceless Facts & Narrative) and publishes to YouTube Shorts & Instagram Reels
           # Automatically deletes local video files upon successful upload
-          python main.py --mode auto --publish
+          python main.py --mode auto --modes mode1 --publish
 
       - name: Persist Topic History & Prevent Duplicates
         run: |

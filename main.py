@@ -144,6 +144,17 @@ def main():
         help="[Mode auto] Sleep interval between batches when --loop is enabled (e.g. 6h, 12h, 30m)",
     )
     parser.add_argument(
+        "--modes",
+        nargs="+",
+        default=None,
+        help="[Mode auto] Specific modes to run in batch, e.g. '--modes mode1' (default: all modes)",
+    )
+    parser.add_argument(
+        "--skip-mode2",
+        action="store_true",
+        help="[Mode auto] Skip Mode 2 dev vs claude dialogue in the batch run",
+    )
+    parser.add_argument(
         "--skip-mode3",
         action="store_true",
         help="[Mode auto] Skip Mode 3 podcast clipper in the batch run",
@@ -204,7 +215,9 @@ def main():
         while True:
             manifest = orchestrator.run_autonomous_batch(
                 num_clipper_shorts=args.clips,
+                skip_mode2=args.skip_mode2,
                 skip_mode3=args.skip_mode3,
+                modes=args.modes,
             )
 
             # Auto-publish to YouTube Shorts and Instagram Reels if requested
