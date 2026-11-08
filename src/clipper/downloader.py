@@ -330,12 +330,61 @@ class VideoDownloader:
     ) -> Path:
         """
         Selective Range Slicing:
-        Instructs yt-dlp to stream and download ONLY the 30-60s slice of video directly.
+        Tiers:
+          1. RapidAPI YouTube Fast Downloader (server-side trimmed CDN MP4, zero cloud IP blocks).
+          2. Direct yt-dlp selective slice via android client.
         """
         output_path.parent.mkdir(parents=True, exist_ok=True)
-        duration_s = end_time - start_time
+        duration_s = max(1.0, end_time - start_time)
         print(f"[Clipper] Selective Range Slicing: {start_time:.1f}s -> {end_time:.1f}s (~{duration_s:.1f}s clip)...")
 
+        video_id = self.extract_video_id(source)
+        rapidapi_key = getattr(config, "rapidapi_key", "") or os.environ.get("RAPIDAPI_KEY", "").strip()
+        rapidapi_host = getattr(config, "rapidapi_host", "") or os.environ.get("RAPIDAPI_HOST", "youtube-video-fast-downloader-24-7.p.rapidapi.com").strip()
+
+        # Tier 1: RapidAPI Server-Side Trimmed Direct Download
+        if rapidapi_key and self.is_url(source):
+            try:
+                import urllib.request
+                import urllib.parse
+                import time
+
+                params = urllib.parse.urlencode({
+                    "quality": "18",
+                    "trim_start_time": int(start_time),
+                    "trim_duration": int(duration_s) + 1,
+                })
+                api_url = f"https://{rapidapi_host}/download_video/{video_id}?{params}"
+                headers = {
+                    "x-rapidapi-key": rapidapi_key,
+                    "x-rapidapi-host": rapidapi_host,
+                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+                }
+                req = urllib.request.Request(api_url, headers=headers)
+                print(f"[Clipper/RapidAPI] Requesting server-side trimmed slice for {video_id}...")
+                with urllib.request.urlopen(req, timeout=50) as r:
+                    resp_data = json.loads(r.read().decode("utf-8"))
+
+                file_url = resp_data.get("file") or resp_data.get("reserved_file")
+                if file_url:
+                    print(f"[Clipper/RapidAPI] Polling CDN stream: {file_url}...")
+                    dl_headers = {"User-Agent": "Mozilla/5.0"}
+                    for attempt in range(12):
+                        try:
+                            dl_req = urllib.request.Request(file_url, headers=dl_headers)
+                            with urllib.request.urlopen(dl_req, timeout=10) as dl_r:
+                                chunk = dl_r.read()
+                                if len(chunk) > 10000:
+                                    with open(output_path, "wb") as f_out:
+                                        f_out.write(chunk)
+                                    print(f"[Clipper/RapidAPI] Successfully downloaded sliced clip -> {output_path.name} ({len(chunk)/1024/1024:.2f} MB)")
+                                    return output_path
+                        except Exception:
+                            time.sleep(3)
+            except Exception as e_api:
+                print(f"[Clipper] RapidAPI downloader notice: {e_api}. Falling back to yt-dlp slice...")
+
+        # Tier 2: yt-dlp selective slice
         cmd = [
             sys.executable, "-m", "yt_dlp",
             "--extractor-args", "youtube:player_client=android",

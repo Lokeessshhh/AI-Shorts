@@ -25,6 +25,14 @@ class Settings:
     supadata_api_key: str = field(
         default_factory=lambda: os.getenv("SUPADATA_API_KEY", "")
     )
+    rapidapi_key: str = field(
+        default_factory=lambda: os.getenv("RAPIDAPI_KEY", "")
+    )
+    rapidapi_host: str = field(
+        default_factory=lambda: os.getenv(
+            "RAPIDAPI_HOST", "youtube-video-fast-downloader-24-7.p.rapidapi.com"
+        )
+    )
 
     # Audio & Voice Defaults
     default_voice: str = field(

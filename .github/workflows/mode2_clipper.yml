@@ -53,6 +53,8 @@ jobs:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
           PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
           SUPADATA_API_KEY: ${{ secrets.SUPADATA_API_KEY }}
+          RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
+          RAPIDAPI_HOST: ${{ secrets.RAPIDAPI_HOST }}
           INSTAGRAM_USERNAME: ${{ secrets.INSTAGRAM_USERNAME }}
           INSTAGRAM_PASSWORD: ${{ secrets.INSTAGRAM_PASSWORD }}
           YOUTUBE_CLIENT_SECRET_B64: ${{ secrets.YOUTUBE_CLIENT_SECRET_B64 }}
@@ -92,6 +94,8 @@ jobs:
               f.write(f'OPENROUTER_API_KEY={os.environ.get(\"OPENROUTER_API_KEY\", \"\")}\n')
               f.write(f'PEXELS_API_KEY={os.environ.get(\"PEXELS_API_KEY\", \"\")}\n')
               f.write(f'SUPADATA_API_KEY={os.environ.get(\"SUPADATA_API_KEY\", \"\")}\n')
+              f.write(f'RAPIDAPI_KEY={os.environ.get(\"RAPIDAPI_KEY\", \"\")}\n')
+              f.write(f'RAPIDAPI_HOST={os.environ.get(\"RAPIDAPI_HOST\", \"\")}\n')
               f.write(f'INSTAGRAM_USERNAME={os.environ.get(\"INSTAGRAM_USERNAME\", \"\")}\n')
               f.write(f'INSTAGRAM_PASSWORD={os.environ.get(\"INSTAGRAM_PASSWORD\", \"\")}\n')
           print('[Configured] Runtime .env created')
