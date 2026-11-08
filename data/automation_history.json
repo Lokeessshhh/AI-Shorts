@@ -7,7 +7,9 @@
     "the hidden science of team colors and fan psychology",
     "the hidden science behind why we root for underdogs in sports"
   ],
-  "clipped_youtube_ids": [],
+  "clipped_youtube_ids": [
+    "dNIef2fGLQY"
+  ],
   "batch_history": [
     {
       "batch_id": "batch_20261108_130712",
@@ -235,7 +237,135 @@
         "Mode 2 Clipper Failed: yt-dlp slice download failed: WARNING: [youtube] No title found in player responses; falling back to title from initial data. Other metadata may also be missing\nERROR: [youtube] dNIef2fGLQY: Sign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies\n"
       ],
       "total_batch_seconds": 99.4
+    },
+    {
+      "batch_id": "batch_20261108_192712",
+      "timestamp": "2026-11-08T19:27:12.025880",
+      "batch_dir": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261108_192712",
+      "modes_completed": [
+        "mode2_clipper"
+      ],
+      "total_videos": 3,
+      "mode1": {},
+      "mode2": {
+        "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261108_192712/mode2_clipper/clip_1_advice_you_should_ignore_1794166032.mp4",
+        "title": "Advice You Should Ignore",
+        "source_title": "Why the US Dollar Will Remain the Dominant Currency for 20 Years | Gita Gopinath | FO585 Raj Shamani",
+        "source_channel": "Raj Shamani",
+        "source_url": "https://www.youtube.com/watch?v=dNIef2fGLQY",
+        "duration": 39.9,
+        "viral_score": 96,
+        "status": "SUCCESS",
+        "hook_sentence": "",
+        "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261108_192712/mode2_clipper/clip_1_advice_you_should_ignore_1794166032_metadata.txt",
+        "is_fallback": false,
+        "topic": "Advice You Should Ignore",
+        "clips_count": 3,
+        "selected_clip": {
+          "rank": 1,
+          "title": "Advice You Should Ignore",
+          "viral_score": 96,
+          "hook_score": 34,
+          "narrative_score": 28,
+          "debate_score": 20,
+          "density_score": 14,
+          "virality_reason": "This clip challenges conventional wisdom, provoking viewers to reflect on their own beliefs and share their thoughts.",
+          "hook_sentence": "What is one advice that nobody should follow?",
+          "category": "Personal Story & Mindset",
+          "mood": "emotional_piano",
+          "wpm": 127.8,
+          "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261108_192712/mode2_clipper/clip_1_advice_you_should_ignore_1794166032.mp4",
+          "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261108_192712/mode2_clipper/clip_1_advice_you_should_ignore_1794166032_metadata.txt",
+          "duration": 39.9,
+          "composite_upload_score": 99.14,
+          "selection_rank": 1,
+          "selected_for_upload": true,
+          "selection_verdict": "WINNER / SELECTED FOR UPLOAD",
+          "selection_reason": "Top Composite Score (99.14/100) with 34/35 hook strength ('What is one advice that nobody should follow?') and 20/20 comment arousal."
+        },
+        "clips": [
+          {
+            "rank": 1,
+            "title": "Advice You Should Ignore",
+            "viral_score": 96,
+            "hook_score": 34,
+            "narrative_score": 28,
+            "debate_score": 20,
+            "density_score": 14,
+            "virality_reason": "This clip challenges conventional wisdom, provoking viewers to reflect on their own beliefs and share their thoughts.",
+            "hook_sentence": "What is one advice that nobody should follow?",
+            "category": "Personal Story & Mindset",
+            "mood": "emotional_piano",
+            "wpm": 127.8,
+            "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261108_192712/mode2_clipper/clip_1_advice_you_should_ignore_1794166032.mp4",
+            "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261108_192712/mode2_clipper/clip_1_advice_you_should_ignore_1794166032_metadata.txt",
+            "duration": 39.9,
+            "composite_upload_score": 99.14,
+            "selection_rank": 1,
+            "selected_for_upload": true,
+            "selection_verdict": "WINNER / SELECTED FOR UPLOAD",
+            "selection_reason": "Top Composite Score (99.14/100) with 34/35 hook strength ('What is one advice that nobody should follow?') and 20/20 comment arousal."
+          },
+          {
+            "rank": 2,
+            "title": "America's Borrowing Crisis",
+            "viral_score": 90,
+            "hook_score": 33,
+            "narrative_score": 25,
+            "debate_score": 18,
+            "density_score": 14,
+            "virality_reason": "The provocative question about America's borrowing invites debate on economic policies and personal finance.",
+            "hook_sentence": "Why is America borrowing so much more money now?",
+            "category": "Business, Money & Career",
+            "mood": "high_energy",
+            "wpm": 172.5,
+            "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261108_192712/mode2_clipper/clip_2_americas_borrowing_crisis_1794166032.mp4",
+            "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261108_192712/mode2_clipper/clip_2_americas_borrowing_crisis_1794166032_metadata.txt",
+            "duration": 33.04,
+            "composite_upload_score": 93.29,
+            "selection_rank": 2,
+            "selected_for_upload": false,
+            "selection_verdict": "RUNNER-UP #2",
+            "selection_reason": "Composite score (93.29/100) behind winning clip."
+          },
+          {
+            "rank": 3,
+            "title": "Has the World Really Changed?",
+            "viral_score": 80,
+            "hook_score": 28,
+            "narrative_score": 24,
+            "debate_score": 16,
+            "density_score": 12,
+            "virality_reason": "The existential question about change resonates with viewers, prompting them to reflect and engage.",
+            "hook_sentence": "What has changed?",
+            "category": "Psychology & Human Nature",
+            "mood": "chill_lofi",
+            "wpm": 145.5,
+            "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261108_192712/mode2_clipper/clip_3_has_the_world_really_changed_1794166032.mp4",
+            "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261108_192712/mode2_clipper/clip_3_has_the_world_really_changed_1794166032_metadata.txt",
+            "duration": 36.3,
+            "composite_upload_score": 82.0,
+            "selection_rank": 3,
+            "selected_for_upload": false,
+            "selection_verdict": "RUNNER-UP #3",
+            "selection_reason": "Composite score (82.0/100) behind winning clip."
+          }
+        ],
+        "execution_seconds": 201.6
+      },
+      "errors": [],
+      "total_batch_seconds": 202.4
     }
   ],
-  "last_updated": "2026-11-08T19:22:25.175302"
+  "last_updated": "2026-11-08T19:30:34.417069",
+  "clip_logs": [
+    {
+      "timestamp": "2026-11-08T19:30:34.414513",
+      "video_id": "dNIef2fGLQY",
+      "title": "Why the US Dollar Will Remain the Dominant Currency for 20 Years | Gita Gopinath | FO585 Raj Shamani",
+      "metadata": {
+        "clips_count": 3
+      }
+    }
+  ]
 }
