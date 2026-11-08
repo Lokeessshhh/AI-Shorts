@@ -1,6 +1,97 @@
 {
-  "completed_topics": [],
+  "completed_topics": [
+    "the bizarre reason why power outages can boost creativity",
+    "why caching is like library card catalog system",
+    "the surprising connection between stock market cycles and human emotion"
+  ],
   "clipped_youtube_ids": [],
-  "batch_history": [],
-  "last_updated": "2026-11-08T18:23:00"
+  "batch_history": [
+    {
+      "batch_id": "batch_20261108_130712",
+      "timestamp": "2026-11-08T13:07:12.297862",
+      "batch_dir": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261108_130712",
+      "modes_completed": [
+        "mode1_facts",
+        "mode2_dev_claude",
+        "mode3_fallback"
+      ],
+      "total_videos": 3,
+      "mode1": {
+        "status": "SUCCESS",
+        "topic": "The Bizarre Reason Why Power Outages Can Boost Creativity",
+        "title": "The Bizarre Reason Why Power Outages Can Boost Creativity",
+        "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261108_130712/mode1_facts/the_bizarre_reason_why_power_outages_can_1794143351.mp4",
+        "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261108_130712/mode1_facts/the_bizarre_reason_why_power_outages_can_1794143351_metadata.txt",
+        "duration": 23.81,
+        "execution_seconds": 146.5
+      },
+      "mode2": {
+        "status": "SUCCESS",
+        "topic": "Why Caching is Like a Library's Card Catalog System",
+        "title": "Why Caching is Like a Library's Card Catalog System",
+        "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261108_130712/mode2_dev_claude/dev_claude_encyclopedia_why_caching_is_like_a_librarys_card_cata_1794143383.mp4",
+        "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261108_130712/mode2_dev_claude/dev_claude_encyclopedia_why_caching_is_like_a_librarys_card_cata_1794143383_metadata.txt",
+        "duration": 39.72,
+        "execution_seconds": 132.3
+      },
+      "mode3": {
+        "status": "SUCCESS",
+        "is_fallback": true,
+        "source_url": "N/A",
+        "source_title": "The Surprising Connection Between Stock Market Cycles and Human Emotion",
+        "source_channel": "Google Trends RSS",
+        "clips_count": 1,
+        "topic": "The Surprising Connection Between Stock Market Cycles and Human Emotion",
+        "title": "The Surprising Connection Between Stock Market Cycles and Human Emotion",
+        "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261108_130712/mode3_fallback/the_surprising_connection_between_stock__1794143668.mp4",
+        "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261108_130712/mode3_fallback/the_surprising_connection_between_stock__1794143668_metadata.txt",
+        "duration": 26.6,
+        "selected_clip": {
+          "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261108_130712/mode3_fallback/the_surprising_connection_between_stock__1794143668.mp4",
+          "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261108_130712/mode3_fallback/the_surprising_connection_between_stock__1794143668_metadata.txt",
+          "title": "The Surprising Connection Between Stock Market Cycles and Human Emotion",
+          "rank": 1,
+          "composite_upload_score": 95.0
+        }
+      },
+      "errors": [
+        "Mode 3 Clipper Failed: ERROR: [youtube] yUdg7drjrZY: Sign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies"
+      ],
+      "total_batch_seconds": 471.0
+    }
+  ],
+  "last_updated": "2026-11-08T13:15:03.281347",
+  "topic_logs": [
+    {
+      "timestamp": "2026-11-08T13:09:43.641634",
+      "mode": "facts",
+      "topic": "The Bizarre Reason Why Power Outages Can Boost Creativity",
+      "normalized": "the bizarre reason why power outages can boost creativity",
+      "metadata": {
+        "title": "The Bizarre Reason Why Power Outages Can Boost Creativity",
+        "video": "the_bizarre_reason_why_power_outages_can_1794143351.mp4"
+      }
+    },
+    {
+      "timestamp": "2026-11-08T13:11:55.956324",
+      "mode": "dev_claude",
+      "topic": "Why Caching is Like a Library's Card Catalog System",
+      "normalized": "why caching is like library card catalog system",
+      "metadata": {
+        "title": "Why Caching is Like a Library's Card Catalog System",
+        "video": "dev_claude_encyclopedia_why_caching_is_like_a_librarys_card_cata_1794143383.mp4"
+      }
+    },
+    {
+      "timestamp": "2026-11-08T13:15:03.278756",
+      "mode": "mode1_facts",
+      "topic": "The Surprising Connection Between Stock Market Cycles and Human Emotion",
+      "normalized": "the surprising connection between stock market cycles and human emotion",
+      "metadata": {
+        "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261108_130712/mode3_fallback/the_surprising_connection_between_stock__1794143668.mp4",
+        "duration": 26.616,
+        "title": "The Surprising Connection Between Stock Market Cycles and Human Emotion"
+      }
+    }
+  ]
 }
