@@ -292,6 +292,10 @@ class AutonomousShortsOrchestrator:
                     manifest["mode3"] = {
                         "status": "SUCCESS",
                         "is_fallback": True,
+                        "source_url": "N/A",
+                        "source_title": alt_res.title,
+                        "source_channel": "Google Trends RSS",
+                        "clips_count": 1,
                         "topic": alt_topic,
                         "title": alt_res.title,
                         "video_path": str(batch_video_alt),
@@ -378,11 +382,12 @@ class AutonomousShortsOrchestrator:
         if manifest.get("mode3", {}).get("status") == "SUCCESS":
             m3 = manifest["mode3"]
             selected = m3.get("selected_clip", {})
+            m3_label = "[MODE 3: PREMIER ALTERNATE SHORT]" if m3.get("is_fallback") else "[MODE 3: PODCAST & VIDEO VIRAL CLIPS]"
             lines.extend([
-                "[MODE 3: PODCAST & VIDEO VIRAL CLIPS]",
-                f"Source: {m3['source_title']} ({m3['source_channel']})",
-                f"URL:    {m3['source_url']}",
-                f"Total Clips Extracted: {m3['clips_count']}",
+                m3_label,
+                f"Source: {m3.get('source_title', m3.get('topic', 'Autonomous Trend'))} ({m3.get('source_channel', 'Web Trends')})",
+                f"URL:    {m3.get('source_url', 'N/A')}",
+                f"Total Clips Extracted: {m3.get('clips_count', 1)}",
                 "",
                 ">>> SELECTED FOR UPLOAD (WINNER) <<<",
                 f"Clip Title:      {selected.get('title')}",
