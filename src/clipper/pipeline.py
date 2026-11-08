@@ -59,22 +59,27 @@ class Mode3ClipperPipeline:
         print(f"[TARGET] Top {num_clips} Viral Shorts ({min_duration:.0f}s - {max_duration:.0f}s)")
         print("=" * 60)
 
-        # Step 1: Download or Ingest Source Video
-        print("\n[1/4] Ingesting source video & extracting audio...")
-        video_path, audio_path, meta = self.downloader.download_or_ingest(source)
+        # Step 1: Zero-Video Transcription / Ingestion
+        is_url = self.downloader.is_url(source)
+        if is_url:
+            print("\n[1/4] Zero-Video Ingestion: Pulling instant word-level captions...")
+            meta, transcript_data = self.downloader.get_transcript_and_meta(
+                source=source,
+                transcriber=self.transcriber,
+            )
+            video_path = None
+        else:
+            print("\n[1/4] Ingesting local video file & extracting audio...")
+            video_path, audio_path, meta = self.downloader.download_or_ingest(source)
+            cache_json = audio_path.parent / "transcript.json"
+            transcript_data = self.transcriber.transcribe(audio_path, cache_json_path=cache_json)
+
         print(f"  * Video Title: {meta['title']}")
         print(f"  * Total Duration: {meta['duration']:.1f}s ({meta['duration']/60:.1f} min)")
-        print(f"  * Local Video: {video_path.name}")
-        print(f"  * 16kHz Audio: {audio_path.name}")
-
-        # Step 2: Transcribe Full Audio
-        print("\n[2/4] Transcribing audio with word-level timestamps...")
-        cache_json = audio_path.parent / "transcript.json"
-        transcript_data = self.transcriber.transcribe(audio_path, cache_json_path=cache_json)
         print(f"  * Transcribed {transcript_data['total_words']} words across {len(transcript_data['segments'])} segments.")
 
-        # Step 3: AI Viral Highlight Detection
-        print(f"\n[3/4] Detecting Top {num_clips} viral moments via OpenRouter...")
+        # Step 2: AI Viral Highlight Detection
+        print(f"\n[2/4] Detecting Top {num_clips} viral moments via OpenRouter...")
         highlights = self.highlight_detector.detect_highlights(
             transcript_data=transcript_data,
             num_clips=num_clips,
@@ -93,8 +98,8 @@ class Mode3ClipperPipeline:
             print(f"      Debate (20%): {h.get('debate_score', 0)}/20 | Density (15%): {h.get('density_score', 0)}/15")
             print(f"      Timeline Act: {h.get('act', 'General')}")
 
-        # Step 4: Render Each Short with Polish
-        print(f"\n[4/4] Rendering {len(highlights)} vertical 9:16 shorts (Reframing + ASS Subtitles + Edits)...")
+        # Step 3: Render Each Short with Polish (Selective Slicing if URL)
+        print(f"\n[3/4] Slicing & rendering {len(highlights)} vertical 9:16 shorts...")
         results: List[Dict[str, Any]] = []
 
         for idx, h in enumerate(highlights, 1):
@@ -105,17 +110,41 @@ class Mode3ClipperPipeline:
             out_video = output_dir / clip_filename
             out_meta = output_dir / clip_meta_filename
             temp_dir = config.temp_dir / f"clip_{idx}_{session_id}"
+            temp_dir.mkdir(parents=True, exist_ok=True)
 
             t_start = time.time()
-            self.editor.render_short(
-                source_video=video_path,
-                highlight=h,
-                output_mp4=out_video,
-                temp_dir=temp_dir,
-                enable_micro_zoom=True,
-                enable_progress_bar=True,
-                layout=layout,
-            )
+            if is_url:
+                # Selective Range Slicing: Download ONLY this 30-60s clip
+                sliced_input = temp_dir / f"raw_slice_{idx}_{session_id}.mp4"
+                self.downloader.download_slice(
+                    source=source,
+                    start_time=h["start_time"],
+                    end_time=h["end_time"],
+                    output_path=sliced_input,
+                )
+                self.editor.render_short(
+                    source_video=sliced_input,
+                    highlight=h,
+                    output_mp4=out_video,
+                    temp_dir=temp_dir,
+                    enable_micro_zoom=True,
+                    enable_progress_bar=True,
+                    layout=layout,
+                    is_pre_sliced=True,
+                )
+                if sliced_input.exists():
+                    sliced_input.unlink(missing_ok=True)
+            else:
+                self.editor.render_short(
+                    source_video=video_path,
+                    highlight=h,
+                    output_mp4=out_video,
+                    temp_dir=temp_dir,
+                    enable_micro_zoom=True,
+                    enable_progress_bar=True,
+                    layout=layout,
+                    is_pre_sliced=False,
+                )
             render_duration = time.time() - t_start
 
             # Generate Social Metadata File

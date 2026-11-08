@@ -72,6 +72,7 @@ class ShortEditor:
         enable_micro_zoom: bool = True,
         enable_progress_bar: bool = True,
         layout: Optional[str] = None,
+        is_pre_sliced: bool = False,
     ) -> Path:
         """
         Assemble one short from start_time to end_time with all viral polish effects.
@@ -84,14 +85,17 @@ class ShortEditor:
         duration = float(highlight["duration"])
         rank = highlight.get("rank", 1)
 
-        print(f"[Clipper/Editor] Rendering Clip #{rank}: {start_time:.1f}s -> {end_time:.1f}s ({duration:.1f}s)")
+        feed_start = 0.0 if is_pre_sliced else start_time
+        feed_end = duration if is_pre_sliced else end_time
+
+        print(f"[Clipper/Editor] Rendering Clip #{rank}: {start_time:.1f}s -> {end_time:.1f}s ({duration:.1f}s) [Pre-sliced={is_pre_sliced}]")
 
         # 1. Analyze framing if not already provided
         if not reframe_analysis:
             reframe_analysis = self.reframer.analyze_clip(
                 video_path=source_video,
-                start_time=start_time,
-                end_time=end_time,
+                start_time=feed_start,
+                end_time=feed_end,
                 sample_fps=1.5,
                 forced_layout=layout,
             )
@@ -177,8 +181,8 @@ class ShortEditor:
                 self.ffmpeg_path,
                 "-y",
                 "-loglevel", "error",
-                "-ss", f"{start_time:.3f}",
-                "-to", f"{end_time:.3f}",
+                "-ss", f"{feed_start:.3f}",
+                "-to", f"{feed_end:.3f}",
                 "-i", str(source_video),
                 "-i", str(bgm_path),
                 "-filter_complex", full_filtergraph,
@@ -199,8 +203,8 @@ class ShortEditor:
                 self.ffmpeg_path,
                 "-y",
                 "-loglevel", "error",
-                "-ss", f"{start_time:.3f}",
-                "-to", f"{end_time:.3f}",
+                "-ss", f"{feed_start:.3f}",
+                "-to", f"{feed_end:.3f}",
                 "-i", str(source_video),
                 "-filter_complex", video_filtergraph,
                 "-map", f"[{curr_v}]",

@@ -65,10 +65,9 @@ class BatchPublisher:
         print(f"    Batch Directory:  {batch_dir}")
         print("=" * 70)
 
-        # Prepare 3 upload items:
-        # Item 1: Mode 1 (Facts)
-        # Item 2: Mode 2 (Dev vs Claude)
-        # Item 3: Mode 3 (Winning Clip)
+        # Prepare upload items:
+        # Item 1: Mode 1 (Faceless Facts)
+        # Item 2: Mode 2 (Smart Clipper Winning Clip)
         items_to_upload = []
 
         # 1. Mode 1
@@ -81,30 +80,26 @@ class BatchPublisher:
                 "metadata_path": Path(m1["metadata_path"]) if m1.get("metadata_path") else None,
             })
 
-        # 2. Mode 2
-        m2 = manifest.get("mode2", {})
-        if m2.get("status") == "SUCCESS" and m2.get("video_path"):
-            items_to_upload.append({
-                "mode": "mode2_dev_claude",
-                "label": "Mode 2 (Dev vs Claude)",
-                "video_path": Path(m2["video_path"]),
-                "metadata_path": Path(m2["metadata_path"]) if m2.get("metadata_path") else None,
-            })
-
-        # 3. Mode 3 (Winning Clip only)
-        m3 = manifest.get("mode3", {})
-        selected_clip = m3.get("selected_clip")
+        # 2. Mode 2 (Smart Clipper Winning Clip - supports mode2 & legacy mode3 key)
+        m2 = manifest.get("mode2", {}) or manifest.get("mode3", {})
+        selected_clip = m2.get("selected_clip")
         if not selected_clip:
-            # Fallback to selected_for_upload.json
-            p_selected = batch_dir / "mode3_clipper" / "selected_for_upload.json"
-            if p_selected.exists():
-                with open(p_selected, "r", encoding="utf-8") as f:
-                    selected_clip = json.load(f)
+            for cand_dir in ["mode2_clipper", "mode3_clipper"]:
+                p_selected = batch_dir / cand_dir / "selected_for_upload.json"
+                if p_selected.exists():
+                    try:
+                        with open(p_selected, "r", encoding="utf-8") as f:
+                            selected_clip = json.load(f)
+                        break
+                    except Exception:
+                        pass
+            if not selected_clip and m2.get("video_path"):
+                selected_clip = m2
 
         if selected_clip and selected_clip.get("video_path"):
             items_to_upload.append({
-                "mode": "mode3_clipper_winner",
-                "label": f"Mode 3 Winning Clip (#{selected_clip.get('rank', 1)})",
+                "mode": "mode2_clipper_winner",
+                "label": f"Mode 2 Winning Clip (#{selected_clip.get('rank', 1)})",
                 "video_path": Path(selected_clip["video_path"]),
                 "metadata_path": Path(selected_clip["metadata_path"]) if selected_clip.get("metadata_path") else None,
             })
@@ -171,16 +166,16 @@ class BatchPublisher:
 
             publish_log.append(item_result)
 
-        # Clean up unselected runner-up clips from Mode 3 to save disk
+        # Clean up unselected runner-up clips from Mode 2 / Mode 3 to save disk
         if delete_unselected_clips:
-            m3_clips = manifest.get("mode3", {}).get("clips", [])
-            for c in m3_clips:
+            m2_clips = manifest.get("mode2", {}).get("clips", []) or manifest.get("mode3", {}).get("clips", [])
+            for c in m2_clips:
                 if not c.get("selected_for_upload") and c.get("video_path"):
                     p_clip = Path(c["video_path"])
                     if p_clip.exists():
                         try:
                             p_clip.unlink()
-                            print(f"  * [Cleanup] Purged unselected Mode 3 runner-up clip: {p_clip.name}")
+                            print(f"  * [Cleanup] Purged unselected runner-up clip: {p_clip.name}")
                         except Exception:
                             pass
 

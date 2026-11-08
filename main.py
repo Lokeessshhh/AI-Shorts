@@ -1,9 +1,8 @@
 """AI Shorts Production CLI Engine
 Supported Modes:
   - Mode 1: Faceless Narrative & Facts (LLM Script + Edge-TTS + ASS Subtitles + Pexels B-Roll + FFmpeg)
-  - Mode 2: Reddit Stories & Gameplay (Zero-Key Scraper / AI Storyteller + Pillow Card + Gameplay + 50/50 Split)
-  - Mode 3: Video & Podcast Smart Clipper (yt-dlp + faster-whisper + OpenRouter Highlights + OpenCV Reframe + Polish)
-  - Mode auto: Autonomous Trend Scout & 3-Mode Batch Orchestrator (Zero input, scans Google Trends, HN & YouTube)
+  - Mode 2: Video & Podcast Smart Clipper (yt-dlp + youtube-transcript-api + OpenRouter Highlights + OpenCV Reframe + Polish)
+  - Mode auto: Autonomous Trend Scout & 2-Mode Batch Orchestrator (Google Trends & Podcast Watchlist)
 """
 
 import sys
@@ -35,100 +34,72 @@ def parse_interval_seconds(interval_str: str) -> float:
 
 def main():
     parser = argparse.ArgumentParser(
-        description="AI Shorts Engine: Automated Short-Form Content Generator (Modes 1, 2, 3 & Auto)"
+        description="AI Shorts Engine: Automated Short-Form Content Generator (Mode 1: Facts, Mode 2: Clipper & Auto)"
     )
     parser.add_argument(
         "--mode",
         type=str,
-        choices=["facts", "story", "clipper", "auto"],
+        choices=["facts", "clipper", "auto"],
         default="facts",
-        help="Content mode: 'facts' (Mode 1), 'story' (Mode 2), 'clipper' (Mode 3), or 'auto' (Autonomous 3-Mode Batch)",
+        help="Content mode: 'facts' (Mode 1), 'clipper' (Mode 2), or 'auto' (Autonomous 2-Mode Batch)",
     )
 
-    # General / Shared Arguments
+    # Mode 1 Arguments
     parser.add_argument(
         "--topic",
         type=str,
         default=None,
-        help="[Mode 1 & 2] Premise, topic, or concept to generate",
+        help="[Mode 1] Premise, topic, or concept to generate",
     )
     parser.add_argument(
         "--voice",
         type=str,
         default=None,
-        help="[Mode 1 & 2] edge-tts voice name (e.g. en-US-ChristopherNeural, en-US-AndrewNeural)",
+        help="[Mode 1] edge-tts voice name (e.g. en-US-ChristopherNeural, en-US-AndrewNeural)",
     )
     parser.add_argument(
         "--bgm",
         type=str,
         default=None,
-        help="[Mode 1 & 2] Path to custom background music audio file",
+        help="[Mode 1] Path to custom background music audio file",
     )
 
-    # Mode 2 Story Arguments
-    parser.add_argument(
-        "--format",
-        type=str,
-        choices=["dev_claude", "reddit"],
-        default="dev_claude",
-        help="[Mode 2] Story format: 'dev_claude' (Developer vs Claude 2-person dialogue) or 'reddit' (Reddit narrative)",
-    )
-    parser.add_argument(
-        "--reddit",
-        type=str,
-        default=None,
-        help="[Mode 2] Reddit post URL to scrape and narrate",
-    )
-    parser.add_argument(
-        "--subreddit",
-        type=str,
-        default=None,
-        help="[Mode 2] Subreddit to pull top trending story from (e.g. AITA, AskReddit, confession)",
-    )
-    parser.add_argument(
-        "--gameplay",
-        type=str,
-        choices=["random", "gta", "subway", "trackmania", "minecraft", "satisfying_asmr", "beamng", "temple_run", "marble_run"],
-        default="random",
-        help="[Mode 2] Background gameplay style (default: random dynamic download)",
-    )
-    parser.add_argument(
-        "--layout",
-        type=str,
-        default=None,
-        help="[Mode 2 & 3] Visual layout: 'split_screen', 'floating_card', 'auto', or 'solo'",
-    )
-
-    # Mode 3 Clipper Arguments
+    # Mode 2 Clipper Arguments
     parser.add_argument(
         "--url",
         type=str,
         default=None,
-        help="[Mode 3] YouTube video URL to download and clip",
+        help="[Mode 2] YouTube video URL to download and clip",
     )
     parser.add_argument(
         "--input",
         type=str,
         default=None,
-        help="[Mode 3] Path to local video file to clip",
+        help="[Mode 2] Path to local video file to clip",
     )
     parser.add_argument(
         "--clips",
         type=int,
         default=3,
-        help="[Mode 3 & Auto] Number of viral shorts to extract (default: 3)",
+        help="[Mode 2 & Auto] Number of viral shorts to extract (default: 3)",
     )
     parser.add_argument(
         "--min-duration",
         type=float,
         default=30.0,
-        help="[Mode 3] Minimum duration in seconds per clip (default: 30.0)",
+        help="[Mode 2] Minimum duration in seconds per clip (default: 30.0)",
     )
     parser.add_argument(
         "--max-duration",
         type=float,
         default=60.0,
-        help="[Mode 3] Maximum duration in seconds per clip (default: 60.0)",
+        help="[Mode 2] Maximum duration in seconds per clip (default: 60.0)",
+    )
+    parser.add_argument(
+        "--layout",
+        type=str,
+        default=None,
+        help="[Mode 2] Visual layout: 'auto', 'solo', or 'split_screen'",
     )
 
     # Autonomous Orchestrator Arguments
@@ -147,17 +118,12 @@ def main():
         "--modes",
         nargs="+",
         default=None,
-        help="[Mode auto] Specific modes to run in batch, e.g. '--modes mode1' (default: all modes)",
+        help="[Mode auto] Specific modes to run in batch, e.g. '--modes mode1' or '--modes mode1 mode2' (default: all modes)",
     )
     parser.add_argument(
         "--skip-mode2",
         action="store_true",
-        help="[Mode auto] Skip Mode 2 dev vs claude dialogue in the batch run",
-    )
-    parser.add_argument(
-        "--skip-mode3",
-        action="store_true",
-        help="[Mode auto] Skip Mode 3 podcast clipper in the batch run",
+        help="[Mode auto] Skip Mode 2 podcast clipper in the batch run",
     )
     parser.add_argument(
         "--publish",
@@ -200,8 +166,6 @@ def main():
     # Auto-detect mode if specific flags are passed
     if args.url or args.input:
         args.mode = "clipper"
-    elif args.reddit or args.subreddit:
-        args.mode = "story"
 
     # -------------------------------------------------------------
     # ROUTE: Mode auto (Autonomous Trend Scout & Batch Orchestrator)
@@ -216,7 +180,6 @@ def main():
             manifest = orchestrator.run_autonomous_batch(
                 num_clipper_shorts=args.clips,
                 skip_mode2=args.skip_mode2,
-                skip_mode3=args.skip_mode3,
                 modes=args.modes,
             )
 
@@ -237,30 +200,7 @@ def main():
             time.sleep(interval_seconds)
 
     # -------------------------------------------------------------
-    # ROUTE: Mode 2 (Developer vs Claude Dialogue OR Reddit Stories)
-    # -------------------------------------------------------------
-    elif args.mode == "story":
-        if args.format == "dev_claude" and not (args.reddit or args.subreddit):
-            from src.story.dev_claude_pipeline import DevClaudePipeline
-            pipeline = DevClaudePipeline()
-            result = pipeline.run(topic=args.topic, gameplay_style=args.gameplay)
-            print(f"\n[SUCCESS] Mode 2 Developer vs Claude Short Created: {result['video_path']}")
-        else:
-            from src.story.pipeline import Mode2StoryPipeline
-
-            pipeline = Mode2StoryPipeline()
-            result = pipeline.run(
-                reddit_url=args.reddit,
-                subreddit=args.subreddit,
-                topic=args.topic,
-                gameplay_style=args.gameplay,
-                voice=args.voice,
-                layout=args.layout or "floating_card",
-            )
-            print(f"\n[SUCCESS] Mode 2 Story Short Created: {result['video_path']}")
-
-    # -------------------------------------------------------------
-    # ROUTE: Mode 3 (Podcast & Video Smart Clipper)
+    # ROUTE: Mode 2 (Podcast & Video Smart Clipper)
     # -------------------------------------------------------------
     elif args.mode == "clipper":
         source = args.url or args.input
@@ -277,7 +217,7 @@ def main():
             max_duration=args.max_duration,
             layout=args.layout,
         )
-        print(f"\n[SUCCESS] Mode 3 Generated {len(results)} Shorts!")
+        print(f"\n[SUCCESS] Mode 2 Clipper Generated {len(results)} Shorts!")
         for r in results:
             print(f"  * #{r['rank']} ({r['viral_score']}/100): {r['video_path']}")
 
@@ -297,7 +237,9 @@ def main():
             custom_voice=args.voice,
             custom_bgm=bgm_path,
         )
-        print(f"\n[SUCCESS] Master Faceless Video: {result.video_path}")
+        print(f"\n[SUCCESS] Mode 1 Short Created: {result.video_path}")
+        if result.metadata_path:
+            print(f"  * Metadata: {result.metadata_path}")
 
 
 if __name__ == "__main__":

@@ -236,7 +236,13 @@ Return strictly in this JSON format:
     # =========================================================================
     # MODE 3: Podcast & Video Smart Clipper (YouTube Feeds via yt-dlp)
     # =========================================================================
-    def scout_mode3_podcast(self) -> Dict[str, str]:
+    def scout_mode2_podcast(self) -> Dict[str, str]:
+        """Alias for Mode 2 Podcast Clipper."""
+        return self._scout_podcast()
+
+    scout_mode3_podcast = scout_mode2_podcast
+
+    def _scout_podcast(self) -> Dict[str, str]:
         """
         Inspect curated high-profile podcast channels, select the newest unclipped
         video URL using yt-dlp flat-playlist metadata.

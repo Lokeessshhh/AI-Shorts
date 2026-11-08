@@ -1,4 +1,4 @@
-name: "Daily AI Shorts Automation (Mode 1 - Faceless Facts)"
+name: "Daily AI Shorts - Mode 1 (Faceless Facts)"
 
 on:
   schedule:
@@ -32,6 +32,11 @@ jobs:
           python-version: '3.12'
           cache: 'pip'
 
+      - name: Set up Node.js (BotGuard Solver)
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
       - name: Install System FFmpeg
         run: |
           sudo apt-get update
@@ -52,10 +57,18 @@ jobs:
           YOUTUBE_CLIENT_SECRET_B64: ${{ secrets.YOUTUBE_CLIENT_SECRET_B64 }}
           YOUTUBE_TOKEN_B64: ${{ secrets.YOUTUBE_TOKEN_B64 }}
           INSTAGRAM_SESSION_B64: ${{ secrets.INSTAGRAM_SESSION_B64 }}
+          YOUTUBE_COOKIES: ${{ secrets.YOUTUBE_COOKIES }}
         run: |
           mkdir -p credentials
           python -c "
           import os, base64
+
+          # Write cookies.txt if secret provided
+          cookies = os.environ.get('YOUTUBE_COOKIES', '').strip()
+          if cookies:
+              with open('cookies.txt', 'w', encoding='utf-8') as f:
+                  f.write(cookies)
+              print('[Restored] cookies.txt configured')
 
           # Restore credentials files from Base64 secrets
           file_map = {
@@ -84,7 +97,7 @@ jobs:
 
       - name: Execute Autonomous Mode 1 Shorts & Multi-Platform Publisher
         run: |
-          # Executes Mode 1 (AI Faceless Facts & Narrative) and publishes to YouTube Shorts & Instagram Reels
+          # Executes Mode 1 (Faceless Facts) and publishes to YouTube Shorts & Instagram Reels
           # Automatically deletes local video files upon successful upload
           python main.py --mode auto --modes mode1 --publish
 

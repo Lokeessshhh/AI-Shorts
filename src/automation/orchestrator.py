@@ -1,5 +1,7 @@
 """Master Autonomous Orchestrator for AI Shorts.
-Coordinates Trend Scouting, State Persistence, and Batch Execution of Modes 1, 2, and 3
+Coordinates Trend Scouting, State Persistence, and Batch Execution of:
+- Mode 1: Faceless Narrative & Facts (Google Trends / Pexels B-Roll / Edge-TTS / Dynamic ASS Subtitles)
+- Mode 2: Podcast & Video Smart Clipper (YouTube Transcript API / Selective Range Slicing / Highlight Detection / Polish)
 sequentially with zero human input.
 """
 
@@ -20,16 +22,15 @@ if sys.platform == "win32":
         pass
 
 from ..config import config
-from .state_manager import StateManager
+from .state_manager import StateManager, normalize_short_record
 from .trend_scout import TrendScout
 from .clip_selector import ClipSelector
 from ..pipeline.faceless_agent import FacelessShortsAgent
-from ..story.dev_claude_pipeline import DevClaudePipeline
-from ..clipper.pipeline import Mode3ClipperPipeline
+from ..clipper.pipeline import Mode3ClipperPipeline as Mode2ClipperPipeline
 
 
 class AutonomousShortsOrchestrator:
-    """End-to-End Autonomous Batch Coordinator."""
+    """End-to-End Autonomous Batch Coordinator for Mode 1 (Facts) & Mode 2 (Clipper)."""
 
     def __init__(
         self,
@@ -45,9 +46,10 @@ class AutonomousShortsOrchestrator:
         skip_mode2: bool = False,
         skip_mode3: bool = False,
         modes: Optional[List[str]] = None,
+        **kwargs,
     ) -> Dict[str, Any]:
         """
-        Executes configured modes (Mode 1, Mode 2, and/or Mode 3) with zero manual intervention.
+        Executes configured modes (Mode 1 and/or Mode 2 Clipper) with zero manual intervention.
         Consolidates all rendered videos and social metadata into a dedicated batch folder.
         """
         batch_start_time = time.time()
@@ -57,8 +59,7 @@ class AutonomousShortsOrchestrator:
         batch_dir.mkdir(parents=True, exist_ok=True)
 
         mode1_dir = batch_dir / "mode1_facts"
-        mode2_dir = batch_dir / "mode2_dev_claude"
-        mode3_dir = batch_dir / "mode3_clipper"
+        mode2_dir = batch_dir / "mode2_clipper"
 
         print("\n" + "=" * 70)
         print(f"[ENGINE] AI SHORTS AUTONOMOUS BATCH ENGINE [{batch_id}]")
@@ -66,24 +67,20 @@ class AutonomousShortsOrchestrator:
         print(f"    Batch Directory: {batch_dir}")
         print("=" * 70)
 
-        # Determine active modes
+        # Resolve active modes
         if modes:
             active_modes = set()
             for m in modes:
                 m_norm = m.lower().strip()
                 if m_norm in ("mode1", "facts", "1"):
                     active_modes.add("mode1")
-                elif m_norm in ("mode2", "story", "dev_claude", "2"):
+                elif m_norm in ("mode2", "clipper", "2", "mode3", "3"):
                     active_modes.add("mode2")
-                elif m_norm in ("mode3", "clipper", "3"):
-                    active_modes.add("mode3")
         else:
-            active_modes = {"mode1", "mode2", "mode3"}
+            active_modes = {"mode1", "mode2"}
 
-        if skip_mode2:
+        if skip_mode2 or skip_mode3:
             active_modes.discard("mode2")
-        if skip_mode3:
-            active_modes.discard("mode3")
 
         print(f"[ENGINE] Active Modes: {sorted(list(active_modes))}")
 
@@ -95,7 +92,6 @@ class AutonomousShortsOrchestrator:
             "total_videos": 0,
             "mode1": {},
             "mode2": {},
-            "mode3": {},
             "errors": [],
         }
 
@@ -105,16 +101,13 @@ class AutonomousShortsOrchestrator:
         print("\n[STEP 1] AUTONOMOUS TREND SCOUTING & TOPIC REASONING")
         print("-" * 70)
         topic_m1 = self.scout.scout_mode1_topic() if "mode1" in active_modes else None
-        topic_m2 = self.scout.scout_mode2_topic() if "mode2" in active_modes else None
-        podcast_m3 = self.scout.scout_mode3_podcast() if "mode3" in active_modes else None
+        podcast_m2 = self.scout.scout_mode2_podcast() if "mode2" in active_modes else None
 
         print("\n[SCOUT SUMMARY]")
         if topic_m1:
-            print(f"  * Mode 1 (Facts):      \"{topic_m1}\"")
-        if topic_m2:
-            print(f"  * Mode 2 (Dev vs AI):  \"{topic_m2}\"")
-        if podcast_m3:
-            print(f"  * Mode 3 (Podcast):    \"{podcast_m3['title']}\" ({podcast_m3['channel']})")
+            print(f"  * Mode 1 (Facts):    \"{topic_m1}\"")
+        if podcast_m2:
+            print(f"  * Mode 2 (Podcast):  \"{podcast_m2['title']}\" ({podcast_m2['channel']})")
 
         # -------------------------------------------------------------
         # STEP 2: MODE 1 (FACELESS NARRATIVE & FACTS)
@@ -141,10 +134,11 @@ class AutonomousShortsOrchestrator:
                 self.state.mark_topic_done(
                     topic_m1,
                     mode="facts",
-                    metadata={"title": res_m1.title, "video": batch_video_m1.name},
+                    title=res_m1.title,
+                    metadata={"video_path": str(batch_video_m1), "duration": res_m1.duration_seconds},
                 )
 
-                manifest["mode1"] = {
+                manifest["mode1"] = normalize_short_record({
                     "status": "SUCCESS",
                     "topic": topic_m1,
                     "title": res_m1.title,
@@ -152,7 +146,7 @@ class AutonomousShortsOrchestrator:
                     "metadata_path": str(batch_meta_m1) if batch_meta_m1 else None,
                     "duration": round(res_m1.duration_seconds, 2),
                     "execution_seconds": round(time.time() - m1_start, 1),
-                }
+                })
                 manifest["modes_completed"].append("mode1_facts")
                 manifest["total_videos"] += 1
                 print(f"[SUCCESS/Mode 1] Rendered: {batch_video_m1.name}")
@@ -160,77 +154,30 @@ class AutonomousShortsOrchestrator:
             except Exception as e:
                 err_msg = f"Mode 1 Generation Failed: {e}"
                 print(f"[ERROR/Mode 1] {err_msg}")
-                manifest["mode1"] = {"status": "FAILED", "error": str(e), "topic": topic_m1}
+                manifest["mode1"] = normalize_short_record({"status": "FAILED", "error": str(e), "topic": topic_m1})
                 manifest["errors"].append(err_msg)
 
         # -------------------------------------------------------------
-        # STEP 3: MODE 2 (DEVELOPER VS CLAUDE DIALOGUE & GAMEPLAY)
+        # STEP 3: MODE 2 (PODCAST & LONG-FORM SMART CLIPPER)
         # -------------------------------------------------------------
-        if "mode2" in active_modes and topic_m2:
+        if "mode2" in active_modes and podcast_m2:
             print("\n" + "=" * 70)
-            print("[STEP 3] EXECUTING MODE 2: DEVELOPER VS CLAUDE DIALOGUE")
+            print("[STEP 3] EXECUTING MODE 2: PODCAST & VIDEO SMART CLIPPER")
             print("=" * 70)
             m2_start = time.time()
             try:
                 mode2_dir.mkdir(parents=True, exist_ok=True)
-                pipeline_m2 = DevClaudePipeline()
-                res_m2 = pipeline_m2.run(topic=topic_m2, gameplay_style="random")
-
-                vpath_m2 = Path(res_m2["video_path"])
-                mpath_m2 = Path(res_m2["metadata_path"])
-
-                batch_video_m2 = mode2_dir / vpath_m2.name
-                shutil.copy2(vpath_m2, batch_video_m2)
-                batch_meta_m2 = mode2_dir / mpath_m2.name
-                shutil.copy2(mpath_m2, batch_meta_m2)
-
-                # Mark state
-                self.state.mark_topic_done(
-                    topic_m2,
-                    mode="dev_claude",
-                    metadata={"title": res_m2["title"], "video": batch_video_m2.name},
-                )
-
-                manifest["mode2"] = {
-                    "status": "SUCCESS",
-                    "topic": topic_m2,
-                    "title": res_m2["title"],
-                    "video_path": str(batch_video_m2),
-                    "metadata_path": str(batch_meta_m2),
-                    "duration": res_m2.get("duration", 0.0),
-                    "execution_seconds": round(time.time() - m2_start, 1),
-                }
-                manifest["modes_completed"].append("mode2_dev_claude")
-                manifest["total_videos"] += 1
-                print(f"[SUCCESS/Mode 2] Rendered: {batch_video_m2.name}")
-
-            except Exception as e:
-                err_msg = f"Mode 2 Generation Failed: {e}"
-                print(f"[ERROR/Mode 2] {err_msg}")
-                manifest["mode2"] = {"status": "FAILED", "error": str(e), "topic": topic_m2}
-                manifest["errors"].append(err_msg)
-
-        # -------------------------------------------------------------
-        # STEP 4: MODE 3 (PODCAST & LONG-FORM SMART CLIPPER)
-        # -------------------------------------------------------------
-        if "mode3" in active_modes and podcast_m3:
-            print("\n" + "=" * 70)
-            print("[STEP 4/4] EXECUTING MODE 3: PODCAST SMART CLIPPER")
-            print("=" * 70)
-            m3_start = time.time()
-            try:
-                mode3_dir.mkdir(parents=True, exist_ok=True)
-                pipeline_m3 = Mode3ClipperPipeline()
-                clips_res = pipeline_m3.run(
-                    source=podcast_m3["url"],
+                pipeline_m2 = Mode2ClipperPipeline()
+                clips_res = pipeline_m2.run(
+                    source=podcast_m2["url"],
                     num_clips=num_clipper_shorts,
-                    output_dir=mode3_dir,
+                    output_dir=mode2_dir,
                 )
 
                 # Mark state
                 self.state.mark_video_clipped(
-                    podcast_m3["video_id"],
-                    title=podcast_m3["title"],
+                    podcast_m2["video_id"],
+                    title=podcast_m2["title"],
                     metadata={"clips_count": len(clips_res)},
                 )
 
@@ -259,42 +206,41 @@ class AutonomousShortsOrchestrator:
                 winner, scored_clips = selector.score_and_select_best_clip(clip_items)
 
                 # Persist dedicated upload target pointer
-                selected_file = mode3_dir / "selected_for_upload.json"
+                selected_file = mode2_dir / "selected_for_upload.json"
                 with open(selected_file, "w", encoding="utf-8") as f:
                     json.dump(winner, f, indent=2, ensure_ascii=False)
 
-                manifest["mode3"] = {
+                manifest["mode2"] = normalize_short_record({
                     "status": "SUCCESS",
-                    "source_url": podcast_m3["url"],
-                    "source_title": podcast_m3["title"],
-                    "source_channel": podcast_m3["channel"],
+                    "source_url": podcast_m2["url"],
+                    "source_title": podcast_m2["title"],
+                    "source_channel": podcast_m2["channel"],
                     "clips_count": len(clips_res),
                     "selected_clip": winner,
                     "clips": scored_clips,
-                    "execution_seconds": round(time.time() - m3_start, 1),
-                }
-                manifest["modes_completed"].append("mode3_clipper")
+                    "title": winner.get("title", podcast_m2["title"]),
+                    "video_path": winner.get("video_path"),
+                    "metadata_path": winner.get("metadata_path"),
+                    "duration": winner.get("duration", 45.0),
+                    "viral_score": winner.get("viral_score", 90),
+                    "execution_seconds": round(time.time() - m2_start, 1),
+                })
+                manifest["modes_completed"].append("mode2_clipper")
                 manifest["total_videos"] += len(clips_res)
-                print(f"[SUCCESS/Mode 3] Rendered {len(clips_res)} Podcast Shorts!")
-                print(f"[SELECTED FOR UPLOAD] '{winner['title']}' (Composite: {winner['composite_upload_score']}/100, Tournament: {winner['viral_score']}/100)")
-                print(f"  * Selection Reason: {winner['selection_reason']}")
+                print(f"[SUCCESS/Mode 2] Rendered {len(clips_res)} Podcast Shorts!")
+                print(f"[SELECTED FOR UPLOAD] '{winner['title']}' (Composite: {winner.get('composite_upload_score')}/100, Viral: {winner.get('viral_score')}/100)")
+                print(f"  * Selection Reason: {winner.get('selection_reason')}")
 
             except Exception as e:
-                err_msg = f"Mode 3 Clipper Failed: {e}"
-                print(f"[ERROR/Mode 3] {err_msg}")
-                manifest["mode3"] = {
-                    "status": "FAILED",
-                    "error": str(e),
-                    "source_url": podcast_m3.get("url") if podcast_m3 else None,
-                }
+                err_msg = f"Mode 2 Clipper Failed: {e}"
+                print(f"[ERROR/Mode 2] {err_msg}")
                 manifest["errors"].append(err_msg)
 
-                # Resilient Fallback: If cloud runner is blocked by YouTube bot-check on long podcasts,
-                # generate a high-retention alternate short so the batch ALWAYS produces 3 premier uploads!
-                print("\n[Orchestrator] Mode 3 stream blocked by platform; generating high-retention alternate short...")
+                # Autonomous Fallback: If streaming is blocked, generate alternate high-retention short
+                print("\n[Orchestrator] Mode 2 stream blocked; generating high-retention alternate short...")
                 try:
                     alt_topic = self.scout.scout_mode1_topic()
-                    alt_dir = batch_dir / "mode3_fallback"
+                    alt_dir = batch_dir / "mode2_fallback"
                     alt_dir.mkdir(parents=True, exist_ok=True)
                     agent_alt = FacelessShortsAgent()
                     alt_res = agent_alt.create_short(topic=alt_topic)
@@ -316,7 +262,7 @@ class AutonomousShortsOrchestrator:
                         metadata={"video_path": str(batch_video_alt), "duration": alt_res.duration_seconds},
                     )
 
-                    manifest["mode3"] = {
+                    manifest["mode2"] = normalize_short_record({
                         "status": "SUCCESS",
                         "is_fallback": True,
                         "source_url": "N/A",
@@ -335,30 +281,28 @@ class AutonomousShortsOrchestrator:
                             "rank": 1,
                             "composite_upload_score": 95.0,
                         },
-                    }
-                    manifest["modes_completed"].append("mode3_fallback")
+                    })
+                    manifest["modes_completed"].append("mode2_fallback")
                     manifest["total_videos"] += 1
                     print(f"[SUCCESS/Fallback] Alternate Premier Short Ready: {alt_res.title}")
                 except Exception as fe:
                     print(f"[ERROR/Fallback] Fallback short generation failed: {fe}")
+                    manifest["mode2"] = normalize_short_record({"status": "FAILED", "error": str(fe)})
 
         # -------------------------------------------------------------
-        # STEP 5: COMPILE BATCH MANIFEST & SUMMARY
+        # STEP 4: COMPILE BATCH MANIFEST & SUMMARY
         # -------------------------------------------------------------
         total_batch_time = time.time() - batch_start_time
         manifest["total_batch_seconds"] = round(total_batch_time, 1)
 
-        # Write manifest.json
         manifest_file = batch_dir / "manifest.json"
         with open(manifest_file, "w", encoding="utf-8") as f:
             json.dump(manifest, f, indent=2, ensure_ascii=False)
 
-        # Write ready-to-read BATCH_SUMMARY.txt
         summary_file = batch_dir / "BATCH_SUMMARY.txt"
         summary_content = self._format_batch_summary(manifest, batch_dir)
         summary_file.write_text(summary_content, encoding="utf-8")
 
-        # Record in StateManager
         self.state.record_batch(manifest)
 
         print("\n" + "=" * 70)
@@ -375,71 +319,53 @@ class AutonomousShortsOrchestrator:
         """Format human-friendly plain text summary for social publishing."""
         lines = [
             "=======================================================",
-            f"AI SHORTS AUTONOMOUS BATCH REPORT: {manifest['batch_id']}",
-            f"Generated: {manifest['timestamp']}",
-            f"Total Videos Rendered: {manifest['total_videos']}",
-            f"Total Execution Time: {manifest['total_batch_seconds']} seconds",
+            f"AI SHORTS AUTONOMOUS BATCH REPORT: {manifest.get('batch_id', 'Unknown')}",
+            f"Generated: {manifest.get('timestamp', 'Now')}",
+            f"Total Videos Rendered: {manifest.get('total_videos', 0)}",
+            f"Total Execution Time: {manifest.get('total_batch_seconds', 0)} seconds",
             "=======================================================\n",
         ]
 
         if manifest.get("mode1", {}).get("status") == "SUCCESS":
-            m1 = manifest["mode1"]
+            m1 = normalize_short_record(manifest["mode1"])
             lines.extend([
                 "[MODE 1: FACELESS NARRATIVE & FACTS]",
                 f"Topic:    {m1['topic']}",
                 f"Title:    {m1['title']}",
-                f"Video:    {Path(m1['video_path']).name}",
-                f"Duration: {m1['duration']}s",
-                f"Metadata: {Path(m1['metadata_path']).name if m1.get('metadata_path') else 'N/A'}",
+                f"File:     {Path(m1['video_path']).name if m1['video_path'] else 'None'} ({m1['duration']}s)",
+                f"Metadata: {Path(m1['metadata_path']).name if m1.get('metadata_path') else 'None'}",
                 "",
             ])
 
         if manifest.get("mode2", {}).get("status") == "SUCCESS":
-            m2 = manifest["mode2"]
+            m2 = normalize_short_record(manifest["mode2"])
+            selected = normalize_short_record(m2.get("selected_clip", {}))
+            m2_label = "[MODE 2: PREMIER ALTERNATE SHORT]" if m2.get("is_fallback") else "[MODE 2: PODCAST & VIDEO SMART CLIPPER]"
             lines.extend([
-                "[MODE 2: DEVELOPER VS CLAUDE TECH DIALOGUE]",
-                f"Topic:    {m2['topic']}",
-                f"Title:    {m2['title']}",
-                f"Video:    {Path(m2['video_path']).name}",
-                f"Duration: {m2['duration']}s",
-                f"Metadata: {Path(m2['metadata_path']).name if m2.get('metadata_path') else 'N/A'}",
-                "",
-            ])
-
-        if manifest.get("mode3", {}).get("status") == "SUCCESS":
-            m3 = manifest["mode3"]
-            selected = m3.get("selected_clip", {})
-            m3_label = "[MODE 3: PREMIER ALTERNATE SHORT]" if m3.get("is_fallback") else "[MODE 3: PODCAST & VIDEO VIRAL CLIPS]"
-            lines.extend([
-                m3_label,
-                f"Source: {m3.get('source_title', m3.get('topic', 'Autonomous Trend'))} ({m3.get('source_channel', 'Web Trends')})",
-                f"URL:    {m3.get('source_url', 'N/A')}",
-                f"Total Clips Extracted: {m3.get('clips_count', 1)}",
+                m2_label,
+                f"Source: {m2['source_title']} ({m2['source_channel']})",
+                f"URL:    {m2['source_url']}",
+                f"Total Clips Extracted: {m2['clips_count']}",
                 "",
                 ">>> SELECTED FOR UPLOAD (WINNER) <<<",
-                f"Clip Title:      {selected.get('title')}",
-                f"Video File:      {Path(selected.get('video_path', '')).name}",
-                f"Composite Score: {selected.get('composite_upload_score', 'N/A')}/100 (Tournament Viral Score: {selected.get('viral_score')}/100)",
-                f"Duration:        {selected.get('duration')}s",
-                f"Hook Sentence:   \"{selected.get('hook_sentence', '')}\"",
-                f"Selection Reason: {selected.get('selection_reason')}",
-                f"Metadata File:   {Path(selected.get('metadata_path', '')).name}",
-                "",
-                "Candidate Clips Ranking:",
-            ])
-            for clip in m3.get("clips", []):
-                badge = "[SELECTED FOR UPLOAD]" if clip.get("selected_for_upload") else f"[RUNNER-UP #{clip.get('selection_rank', clip.get('rank'))}]"
-                score_val = clip.get("composite_upload_score", clip.get("viral_score"))
-                lines.append(
-                    f"  * #{clip['rank']} [{score_val}/100] {badge}: {Path(clip['video_path']).name} ({clip['duration']}s)"
-                )
-            lines.append("")
-
-        if manifest.get("errors"):
-            lines.extend([
-                "[WARNINGS / ERRORS DURING RUN]",
-                "\n".join([f"- {e}" for e in manifest["errors"]]),
+                f"Clip Title:      {selected['title']}",
+                f"Video File:      {Path(selected['video_path']).name if selected['video_path'] else 'None'}",
+                f"Composite Score: {selected.get('composite_upload_score', 'N/A')}/100 (Tournament Viral Score: {selected['viral_score']}/100)",
+                f"Duration:        {selected['duration']}s",
+                f"Hook Sentence:   \"{selected['hook_sentence']}\"",
+                f"Selection Reason: {selected.get('selection_reason', 'Top-ranked viral highlight')}",
+                f"Metadata File:   {Path(selected['metadata_path']).name if selected.get('metadata_path') else 'None'}",
                 "",
             ])
+            if m2.get("clips"):
+                lines.append("Candidate Clips Ranking:")
+                for clip in m2.get("clips", []):
+                    norm_c = normalize_short_record(clip)
+                    badge = "[SELECTED FOR UPLOAD]" if clip.get("selected_for_upload") else f"[RUNNER-UP #{clip.get('selection_rank', clip.get('rank', 2))}]"
+                    score_val = clip.get("composite_upload_score", norm_c["viral_score"])
+                    lines.append(
+                        f"  * #{clip.get('rank', 1)} [{score_val}/100] {badge}: {Path(norm_c['video_path']).name if norm_c['video_path'] else 'Clip'} ({norm_c['duration']}s)"
+                    )
+                lines.append("")
 
         return "\n".join(lines)

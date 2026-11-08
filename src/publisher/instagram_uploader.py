@@ -91,7 +91,8 @@ class InstagramUploader:
         thumb_path = video_path.with_suffix(".thumb.jpg")
         try:
             import subprocess, shutil
-            ffmpeg_exe = shutil.which("ffmpeg") or "ffmpeg"
+            import imageio_ffmpeg
+            ffmpeg_exe = shutil.which("ffmpeg") or imageio_ffmpeg.get_ffmpeg_exe()
             subprocess.run(
                 [
                     ffmpeg_exe, "-y", "-loglevel", "error",

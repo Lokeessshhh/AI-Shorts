@@ -1,0 +1,115 @@
+name: "Daily AI Shorts - Mode 2 (Podcast Clipper)"
+
+on:
+  schedule:
+    # 9:00 AM IST = 03:30 UTC
+    # 5:00 PM IST = 11:30 UTC
+    # Runs twice daily -> publishes Mode 2 Podcast Smart Clipper Shorts across YouTube & Instagram
+    - cron: '30 3,11 * * *'
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: 'Upload to YouTube Shorts and Instagram Reels'
+        type: boolean
+        default: true
+
+jobs:
+  run-batch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+
+      - name: Set up Node.js (BotGuard Solver)
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install System FFmpeg
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          ffmpeg -version
+
+      - name: Install Python Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Restore Credentials & Environment Secrets
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+          INSTAGRAM_USERNAME: ${{ secrets.INSTAGRAM_USERNAME }}
+          INSTAGRAM_PASSWORD: ${{ secrets.INSTAGRAM_PASSWORD }}
+          YOUTUBE_CLIENT_SECRET_B64: ${{ secrets.YOUTUBE_CLIENT_SECRET_B64 }}
+          YOUTUBE_TOKEN_B64: ${{ secrets.YOUTUBE_TOKEN_B64 }}
+          INSTAGRAM_SESSION_B64: ${{ secrets.INSTAGRAM_SESSION_B64 }}
+          YOUTUBE_COOKIES: ${{ secrets.YOUTUBE_COOKIES }}
+        run: |
+          mkdir -p credentials
+          python -c "
+          import os, base64
+
+          # Write cookies.txt if secret provided
+          cookies = os.environ.get('YOUTUBE_COOKIES', '').strip()
+          if cookies:
+              with open('cookies.txt', 'w', encoding='utf-8') as f:
+                  f.write(cookies)
+              print('[Restored] cookies.txt configured')
+
+          # Restore credentials files from Base64 secrets
+          file_map = {
+              'credentials/client_secret.json': 'YOUTUBE_CLIENT_SECRET_B64',
+              'credentials/youtube_token.json': 'YOUTUBE_TOKEN_B64',
+              'credentials/instagram_session.json': 'INSTAGRAM_SESSION_B64',
+          }
+
+          for path, secret_key in file_map.items():
+              val = os.environ.get(secret_key, '').strip()
+              if val:
+                  with open(path, 'wb') as f:
+                      f.write(base64.b64decode(val))
+                  print(f'[Restored] {path}')
+              else:
+                  print(f'[Warning] {secret_key} secret is empty')
+
+          # Write runtime .env file
+          with open('.env', 'w', encoding='utf-8') as f:
+              f.write(f'OPENROUTER_API_KEY={os.environ.get(\"OPENROUTER_API_KEY\", \"\")}\n')
+              f.write(f'PEXELS_API_KEY={os.environ.get(\"PEXELS_API_KEY\", \"\")}\n')
+              f.write(f'INSTAGRAM_USERNAME={os.environ.get(\"INSTAGRAM_USERNAME\", \"\")}\n')
+              f.write(f'INSTAGRAM_PASSWORD={os.environ.get(\"INSTAGRAM_PASSWORD\", \"\")}\n')
+          print('[Configured] Runtime .env created')
+          "
+
+      - name: Execute Autonomous Mode 2 Clipper & Multi-Platform Publisher
+        run: |
+          # Executes Mode 2 (Podcast & Video Smart Clipper) and publishes to YouTube Shorts & Instagram Reels
+          # Automatically deletes local video files upon successful upload
+          python main.py --mode auto --modes mode2 --publish
+
+      - name: Persist Topic History & Prevent Duplicates
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/automation_history.json
+          if ! git diff --staged --quiet; then
+            git commit -m "chore: update autonomous batch history [skip ci]"
+            git push
+            echo "[History] Updated automation_history.json committed and pushed"
+          else
+            echo "[History] No new topics to commit"
+          fi

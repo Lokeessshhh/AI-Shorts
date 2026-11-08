@@ -18,6 +18,53 @@ def normalize_topic(text: str) -> str:
     return " ".join(words)
 
 
+def normalize_short_record(data: Optional[Dict[str, Any]]) -> Dict[str, Any]:
+    """Defensive schema normalization: guarantees every expected key exists with safe fallbacks."""
+    if not isinstance(data, dict):
+        data = {}
+
+    title = data.get("title") or "Autonomous Highlight"
+    source_title = data.get("source_title") or title or "Curated Stream"
+    source_channel = data.get("source_channel") or "AI Shorts Studio"
+    source_url = data.get("source_url") or "N/A"
+    video_path = str(data.get("video_path") or "")
+    metadata_path = str(data.get("metadata_path")) if data.get("metadata_path") else None
+    hook_sentence = data.get("hook_sentence") or ""
+
+    duration = 45.0
+    try:
+        if data.get("duration") is not None:
+            duration = float(data["duration"])
+    except (ValueError, TypeError):
+        pass
+
+    viral_score = 90
+    try:
+        if data.get("viral_score") is not None:
+            viral_score = int(data["viral_score"])
+    except (ValueError, TypeError):
+        pass
+
+    return {
+        "video_path": video_path,
+        "title": title,
+        "source_title": source_title,
+        "source_channel": source_channel,
+        "source_url": source_url,
+        "duration": duration,
+        "viral_score": viral_score,
+        "status": data.get("status") or "SUCCESS",
+        "hook_sentence": hook_sentence,
+        "metadata_path": metadata_path,
+        "is_fallback": bool(data.get("is_fallback", False)),
+        "topic": data.get("topic") or title,
+        "clips_count": int(data.get("clips_count", 1) or 1),
+        "selected_clip": data.get("selected_clip") if isinstance(data.get("selected_clip"), dict) else {},
+        "clips": data.get("clips") if isinstance(data.get("clips"), list) else [],
+        "execution_seconds": float(data.get("execution_seconds", 0.0) or 0.0),
+    }
+
+
 class StateManager:
     """Manages persistent automation state and history."""
 
