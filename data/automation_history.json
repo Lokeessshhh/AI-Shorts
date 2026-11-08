@@ -97,20 +97,37 @@
         "Mode 2 Clipper Failed: ERROR: [youtube] dNIef2fGLQY: Sign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies"
       ],
       "total_batch_seconds": 116.8
+    },
+    {
+      "batch_id": "batch_20261108_182204",
+      "timestamp": "2026-11-08T18:22:04.335157",
+      "batch_dir": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261108_182204",
+      "modes_completed": [],
+      "total_videos": 0,
+      "mode1": {},
+      "mode2": {
+        "video_path": "",
+        "title": "Autonomous Highlight",
+        "source_title": "Autonomous Highlight",
+        "source_channel": "AI Shorts Studio",
+        "source_url": "N/A",
+        "duration": 45.0,
+        "viral_score": 90,
+        "status": "FAILED",
+        "hook_sentence": "",
+        "metadata_path": null,
+        "is_fallback": false,
+        "topic": "Autonomous Highlight",
+        "clips_count": 1,
+        "selected_clip": {},
+        "clips": [],
+        "execution_seconds": 0.0
+      },
+      "errors": [
+        "Mode 2 Clipper Failed: ERROR: [youtube] a1mI-ozLyYM: Sign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies"
+      ],
+      "total_batch_seconds": 26.5
     }
   ],
-  "last_updated": "2026-11-08T18:14:59.900509",
-  "topic_logs": [
-    {
-      "timestamp": "2026-11-08T18:14:59.896171",
-      "mode": "mode1_facts",
-      "topic": "The Surprising Connection Between Sports Fans and Superstitions",
-      "normalized": "the surprising connection between sports fans and superstitions",
-      "metadata": {
-        "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261108_181303/mode2_fallback/the_surprising_connection_between_sports_1794161677.mp4",
-        "duration": 19.08,
-        "title": "The Surprising Connection Between Sports Fans and Superstitions"
-      }
-    }
-  ]
+  "last_updated": "2026-11-08T18:22:30.875856"
 }
