@@ -1,6 +1,7 @@
 {
   "completed_topics": [
-    "the bizarre reason why gas prices fluctuate with your mood"
+    "the bizarre reason why gas prices fluctuate with your mood",
+    "the surprising connection between your taxes and your happiness"
   ],
   "clipped_youtube_ids": [],
   "batch_history": [
@@ -36,18 +37,51 @@
         "Mode 3 Clipper Failed: ERROR: [youtube] yUdg7drjrZY: Sign in to confirm you’re not a bot. This helps protect our community. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies"
       ],
       "total_batch_seconds": 130.5
+    },
+    {
+      "batch_id": "batch_20261108_114602",
+      "timestamp": "2026-11-08T11:46:02.894182",
+      "batch_dir": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261108_114602",
+      "modes_completed": [
+        "mode1_facts"
+      ],
+      "total_videos": 1,
+      "mode1": {
+        "status": "SUCCESS",
+        "topic": "The Surprising Connection Between Your Taxes and Your Happiness",
+        "title": "The Surprising Connection Between Your Taxes and Your Happiness",
+        "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261108_114602/mode1_facts/the_surprising_connection_between_your_t_1794138563.mp4",
+        "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261108_114602/mode1_facts/the_surprising_connection_between_your_t_1794138563_metadata.txt",
+        "duration": 24.65,
+        "execution_seconds": 224.9
+      },
+      "mode2": {
+        "status": "FAILED",
+        "error": "All dynamic gameplay sources failed to stream.",
+        "topic": "Why Caching is Like a Library's Reserved Books System"
+      },
+      "mode3": {
+        "status": "FAILED",
+        "error": "ERROR: [youtube] yUdg7drjrZY: Sign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies",
+        "source_url": "https://www.youtube.com/watch?v=yUdg7drjrZY"
+      },
+      "errors": [
+        "Mode 2 Generation Failed: All dynamic gameplay sources failed to stream.",
+        "Mode 3 Clipper Failed: ERROR: [youtube] yUdg7drjrZY: Sign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies"
+      ],
+      "total_batch_seconds": 260.2
     }
   ],
-  "last_updated": "2026-11-08T11:40:36.907169",
+  "last_updated": "2026-11-08T11:50:23.047819",
   "topic_logs": [
     {
-      "timestamp": "2026-11-08T11:40:07.739952",
+      "timestamp": "2026-11-08T11:49:52.555722",
       "mode": "facts",
-      "topic": "The Bizarre Reason Why Gas Prices Fluctuate with Your Mood",
-      "normalized": "the bizarre reason why gas prices fluctuate with your mood",
+      "topic": "The Surprising Connection Between Your Taxes and Your Happiness",
+      "normalized": "the surprising connection between your taxes and your happiness",
       "metadata": {
-        "title": "The Bizarre Reason Why Gas Prices Fluctuate with Your Mood",
-        "video": "the_bizarre_reason_why_gas_prices_fluctu_1794137987.mp4"
+        "title": "The Surprising Connection Between Your Taxes and Your Happiness",
+        "video": "the_surprising_connection_between_your_t_1794138563.mp4"
       }
     }
   ]
