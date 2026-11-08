@@ -3,7 +3,8 @@
     "the bizarre reason why power outages can boost creativity",
     "why caching is like library card catalog system",
     "the surprising connection between stock market cycles and human emotion",
-    "the surprising connection between sports fans and superstitions"
+    "the surprising connection between sports fans and superstitions",
+    "the hidden science of team colors and fan psychology"
   ],
   "clipped_youtube_ids": [],
   "batch_history": [
@@ -127,7 +128,58 @@
         "Mode 2 Clipper Failed: ERROR: [youtube] a1mI-ozLyYM: Sign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies"
       ],
       "total_batch_seconds": 26.5
+    },
+    {
+      "batch_id": "batch_20261108_184608",
+      "timestamp": "2026-11-08T18:46:08.078455",
+      "batch_dir": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261108_184608",
+      "modes_completed": [
+        "mode2_fallback"
+      ],
+      "total_videos": 1,
+      "mode1": {},
+      "mode2": {
+        "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261108_184608/mode2_fallback/the_hidden_science_of_team_colors_and_fa_1794163684.mp4",
+        "title": "The Hidden Science of Team Colors and Fan Psychology",
+        "source_title": "The Hidden Science of Team Colors and Fan Psychology",
+        "source_channel": "Google Trends RSS",
+        "source_url": "N/A",
+        "duration": 25.2,
+        "viral_score": 90,
+        "status": "SUCCESS",
+        "hook_sentence": "",
+        "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261108_184608/mode2_fallback/the_hidden_science_of_team_colors_and_fa_1794163684_metadata.txt",
+        "is_fallback": true,
+        "topic": "The Hidden Science of Team Colors and Fan Psychology",
+        "clips_count": 1,
+        "selected_clip": {
+          "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261108_184608/mode2_fallback/the_hidden_science_of_team_colors_and_fa_1794163684.mp4",
+          "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261108_184608/mode2_fallback/the_hidden_science_of_team_colors_and_fa_1794163684_metadata.txt",
+          "title": "The Hidden Science of Team Colors and Fan Psychology",
+          "rank": 1,
+          "composite_upload_score": 95.0
+        },
+        "clips": [],
+        "execution_seconds": 0.0
+      },
+      "errors": [
+        "Mode 2 Clipper Failed: yt-dlp slice download failed: WARNING: [youtube] No title found in player responses; falling back to title from initial data. Other metadata may also be missing\nERROR: [youtube] yUdg7drjrZY: Sign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies\n"
+      ],
+      "total_batch_seconds": 143.1
     }
   ],
-  "last_updated": "2026-11-08T18:22:30.875856"
+  "last_updated": "2026-11-08T18:48:31.151725",
+  "topic_logs": [
+    {
+      "timestamp": "2026-11-08T18:48:31.149899",
+      "mode": "mode1_facts",
+      "topic": "The Hidden Science of Team Colors and Fan Psychology",
+      "normalized": "the hidden science of team colors and fan psychology",
+      "metadata": {
+        "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261108_184608/mode2_fallback/the_hidden_science_of_team_colors_and_fa_1794163684.mp4",
+        "duration": 25.176,
+        "title": "The Hidden Science of Team Colors and Fan Psychology"
+      }
+    }
+  ]
 }
