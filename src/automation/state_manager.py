@@ -108,7 +108,11 @@ class StateManager:
         return True
 
     def mark_topic_done(
-        self, topic: str, mode: str = "general", metadata: Optional[Dict[str, Any]] = None
+        self,
+        topic: str,
+        mode: str = "general",
+        title: Optional[str] = None,
+        metadata: Optional[Dict[str, Any]] = None,
     ) -> None:
         """Mark a topic as completed and save to state."""
         norm = normalize_topic(topic)
@@ -116,12 +120,16 @@ class StateManager:
             self.state["completed_topics"].append(norm)
 
         # Log entry in batch history or record
+        entry_meta = metadata.copy() if metadata else {}
+        if title:
+            entry_meta["title"] = title
+
         entry = {
             "timestamp": datetime.now().isoformat(),
             "mode": mode,
             "topic": topic,
             "normalized": norm,
-            "metadata": metadata or {},
+            "metadata": entry_meta,
         }
         self.state.setdefault("topic_logs", []).append(entry)
         self._save_state()
