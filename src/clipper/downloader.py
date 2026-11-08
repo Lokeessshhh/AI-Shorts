@@ -60,6 +60,24 @@ class VideoDownloader:
     def get_info(self, source: str) -> Dict[str, Any]:
         """Fetch video metadata without downloading video stream bytes."""
         if self.is_url(source):
+            video_id = self.extract_video_id(source)
+            title = "Curated Podcast Highlight"
+            uploader = "Podcast Host"
+
+            # 1. Fast lightweight oEmbed lookup (never blocked by bot challenges)
+            try:
+                import urllib.request
+                import json
+                oembed_url = f"https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v={video_id}&format=json"
+                req = urllib.request.Request(oembed_url, headers={"User-Agent": "Mozilla/5.0"})
+                with urllib.request.urlopen(req, timeout=5) as resp:
+                    oembed_data = json.loads(resp.read().decode("utf-8"))
+                    title = oembed_data.get("title", title)
+                    uploader = oembed_data.get("author_name", uploader)
+            except Exception:
+                pass
+
+            # 2. Extract detailed info via yt-dlp using tv/android clients (bypasses web bot checks)
             ydl_opts: Dict[str, Any] = {
                 "quiet": True,
                 "no_warnings": True,
@@ -67,7 +85,7 @@ class VideoDownloader:
                 "ffmpeg_location": self.ffmpeg_path,
                 "extractor_args": {
                     "youtube": {
-                        "player_client": ["android", "web"]
+                        "player_client": ["tv", "android"]
                     }
                 },
             }
@@ -79,28 +97,25 @@ class VideoDownloader:
                 with yt_dlp.YoutubeDL(ydl_opts) as ydl:
                     info = ydl.extract_info(source, download=False)
                     return {
-                        "id": info.get("id", self.extract_video_id(source)),
-                        "title": info.get("title", "Untitled Video"),
+                        "id": info.get("id", video_id),
+                        "title": info.get("title") or title,
                         "duration": float(info.get("duration") or 0.0),
-                        "uploader": info.get("uploader", info.get("channel", "Unknown")),
+                        "uploader": info.get("uploader") or info.get("channel") or uploader,
                         "view_count": info.get("view_count", 0),
                         "is_local": False,
                         "url": source,
                     }
             except Exception as e:
-                print(f"[Clipper] get_info warning ({e}), falling back to standard extraction...")
-                ydl_opts["extract_flat"] = False
-                with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-                    info = ydl.extract_info(source, download=False)
-                    return {
-                        "id": info.get("id", self.extract_video_id(source)),
-                        "title": info.get("title", "Untitled Video"),
-                        "duration": float(info.get("duration") or 0.0),
-                        "uploader": info.get("uploader", info.get("channel", "Unknown")),
-                        "view_count": info.get("view_count", 0),
-                        "is_local": False,
-                        "url": source,
-                    }
+                print(f"[Clipper] yt-dlp metadata warning: {e}. Using oEmbed metadata.")
+                return {
+                    "id": video_id,
+                    "title": title,
+                    "duration": 0.0,
+                    "uploader": uploader,
+                    "view_count": 0,
+                    "is_local": False,
+                    "url": source,
+                }
         else:
             local_path = Path(source).resolve()
             if not local_path.exists():
@@ -219,6 +234,9 @@ class VideoDownloader:
                 "words": all_words,
                 "formatted_text": "\n".join(formatted_blocks),
             }
+            if meta.get("duration", 0) <= 0 and raw_snippets:
+                last_snip = raw_snippets[-1]
+                meta["duration"] = round(float(last_snip.get("start", 0)) + float(last_snip.get("duration", 0)), 1)
             print(f"[Clipper] Zero-Video Transcript retrieved: {len(all_words)} words in <1s!")
             return meta, transcript_data
 
@@ -255,7 +273,7 @@ class VideoDownloader:
             "no_warnings": True,
             "extractor_args": {
                 "youtube": {
-                    "player_client": ["android", "web"]
+                    "player_client": ["tv", "android"]
                 }
             },
         }
@@ -293,6 +311,7 @@ class VideoDownloader:
 
         cmd = [
             sys.executable, "-m", "yt_dlp",
+            "--extractor-args", "youtube:player_client=tv,android",
             "-f", "bestvideo[height<=1080]+bestaudio/best[height<=1080]/best",
             "--download-sections", f"*{start_time:.2f}-{end_time:.2f}",
             "--force-keyframes-at-cuts",
@@ -346,7 +365,7 @@ class VideoDownloader:
                     "no_warnings": True,
                     "extractor_args": {
                         "youtube": {
-                            "player_client": ["android", "web"]
+                            "player_client": ["tv", "android"]
                         }
                     },
                 }
