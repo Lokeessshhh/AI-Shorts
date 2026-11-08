@@ -87,10 +87,35 @@ class InstagramUploader:
         print(f"\n[Instagram] Uploading Reel: {video_path.name}...")
         print(f"  * Size: {video_path.stat().st_size / 1024 / 1024:.1f} MB")
 
-        media = cl.clip_upload(
-            path=str(video_path),
-            caption=caption,
-        )
+        # Explicitly generate a thumbnail image to avoid Linux / MoviePy dependencies
+        thumb_path = video_path.with_suffix(".thumb.jpg")
+        try:
+            import subprocess, shutil
+            ffmpeg_exe = shutil.which("ffmpeg") or "ffmpeg"
+            subprocess.run(
+                [
+                    ffmpeg_exe, "-y", "-loglevel", "error",
+                    "-ss", "00:00:01",
+                    "-i", str(video_path),
+                    "-vframes", "1",
+                    "-q:v", "2",
+                    str(thumb_path)
+                ],
+                check=True,
+                capture_output=True,
+            )
+        except Exception as e:
+            print(f"  * [Warning] FFmpeg thumbnail generation skipped: {e}")
+
+        try:
+            media = cl.clip_upload(
+                path=str(video_path),
+                caption=caption,
+                thumbnail=str(thumb_path) if thumb_path.exists() else None,
+            )
+        finally:
+            if thumb_path.exists():
+                thumb_path.unlink(missing_ok=True)
 
         media_code = getattr(media, "code", str(getattr(media, "pk", "")))
         reel_url = f"https://www.instagram.com/reel/{media_code}/"

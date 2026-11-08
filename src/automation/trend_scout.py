@@ -261,6 +261,8 @@ Return strictly in this JSON format:
                     "yt_dlp",
                     "--flat-playlist",
                     "--dump-json",
+                    "--extractor-args",
+                    "youtube:player_client=android,web_creator",
                     "-I",
                     "1:6",
                     channel_url,

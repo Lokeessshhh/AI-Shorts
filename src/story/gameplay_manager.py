@@ -118,6 +118,11 @@ class GameplayManager:
                 "quiet": True,
                 "no_warnings": True,
                 "extract_flat": True,
+                "extractor_args": {
+                    "youtube": {
+                        "player_client": ["android", "web_creator"]
+                    }
+                },
             }
             try:
                 with yt_dlp.YoutubeDL(search_opts) as ydl:
@@ -158,6 +163,11 @@ class GameplayManager:
             "force_keyframes_at_cuts": True,
             "quiet": True,
             "no_warnings": True,
+            "extractor_args": {
+                "youtube": {
+                    "player_client": ["android", "web_creator"]
+                }
+            },
         }
 
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
@@ -212,6 +222,20 @@ class GameplayManager:
                 if raw_video and raw_video.exists():
                     raw_video.unlink(missing_ok=True)
                 raw_video = None
+
+        if not raw_video or not raw_video.exists():
+            print("[Gameplay/Dynamic] YouTube streams unavailable on this runner, falling back to Pexels satisfying background...")
+            try:
+                from ..visuals.pexels import PexelsVisualFetcher
+                pvf = PexelsVisualFetcher()
+                pexels_query = random.choice(["satisfying motion", "kinetic sand", "neon abstract", "matrix tech"])
+                pexels_clips = pvf.search_and_download(keywords=[pexels_query], target_duration=target_duration)
+                if pexels_clips and pexels_clips[0].file_path.exists():
+                    raw_video = pexels_clips[0].file_path
+                    chosen_style = "satisfying_motion"
+                    print(f"[Gameplay/Dynamic] Pexels satisfying background downloaded: {raw_video.name}")
+            except Exception as pe:
+                print(f"[Gameplay/Dynamic] Pexels fallback error: {pe}")
 
         if not raw_video or not raw_video.exists():
             raise RuntimeError("All dynamic gameplay sources failed to stream.")

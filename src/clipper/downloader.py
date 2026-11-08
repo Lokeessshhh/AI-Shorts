@@ -42,6 +42,11 @@ class VideoDownloader:
                 "no_warnings": True,
                 "extract_flat": False,
                 "ffmpeg_location": self.ffmpeg_path,
+                "extractor_args": {
+                    "youtube": {
+                        "player_client": ["android", "web_creator"]
+                    }
+                },
             }
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:
                 info = ydl.extract_info(source, download=False)
@@ -122,6 +127,11 @@ class VideoDownloader:
                     "subtitlesformat": "json3",
                     "quiet": False,
                     "no_warnings": True,
+                    "extractor_args": {
+                        "youtube": {
+                            "player_client": ["android", "web_creator"]
+                        }
+                    },
                 }
                 if progress_hook:
                     ydl_opts["progress_hooks"] = [progress_hook]
