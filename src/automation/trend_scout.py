@@ -268,7 +268,7 @@ Return strictly in this JSON format:
                     "--flat-playlist",
                     "--dump-json",
                     "--extractor-args",
-                    "youtube:player_client=android,web_creator",
+                    "youtube:player_client=android",
                     "-I",
                     "1:6",
                     channel_url,

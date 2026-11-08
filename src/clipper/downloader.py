@@ -85,7 +85,7 @@ class VideoDownloader:
                 "ffmpeg_location": self.ffmpeg_path,
                 "extractor_args": {
                     "youtube": {
-                        "player_client": ["tv", "android"]
+                        "player_client": ["android"]
                     }
                 },
             }
@@ -300,7 +300,7 @@ class VideoDownloader:
             "no_warnings": True,
             "extractor_args": {
                 "youtube": {
-                    "player_client": ["tv", "android"]
+                    "player_client": ["android"]
                 }
             },
         }
@@ -338,7 +338,7 @@ class VideoDownloader:
 
         cmd = [
             sys.executable, "-m", "yt_dlp",
-            "--extractor-args", "youtube:player_client=tv,android",
+            "--extractor-args", "youtube:player_client=android",
             "-f", "18/bestvideo[height<=720]+bestaudio/best[height<=720]/best",
             "--download-sections", f"*{start_time:.2f}-{end_time:.2f}",
             "--force-keyframes-at-cuts",
@@ -392,7 +392,7 @@ class VideoDownloader:
                     "no_warnings": True,
                     "extractor_args": {
                         "youtube": {
-                            "player_client": ["tv", "android"]
+                            "player_client": ["android"]
                         }
                     },
                 }
