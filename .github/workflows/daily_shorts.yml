@@ -1,4 +1,4 @@
-name: Daily AI Shorts Automation (Mode 1: Faceless Facts)
+name: "Daily AI Shorts Automation (Mode 1 - Faceless Facts)"
 
 on:
   schedule:
