@@ -224,18 +224,18 @@ class GameplayManager:
                 raw_video = None
 
         if not raw_video or not raw_video.exists():
-            print("[Gameplay/Dynamic] YouTube streams unavailable on this runner, falling back to Pexels satisfying background...")
+            print("[Gameplay/Dynamic] YouTube streams unavailable on this runner, falling back to Mixkit/Pexels background...")
             try:
                 from ..visuals.pexels import PexelsVisualFetcher
                 pvf = PexelsVisualFetcher()
-                pexels_query = random.choice(["satisfying motion", "kinetic sand", "neon abstract", "matrix tech"])
-                pexels_clips = pvf.search_and_download(keywords=[pexels_query], target_duration=target_duration)
-                if pexels_clips and pexels_clips[0].file_path.exists():
-                    raw_video = pexels_clips[0].file_path
-                    chosen_style = "satisfying_motion"
-                    print(f"[Gameplay/Dynamic] Pexels satisfying background downloaded: {raw_video.name}")
+                keyword = random.choice(["satisfying", "kinetic sand", "neon abstract", "technology"])
+                clip_asset = pvf.fetch_clip_for_scene(scene_id=random.randint(100, 999), keywords=[keyword], duration=target_duration)
+                if clip_asset and clip_asset.file_path.exists():
+                    raw_video = clip_asset.file_path
+                    chosen_style = keyword
+                    print(f"[Gameplay/Dynamic] Stock background downloaded: {raw_video.name}")
             except Exception as pe:
-                print(f"[Gameplay/Dynamic] Pexels fallback error: {pe}")
+                print(f"[Gameplay/Dynamic] Stock fallback error: {pe}")
 
         if not raw_video or not raw_video.exists():
             raise RuntimeError("All dynamic gameplay sources failed to stream.")
