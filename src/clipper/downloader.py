@@ -3,6 +3,7 @@ Handles zero-video transcription, selective range slicing via yt-dlp,
 cookie support for bot challenge avoidance, and local video ingestion.
 """
 
+import json
 import os
 import re
 import sys
