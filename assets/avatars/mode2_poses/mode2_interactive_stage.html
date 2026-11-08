@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mode 2: Avatar & AI Dialogue Live Stage</title>
+    <style>
+        :root {
+            --bg: #090d16;
+            --surface: #121927;
+            --border: #223048;
+            --accent: #ff6b35;
+            --chatgpt: #10a37f;
+            --claude: #d97706;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background: var(--bg);
+            color: #f1f5f9;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 6px;
+            background: linear-gradient(135deg, #ff8c42, #ff3c00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        p.subtitle {
+            color: #94a3b8;
+            margin-bottom: 24px;
+            font-size: 0.95rem;
+        }
+        .stage-container {
+            display: flex;
+            gap: 24px;
+            max-width: 1100px;
+            width: 100%;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        /* Simulated 9:16 Vertical Video Screen */
+        .phone-viewport {
+            width: 360px;
+            height: 640px;
+            background: #0f172a;
+            border: 4px solid #334155;
+            border-radius: 36px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.7), 0 0 30px rgba(255, 107, 53, 0.2);
+            display: flex;
+            flex-direction: column;
+        }
+        /* Top Reddit Post Simulation */
+        .reddit-card {
+            background: #1e293b;
+            margin: 24px 16px 12px 16px;
+            padding: 14px;
+            border-radius: 16px;
+            border: 1px solid #334155;
+            z-index: 5;
+        }
+        .reddit-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        .reddit-badge {
+            background: #ff4500;
+            color: #fff;
+            font-size: 0.7rem;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 9999px;
+        }
+        .reddit-user {
+            font-size: 0.75rem;
+            color: #94a3b8;
+        }
+        .reddit-title {
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.35;
+        }
+        /* Dual Avatar Stage */
+        .actors-stage {
+            flex-grow: 1;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            padding: 0 16px 40px 16px;
+            position: relative;
+        }
+        .actor {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 48%;
+            transition: all 0.25s ease;
+        }
+        .actor img {
+            width: 100%;
+            max-height: 220px;
+            object-fit: contain;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5));
+            transition: transform 0.2s ease;
+        }
+        .actor.speaking img {
+            transform: scale(1.08) translateY(-8px);
+            filter: drop-shadow(0 15px 25px rgba(255, 107, 53, 0.6));
+            animation: bounce 0.4s infinite alternate ease-in-out;
+        }
+        .actor.dimmed {
+            opacity: 0.45;
+            filter: grayscale(40%);
+        }
+        .actor-tag {
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 8px;
+            margin-top: 6px;
+            background: rgba(0,0,0,0.6);
+        }
+        @keyframes bounce {
+            from { transform: scale(1.08) translateY(-6px); }
+            to { transform: scale(1.10) translateY(-12px); }
+        }
+        /* Speech Bubble */
+        .dialogue-bubble {
+            position: absolute;
+            bottom: 270px;
+            left: 20px;
+            right: 20px;
+            background: #fff;
+            color: #0f172a;
+            padding: 12px 16px;
+            border-radius: 18px;
+            font-size: 0.88rem;
+            font-weight: 700;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+            border-bottom: 4px solid #cbd5e1;
+            z-index: 10;
+            transition: all 0.2s ease;
+        }
+        /* Control Panel */
+        .controls-panel {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 24px;
+            max-width: 450px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .controls-panel h2 {
+            font-size: 1.15rem;
+            color: #fff;
+        }
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .pose-btn {
+            background: #1e293b;
+            color: #e2e8f0;
+            border: 1px solid #334155;
+            padding: 8px 14px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .pose-btn:hover, .pose-btn.active {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+        }
+        .talk-toggle {
+            display: flex;
+            gap: 10px;
+            margin-top: 8px;
+        }
+        .talk-btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: 12px;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .talk-btn.stark {
+            background: #ff6b35;
+            color: #fff;
+        }
+        .talk-btn.partner {
+            background: var(--chatgpt);
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <h1>Mode 2: Avatar vs AI Dialogue Preview Stage</h1>
+    <p class="subtitle">Simulate your animated chibi avatar talking with ChatGPT / Claude over viral Reddit stories!</p>
+
+    <div class="stage-container">
+        <!-- 9:16 Video Canvas -->
+        <div class="phone-viewport">
+            <div class="reddit-card">
+                <div class="reddit-header">
+                    <span class="reddit-badge">r/AskReddit</span>
+                    <span class="reddit-user">u/TechWizard • 3h ago</span>
+                </div>
+                <div class="reddit-title">"What is the single most terrifying AI revelation nobody talks about?"</div>
+            </div>
+
+            <div class="dialogue-bubble" id="bubbleText">
+                "MY DAY SUCKERS!! Today I'm going to prove ChatGPT has zero common sense!"
+            </div>
+
+            <div class="actors-stage">
+                <!-- User Avatar (Stark) -->
+                <div class="actor speaking" id="starkActor">
+                    <img id="starkImg" src="stark_01_hyped_open_mouth.png" alt="Stark" />
+                    <span class="actor-tag" style="color: #ff8c42;">YOU (Stark)</span>
+                </div>
+
+                <!-- AI Partner (ChatGPT / Claude) -->
+                <div class="actor dimmed" id="partnerActor">
+                    <img id="partnerImg" src="partner_chatgpt_robot.png" alt="AI Partner" />
+                    <span class="actor-tag" style="color: #10a37f;" id="partnerTag">ChatGPT</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls-panel">
+            <h2>Select Stark Avatar Pose:</h2>
+            <div class="btn-group">
+                <button class="pose-btn active" onclick="setStarkPose('stark_01_hyped_open_mouth.png', 'Hyped / Shouting', 'MY DAY SUCKERS!! Let us uncover this wild Reddit mystery!')">1. Hyped Shouting</button>
+                <button class="pose-btn" onclick="setStarkPose('stark_02_idle_listening.png', 'Idle / Listening', '...')">2. Idle Listening</button>
+                <button class="pose-btn" onclick="setStarkPose('stark_03_explaining_pointing.png', 'Explaining / Pointing', 'Check out comment #1, it has 40,000 upvotes!')">3. Explaining Point</button>
+                <button class="pose-btn" onclick="setStarkPose('stark_04_thinking_skeptical.png', 'Thinking / Skeptical', 'Wait a second... does that even make physical sense?')">4. Thinking</button>
+                <button class="pose-btn" onclick="setStarkPose('stark_05_shocked_mindblown.png', 'Shocked / Mindblown', 'WHAT?! Are you serious right now?!')">5. Shocked</button>
+                <button class="pose-btn" onclick="setStarkPose('stark_06_smug_laughing.png', 'Smug Laughing', 'Haha, I told you I was right all along!')">6. Smug</button>
+            </div>
+
+            <h2>Select AI Conversation Partner:</h2>
+            <div class="btn-group">
+                <button class="pose-btn active" onclick="setPartner('partner_chatgpt_robot.png', 'ChatGPT', '#10a37f')">ChatGPT Bot</button>
+                <button class="pose-btn" onclick="setPartner('partner_claude_spark.png', 'Claude', '#d97706')">Claude Spark</button>
+                <button class="pose-btn" onclick="setPartner('partner_reddit_snoo.png', 'Reddit Snoo', '#ff4500')">Reddit Snoo</button>
+            </div>
+
+            <h2>Simulate Turn-by-Turn Speaking:</h2>
+            <div class="talk-toggle">
+                <button class="talk-btn stark" onclick="speakStark()">👉 Stark Speaks</button>
+                <button class="talk-btn partner" onclick="speakPartner()">👉 AI Speaks</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function setStarkPose(src, name, text) {
+            document.getElementById('starkImg').src = src;
+            if (text) document.getElementById('bubbleText').innerText = text;
+            speakStark();
+        }
+
+        function setPartner(src, name, color) {
+            document.getElementById('partnerImg').src = src;
+            const tag = document.getElementById('partnerTag');
+            tag.innerText = name;
+            tag.style.color = color;
+        }
+
+        function speakStark() {
+            document.getElementById('starkActor').className = 'actor speaking';
+            document.getElementById('partnerActor').className = 'actor dimmed';
+        }
+
+        function speakPartner() {
+            document.getElementById('partnerActor').className = 'actor speaking';
+            document.getElementById('starkActor').className = 'actor dimmed';
+            document.getElementById('bubbleText').innerText = "According to my analysis, that Reddit post is 98% factual!";
+        }
+    </script>
+</body>
+</html>

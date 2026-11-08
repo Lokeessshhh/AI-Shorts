@@ -1,0 +1,44 @@
+# Virtual environment & Python
+.venv/
+venv/
+ENV/
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Sensitive Environment & Secrets (NEVER PUSH)
+.env
+.env.*
+!.env.example
+credentials/
+credentials/*
+*.token.json
+*client_secret*.json
+*session*.json
+
+# Generated video outputs & temporary working directories
+output/
+temp/
+models/
+*.mp4
+*.mp4.part
+*.m4a
+*.wav
+*.ass
+temp_hindi_audio.mp3
+
+# Assets & caches
+assets/bgm/*.mp3
+!assets/bgm/ambient_cinematic.mp3
+assets/gameplay/*.mp4
+assets/clipper_cache/
+assets/cache/
+
+# OS and IDE files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

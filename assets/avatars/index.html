@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Shorts Mascot & Avatar Logo Showcase (50 Candidates)</title>
+    <style>
+        :root {
+            --bg: #0b0f19;
+            --surface: #131c2e;
+            --surface-hover: #1c2942;
+            --border: #233354;
+            --accent: #6366f1;
+            --accent-glow: rgba(99, 102, 241, 0.35);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --success: #10b981;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background: var(--bg);
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            padding: 40px 24px 80px 24px;
+            min-height: 100vh;
+        }
+        .header {
+            max-width: 1300px;
+            margin: 0 auto 36px auto;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 2.4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #a5b4fc, #6366f1, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 12px;
+            letter-spacing: -0.02em;
+        }
+        .header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 680px;
+            margin: 0 auto 24px auto;
+            line-height: 1.6;
+        }
+        .filter-bar {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 36px;
+        }
+        .filter-btn {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 8px 18px;
+            border-radius: 9999px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+            box-shadow: 0 0 16px var(--accent-glow);
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 24px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-color 0.2s ease;
+        }
+        .card:hover {
+            transform: translateY(-6px);
+            border-color: var(--accent);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4), 0 0 20px var(--accent-glow);
+        }
+        .card-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: rgba(11, 15, 25, 0.85);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #e2e8f0;
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 12px;
+            z-index: 2;
+        }
+        .card-img-wrap {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            background: #0f172a;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .card-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .card:hover .card-img-wrap img {
+            transform: scale(1.05);
+        }
+        .card-info {
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        .category-tag {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #818cf8;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .title {
+            font-size: 0.98rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 8px;
+            line-height: 1.35;
+            min-height: 2.7em;
+        }
+        .filename {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 14px;
+            word-break: break-all;
+        }
+        .filename code {
+            background: rgba(0,0,0,0.3);
+            padding: 2px 6px;
+            border-radius: 6px;
+        }
+        .pick-btn {
+            margin-top: auto;
+            background: rgba(99, 102, 241, 0.12);
+            color: #a5b4fc;
+            border: 1px solid rgba(99, 102, 241, 0.25);
+            padding: 9px 12px;
+            border-radius: 12px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+        .pick-btn:hover {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+        }
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--success);
+            color: #064e3b;
+            font-weight: 700;
+            padding: 12px 24px;
+            border-radius: 9999px;
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 100;
+        }
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>AI Shorts Brand Avatar & Mascot Candidates</h1>
+        <p>Curated collection of 50 high-retention mascot logos for YouTube Shorts, Instagram Reels, and TikTok. Filter by category, browse, and pick your favorite!</p>
+        <div class="filter-bar">
+            <button class="filter-btn active" onclick="filterCategory('All')">All (50)</button>
+            <button class="filter-btn" onclick="filterCategory('3D Cute Animals')">3D Animals (15)</button>
+            <button class="filter-btn" onclick="filterCategory('AI & Tech Bots')">AI & Tech Bots (10)</button>
+            <button class="filter-btn" onclick="filterCategory('Vector & Badge Logos')">Vector & Badges (10)</button>
+            <button class="filter-btn" onclick="filterCategory('Illustrated Personas')">Personas (10)</button>
+            <button class="filter-btn" onclick="filterCategory('Fantasy & Mythical')">Fantasy (5)</button>
+        </div>
+    </div>
+
+    <div class="grid" id="avatarGrid">
+        
+        <div class="card" data-category="3D Cute Animals" data-id="1">
+            <div class="card-badge">#01</div>
+            <div class="card-img-wrap">
+                <img src="01_Red_Panda_Headphones.png" alt="Baby Red Panda with Studio Headphones" loading="lazy" />
+            </div>
+            <div class="card-info">
+                <span class="category-tag">3D Cute Animals</span>
+                <h3 class="title">Baby Red Panda with Studio Headphones</h3>
+                <p class="filename"><code>01_Red_Panda_Headphones.png</code></p>
+                <button class="pick-btn" onclick="copySelection('01_Red_Panda_Headphones.png', 'Baby Red Panda with Studio Headphones')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Copy Filename
+                </button>
+            </div>
+        </div>
+        
+        <div class="card" data-category="3D Cute Animals" data-id="2">
+            <div class="card-badge">#02</div>
+            <div class="card-img-wrap">
+                <img src="02_Shiba_Inu_Sunglasses.png" alt="Cool Shiba Inu with Sunglasses & Hoodie" loading="lazy" />
+            </div>
+            <div class="card-info">
+                <span class="category-tag">3D Cute Animals</span>
+                <h3 class="title">Cool Shiba Inu with Sunglasses & Hoodie</h3>
+                <p class="filename"><code>02_Shiba_Inu_Sunglasses.png</code></p>
+                <button class="pick-btn" onclick="copySelection('02_Shiba_Inu_Sunglasses.png', 'Cool Shiba Inu with Sunglasses & Hoodie')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Copy Filename
+                </button>
+            </div>
+        </div>
+        
+        <div class="card" data-category="3D Cute Animals" data-id="3">
+            <div class="card-badge">#03</div>
+            <div class="card-img-wrap">
+                <img src="03_Cyber_Baby_Fox.png" alt="Baby Fox with Podcast Microphone" loading="lazy" />
+            </div>
+            <div class="card-info">
+                <span class="category-tag">3D Cute Animals</span>
+                <h3 class="title">Baby Fox with Podcast Microphone</h3>
+                <p class="filename"><code>03_Cyber_Baby_Fox.png</code></p>
+                <button class="pick-btn" onclick="copySelection('03_Cyber_Baby_Fox.png', 'Baby Fox with Podcast Microphone')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Copy Filename
+                </button>
+            </div>
+        </div>
+        
+        <div class="card" data-category="3D Cute Animals" data-id="4">
+            <div class="card-badge">#04</div>
+            <div class="card-img-wrap">
+                <img src="04_Capybara_Orange.png" alt="Chill Capybara with Citrus on Head" loading="lazy" />
+            </div>
+            <div class="card-info">
+                <span class="category-tag">3D Cute Animals</span>
+                <h3 class="title">Chill Capybara with Citrus on Head</h3>
+                <p class="filename"><code>04_Capybara_Orange.png</code></p>
+                <button class="pick-btn" onclick="copySelection('04_Capybara_Orange.png', 'Chill Capybara with Citrus on Head')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Copy Filename
+                </button>
+            </div>
+        </div>
+        
+        <div class="card" data-category="3D Cute Animals" data-id="5">
+            <div class="card-badge">#05</div>
+            <div class="card-img-wrap">
+                <img src="05_Astronaut_Bunny.png" alt="Cute Astronaut Bunny in Space Helmet" loading="lazy" />
+            </div>
+            <div class="card-info">
+                <span class="category-tag">3D Cute Animals</span>
+                <h3 class="title">Cute Astronaut Bunny in Space Helmet</h3>
+                <p class="filename"><code>05_Astronaut_Bunny.png</code></p>
+                <button class="pick-btn" onclick="copySelection('05_Astronaut_Bunny.png', 'Cute Astronaut Bunny in Space Helmet')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Copy Filename
+                </button>
+            </div>
+        </div>
+        
+        <div class="card" data-category="3D Cute Animals" data-id="6">
+            <div class="card-badge">#06</div>
+            <div class="card-img-wrap">
+                <img src="06_Otter_VR_Goggles.png" alt="Playful River Otter with Tech Goggles" loading="lazy" />
+            </div>
+            <div class="card-info">
+                <span class="category-tag">3D Cute Animals</span>
+                <h3 class="title">Playful River Otter with Tech Goggles</h3>
+                <p class="filename"><code>06_Otter_VR_Goggles.png</code></p>
+                <button class="pick-btn" onclick="copySelection('06_Otter_VR_Goggles.png', 'Playful River Otter with Tech Goggles')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Copy Filename
+                </button>
+            </div>
+        </div>
+        
+        <div class="card" data-category="3D Cute Animals" data-id="7">
+            <div class="card-badge">#07</div>
+            <div class="card-img-wrap">
+                <img src="07_Wise_Baby_Owl.png" alt="Wise Baby Owl with Big Round Glasses" loading="lazy" />
+            </div>
+            <div class="card-info">
+                <span class="category-tag">3D Cute Animals</span>
+                <h3 class="title">Wise Baby Owl with Big Round Glasses</h3>
+                <p class="filename"><code>07_Wise_Baby_Owl.png</code></p>
+                <button class="pick-btn" onclick="copySelection('07_Wise_Baby_Owl.png', 'Wise Baby Owl with Big Round Glasses')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Copy Filename
+                </button>
+            </div>
+        </div>
+        
+        <div class="card" data-category="3D Cute Animals" data-id="8">
+            <div class="card-badge">#08</div>
+            <div class="card-img-wrap">
+                <img src="08_Lion_Cub_Crown.png" alt="Playful Lion Cub with Tiny Golden Crown" loading="lazy" />
+            </div>
+            <div class="card-info">
+                <span class="category-tag">3D Cute Animals</span>
+                <h3 class="title">Playful Lion Cub with Tiny Golden Crown</h3>
+                <p class="filename"><code>08_Lion_Cub_Crown.png</code></p>
+                <button class="pick-btn" onclick="copySelection('08_Lion_Cub_Crown.png', 'Playful Lion Cub with Tiny Golden Crown')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Copy Filename
+                </button>
+            </div>
+        </div>
+        
+        <div class="card" data-category="3D Cute Animals" data-id="9">
+            <div class="card-badge">#09</div>
+            <div class="card-img-wrap">
+                <img src="09_Penguin_Winter_Beanie.png" alt="Chubby Penguin with Beanie & Camera" loading="lazy" />
+            </div>
+            <div class="card-info">
+                <span class="category-tag">3D Cute Animals</span>
+                <h3 class="title">Chubby Penguin with Beanie & Camera</h3>
+                <p class="filename"><code>09_Penguin_Winter_Beanie.png</code></p>
+                <button class="pick-btn" onclick="copySelection('09_Penguin_Winter_Beanie.png', 'Chubby Penguin with Beanie & Camera')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Copy Filename
+                </button>
+            </div>
+        </div>
+        
+        <div class="card" data-category="3D Cute Animals" data-id="10">
+            <div class="card-badge">#10</div>
+            <div class="card-img-wrap">
+                <img src="10_Koala_Popcorn_Shorts.png" alt="Cute Baby Koala Watching Videos" loading="lazy" />
+            </div>
+            <div class="card-info">
+                <span class="category-tag">3D Cute Animals</span>
+                <h3 class="title">Cute Baby Koala Watching Videos</h3>
+                <p class="filename"><code>10_Koala_Popcorn_Shorts.png</code></p>
+                <button class="pick-btn" onclick="copySelection('10_Koala_Popcorn_Shorts.png', 'Cute Baby Koala Watching Videos')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Copy Filename
+                </button>
+            </div>
+        </div>
+        
+        <div class="card" data-category="3D Cute Animals" data-id="11">
+            <div class="card-badge">#11</div>
+            <div class="card-img-wrap">
+                <img src="11_Tiny_Dragon_Clapperboard.png" alt="Cute Baby Dragon Holding Film Scissors" loading="lazy" />
+            </div>
+            <div class="card-info">
+                <span class="category-tag">3D Cute Animals</span>
+                <h3 class="title">Cute Baby Dragon Holding Film Scissors</h3>
+                <p class="filename"><code>11_Tiny_Dragon_Clapperboard.png</code></p>
+                <button class="pick-btn" onclick="copySelection('11_Tiny_Dragon_Clapperboard.png', 'Cute Baby Dragon Holding Film Scissors')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Copy Filename
+                </button>
+            </div>
+        </div>
+        
+        <div class="card" data-category="3D Cute Animals" data-id="12">
+            <div class="card-badge">#12</div>
+            <div class="card-img-wrap">
+                <img src="12_Gamer_Hamster_Headset.png" alt="Chubby Hamster with Gaming Headset" loading="lazy" />
+            </div>
+            <div class="card-info">
+                <span class="category-tag">3D Cute Animals</span>
+                <h3 class="title">Chubby Hamster with Gaming Headset</h3>
+                <p class="filename"><code>12_Gamer_Hamster_Headset.png</code></p>
+                <button class="pick-btn" onclick="copySelection('12_Gamer_Hamster_Headset.png', 'Chubby Hamster with Gaming Headset')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Copy Filename
+                </button>
+            </div>
+        </div>
+        
+        <div class="card" data-category="3D Cute Animals" data-id="13">
+            <div class="card-badge">#13</div>
+            <div class="card-img-wrap">
+                <img src="13_Cat_Neon_Collar.png" alt="Mischievous Calico Kitten with Neon Collar" loading="lazy" />
+            </div>
+            <div class="card-info">
+                <span class="category-tag">3D Cute Animals</span>
+                <h3 class="title">Mischievous Calico Kitten with Neon Collar</h3>
+                <p class="filename"><code>13_Cat_Neon_Collar.png</code></p>
+                <button class="pick-btn" onclick="copySelection('13_Cat_Neon_Collar.png', 'Mischievous Calico Kitten with Neon Collar')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Copy Filename
+                </button>
+            </div>
+        </div>
+        
+        <div class="card" data-category="3D Cute Animals" data-id="14">
+            <div class="card-badge">#14</div>
+            <div class="card-img-wrap">
+                <img src="14_Raccoon_Video_Editor.png" alt="Clever Baby Raccoon with Film Reel" loading="lazy" />
+            </div>
+            <div class="card-info">
+                <span class="category-tag">3D Cute Animals</span>
+                <h3 class="title">Clever Baby Raccoon with Film Reel</h3>
+                <p class="filename"><code>14_Raccoon_Video_Editor.png</code></p>
+                <button class="pick-btn" onclick="copySelection('14_Raccoon_Video_Editor.png', 'Clever Baby Raccoon with Film Reel')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Copy Filename
+                </button>
+            </div>
+        </div>
+        
+        <div class="card" data-category="3D Cute Animals" data-id="15">
+            <div class="card-badge">#15</div>
+            <div class="card-img-wrap">
+                <img src="15_Golden_Puppy_Smile.png" alt="Joyful Golden Retriever Puppy" loading="lazy" />
+            </div>
+            <div class="card-info">
+                <span class="category-tag">3D Cute Animals</span>
+                <h3 class="title">Joyful Golden Retriever Puppy</h3>
+                <p class="filename"><code>15_Golden_Puppy_Smile.png</code></p>
+                <button class="pick-btn" onclick="copySelection('15_Golden_Puppy_Smile.png', 'Joyful Golden Retriever Puppy')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Copy Filename
+                </button>
+            </div>
+        </div>
+        
+        <div class="card" data-category="AI & Tech Bots" data-id="16">
+            <div class="card-badge">#16</div>
+            <div class="card-img-wrap">
+                <img src="16_Bottts_Clipper_Prime.png" alt="Friendly Aqua AI Robot Avatar" loading="lazy" />
+            </div>
+            <div class="card-info">
+                <span class="category-tag">AI & Tech Bots</span>
+                <h3 class="title">Friendly Aqua AI Robot Avatar</h3>
+                <p class="filename"><code>16_Bottts_Clipper_Prime.png</code></p>
+                <button class="pick-btn" onclick="copySelection('16_Bottts_Clipper_Prime.png', 'Friendly Aqua AI Robot Avatar')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Copy Filename
+                </button>
+            </div>
+        </div>
+        
+        <div class="card" data-category="AI & Tech Bots" data-id="17">
+            <div class="card-badge">#17</div>
+            <div class="card-img-wrap">
+                <img src="17_Bottts_Cyber_Spark.png" alt="Cyber Spark Robot with Antenna" loading="lazy" />
+            </div>
+            <div class="card-info">
+                <span class="category-tag">AI & Tech Bots</span>
+                <h3 class="title">Cyber Spark Robot with Antenna</h3>
+                <p class="filename"><code>17_Bottts_Cyber_Spark.png</code></p>
+                <button class="pick-btn" onclick="copySelection('17_Bottts_Cyber_Spark.png', 'Cyber Spark Robot with Antenna')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Copy Filename
+                </button>
+            </div>
+        </div>
+        
+        <div class="card" data-category="AI & Tech Bots" data-id="18">
+            <div class="card-badge">#18</div>
+            <div class="card-img-wrap">
+                <img src="18_Bottts_Neon_Gamer.png" alt="Neon Visor Tech Mascot" loading="lazy" />
+            </div>
+            <div class="card-info">
+                <span class="category-tag">AI & Tech Bots</span>
+                <h3 class="title">Neon Visor Tech Mascot</h3>
+                <p class="filename"><code>18_Bottts_Neon_Gamer.png</code></p>
+                <button class="pick-btn" onclick="copySelection('18_Bottts_Neon_Gamer.png', 'Neon Visor Tech Mascot')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Copy Filename
+                </button>
+            </div>
+        </div>
+        
+        <div class="card" data-category="AI & Tech Bots" data-id="19">
+            <div class="card-badge">#19</div>
+            <div class="card-img-wrap">
+                <img src="19_Cute_3D_Sphere_Robot.png" alt="Floating Glossy Sphere Robot with Big Eyes" loading="lazy" />
+            </div>
+            <div class="card-info">
+                <span class="category-tag">AI & Tech Bots</span>
+                <h3 class="title">Floating Glossy Sphere Robot with Big Eyes</h3>
+                <p class="filename"><code>19_Cute_3D_Sphere_Robot.png</code></p>
+                <button class="pick-btn" onclick="copySelection('19_Cute_3D_Sphere_Robot.png', 'Floating Glossy Sphere Robot with Big Eyes')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Copy Filename
+                </button>
+            </div>
+        </div>
+        
+        <div class="card" data-category="AI & Tech Bots" data-id="20">
+            <div class="card-badge">#20</div>
+            <div class="card-img-wrap">
+                <img src="20_CRT_Head_Video_Bot.png" alt="Retro TV-Head Cute Video Robot" loading="lazy" />
+            </div>
+            <div class="card-info">
+                <span class="category-tag">AI & Tech Bots</span>
+                <h3 class="title">Retro TV-Head Cute Video Robot</h3>
+                <p class="filename"><code>20_CRT_Head_Video_Bot.png</code></p>
+                <button class="pick-btn" onclick="copySelection('20_CRT_Head_Video_Bot.png', 'Retro TV-Head Cute Video Robot')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Copy Filename
+                </button>
+            </div>
+        </div>
+        
+        <div class="card" data-category="AI & Tech Bots" data-id="21">
+            <div class="card-badge">#21</div>
+            <div class="card-img-wrap">
+                <img src="21_Bottts_Golden_Aura.png" alt="Golden Circuit Bot Mascot" loading="lazy" />
+            </div>
+            <div class="card-info">
+                <span class="category-tag">AI & Tech Bots</span>
+                <h3 class="title">Golden Circuit Bot Mascot</h3>
+                <p class="filename"><code>21_Bottts_Golden_Aura.png</code></p>
+                <button class="pick-btn" onclick="copySelection('21_Bottts_Golden_Aura.png', 'Golden Circuit Bot Mascot')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Copy Filename
+                </button>
+            </div>
+        </div>
+        
+        <div class="card" data-category="AI & Tech Bots" data-id="22">
+            <div class="card-badge">#22</div>
+            <div class="card-img-wrap">
+                <img src="22_Cyber_Mech_Cat.png" alt="Futuristic Mech-Cat with Neon Ears" loading="lazy" />
+            </div>
+            <div class="card-info">
+                <span class="category-tag">AI & Tech Bots</span>
+                <h3 class="title">Futuristic Mech-Cat with Neon Ears</h3>
+                <p class="filename"><code>22_Cyber_Mech_Cat.png</code></p>
+                <button class="pick-btn" onclick="copySelection('22_Cyber_Mech_Cat.png', 'Futuristic Mech-Cat with Neon Ears')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Copy Filename
+                </button>
+            </div>
+        </div>
+        
+        <div class="card" data-category="AI & Tech Bots" data-id="23">
+            <div class="card-badge">#23</div>
+            <div class="card-img-wrap">
+                <img src="23_Bottts_Matrix_Pro.png" alt="Matrix Emerald Robot Avatar" loading="lazy" />
+            </div>
+            <div class="card-info">
+                <span class="category-tag">AI & Tech Bots</span>
+                <h3 class="title">Matrix Emerald Robot Avatar</h3>
+                <p class="filename"><code>23_Bottts_Matrix_Pro.png</code></p>
+                <button class="pick-btn" onclick="copySelection('23_Bottts_Matrix_Pro.png', 'Matrix Emerald Robot Avatar')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Copy Filename
+                </button>
+            </div>
+        </div>
+        
+        <div class="card" data-category="AI & Tech Bots" data-id="24">
+            <div class="card-badge">#24</div>
+            <div class="card-img-wrap">
+                <img src="24_Floating_AI_Orb_Mascot.png" alt="Friendly Glowing AI Sprite" loading="lazy" />
+            </div>
+            <div class="card-info">
+                <span class="category-tag">AI & Tech Bots</span>
+                <h3 class="title">Friendly Glowing AI Sprite</h3>
+                <p class="filename"><code>24_Floating_AI_Orb_Mascot.png</code></p>
+                <button class="pick-btn" onclick="copySelection('24_Floating_AI_Orb_Mascot.png', 'Friendly Glowing AI Sprite')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Copy Filename
+                </button>
+            </div>
+        </div>
+        
+        <div class="card" data-category="AI & Tech Bots" data-id="25">
+            <div class="card-badge">#25</div>
+            <div class="card-img-wrap">
+                <img src="25_Bottts_Cosmo_Jet.png" alt="Cosmic Jet Robot Companion" loading="lazy" />
+            </div>
+            <div class="card-info">
+                <span class="category-tag">AI & Tech Bots</span>
+                <h3 class="title">Cosmic Jet Robot Companion</h3>
+                <p class="filename"><code>25_Bottts_Cosmo_Jet.png</code></p>
+                <button class="pick-btn" onclick="copySelection('25_Bottts_Cosmo_Jet.png', 'Cosmic Jet Robot Companion')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Copy Filename
+                </button>
+            </div>
+        </div>
+        
+        <div class="card" data-category="Vector & Badge Logos" data-id="26">
+            <div class="card-badge">#26</div>
+            <div class="card-img-wrap">
+                <img src="26_Vector_Neon_Fox_Emblem.png" alt="Minimalist Geometric Fox Face Logo" loading="lazy" />
+            </div>
+            <div class="card-info">
+                <span class="category-tag">Vector & Badge Logos</span>
+                <h3 class="title">Minimalist Geometric Fox Face Logo</h3>
+                <p class="filename"><code>26_Vector_Neon_Fox_Emblem.png</code></p>
+                <button class="pick-btn" onclick="copySelection('26_Vector_Neon_Fox_Emblem.png', 'Minimalist Geometric Fox Face Logo')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Copy Filename
+                </button>
+            </div>
+        </div>
+        
+        <div class="card" data-category="Vector & Badge Logos" data-id="27">
+            <div class="card-badge">#27</div>
+            <div class="card-img-wrap">
+                <img src="27_Vector_Cyber_Cat_Icon.png" alt="Sleek Cyber Cat Silhouette Badge" loading="lazy" />
+            </div>
+            <div class="card-info">
+                <span class="category-tag">Vector & Badge Logos</span>
+                <h3 class="title">Sleek Cyber Cat Silhouette Badge</h3>
+                <p class="filename"><code>27_Vector_Cyber_Cat_Icon.png</code></p>
+                <button class="pick-btn" onclick="copySelection('27_Vector_Cyber_Cat_Icon.png', 'Sleek Cyber Cat Silhouette Badge')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Copy Filename
+                </button>
+            </div>
+        </div>
+        
+        <div class="card" data-category="Vector & Badge Logos" data-id="28">
+            <div class="card-badge">#28</div>
+            <div class="card-img-wrap">
+                <img src="28_Vector_Playful_Bear.png" alt="Geometric Teddy Bear Logo Badge" loading="lazy" />
+            </div>
+            <div class="card-info">
+                <span class="category-tag">Vector & Badge Logos</span>
+                <h3 class="title">Geometric Teddy Bear Logo Badge</h3>
+                <p class="filename"><code>28_Vector_Playful_Bear.png</code></p>
+                <button class="pick-btn" onclick="copySelection('28_Vector_Playful_Bear.png', 'Geometric Teddy Bear Logo Badge')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Copy Filename
+                </button>
+            </div>
+        </div>
+        
+        <div class="card" data-category="Vector & Badge Logos" data-id="29">
+            <div class="card-badge">#29</div>
+            <div class="card-img-wrap">
+                <img src="29_Vector_Astro_Monkey.png" alt="Astro-Monkey Space Explorer Logo" loading="lazy" />
+            </div>
+            <div class="card-info">
+                <span class="category-tag">Vector & Badge Logos</span>
+                <h3 class="title">Astro-Monkey Space Explorer Logo</h3>
+                <p class="filename"><code>29_Vector_Astro_Monkey.png</code></p>
+                <button class="pick-btn" onclick="copySelection('29_Vector_Astro_Monkey.png', 'Astro-Monkey Space Explorer Logo')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Copy Filename
+                </button>
+            </div>
+        </div>
+        
+        <div class="card" data-category="Vector & Badge Logos" data-id="30">
+            <div class="card-badge">#30</div>
+            <div class="card-img-wrap">
+                <img src="30_Vector_Origami_Bird.png" alt="Origami Hummingbird Swift Logo" loading="lazy" />
+            </div>
+            <div class="card-info">
+                <span class="category-tag">Vector & Badge Logos</span>
+                <h3 class="title">Origami Hummingbird Swift Logo</h3>
+                <p class="filename"><code>30_Vector_Origami_Bird.png</code></p>
+                <button class="pick-btn" onclick="copySelection('30_Vector_Origami_Bird.png', 'Origami Hummingbird Swift Logo')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Copy Filename
+                </button>
+            </div>
+        </div>
+        
+        <div class="card" data-category="Vector & Badge Logos" data-id="31">
+            <div class="card-badge">#31</div>
+            <div class="card-img-wrap">
+                <img src="31_RoboHash_Cyber_Kitty.png" alt="Quirky Illustrated Cyber Kitten" loading="lazy" />
+            </div>
+            <div class="card-info">
+                <span class="category-tag">Vector & Badge Logos</span>
+                <h3 class="title">Quirky Illustrated Cyber Kitten</h3>
+                <p class="filename"><code>31_RoboHash_Cyber_Kitty.png</code></p>
+                <button class="pick-btn" onclick="copySelection('31_RoboHash_Cyber_Kitty.png', 'Quirky Illustrated Cyber Kitten')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Copy Filename
+                </button>
+            </div>
+        </div>
+        
+        <div class="card" data-category="Vector & Badge Logos" data-id="32">
+            <div class="card-badge">#32</div>
+            <div class="card-img-wrap">
+                <img src="32_RoboHash_Playful_Monster.png" alt="Playful Cute Friendly Monster" loading="lazy" />
+            </div>
+            <div class="card-info">
+                <span class="category-tag">Vector & Badge Logos</span>
+                <h3 class="title">Playful Cute Friendly Monster</h3>
+                <p class="filename"><code>32_RoboHash_Playful_Monster.png</code></p>
+                <button class="pick-btn" onclick="copySelection('32_RoboHash_Playful_Monster.png', 'Playful Cute Friendly Monster')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Copy Filename
+                </button>
+            </div>
+        </div>
+        
+        <div class="card" data-category="Vector & Badge Logos" data-id="33">
+            <div class="card-badge">#33</div>
+            <div class="card-img-wrap">
+                <img src="33_Vector_Wolf_Spirit.png" alt="Stylized Lone Wolf Badge" loading="lazy" />
+            </div>
+            <div class="card-info">
+                <span class="category-tag">Vector & Badge Logos</span>
+                <h3 class="title">Stylized Lone Wolf Badge</h3>
+                <p class="filename"><code>33_Vector_Wolf_Spirit.png</code></p>
+                <button class="pick-btn" onclick="copySelection('33_Vector_Wolf_Spirit.png', 'Stylized Lone Wolf Badge')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Copy Filename
+                </button>
+            </div>
+        </div>
+        
+        <div class="card" data-category="Vector & Badge Logos" data-id="34">
+            <div class="card-badge">#34</div>
+            <div class="card-img-wrap">
+                <img src="34_Vector_Ghost_Headphones.png" alt="Cute Pastel Ghost with Headphones" loading="lazy" />
+            </div>
+            <div class="card-info">
+                <span class="category-tag">Vector & Badge Logos</span>
+                <h3 class="title">Cute Pastel Ghost with Headphones</h3>
+                <p class="filename"><code>34_Vector_Ghost_Headphones.png</code></p>
+                <button class="pick-btn" onclick="copySelection('34_Vector_Ghost_Headphones.png', 'Cute Pastel Ghost with Headphones')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Copy Filename
+                </button>
+            </div>
+        </div>
+        
+        <div class="card" data-category="Vector & Badge Logos" data-id="35">
+            <div class="card-badge">#35</div>
+            <div class="card-img-wrap">
+                <img src="35_RoboHash_Lucky_Whiskers.png" alt="Lucky Whiskers Character Mascot" loading="lazy" />
+            </div>
+            <div class="card-info">
+                <span class="category-tag">Vector & Badge Logos</span>
+                <h3 class="title">Lucky Whiskers Character Mascot</h3>
+                <p class="filename"><code>35_RoboHash_Lucky_Whiskers.png</code></p>
+                <button class="pick-btn" onclick="copySelection('35_RoboHash_Lucky_Whiskers.png', 'Lucky Whiskers Character Mascot')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Copy Filename
+                </button>
+            </div>
+        </div>
+        
+        <div class="card" data-category="Illustrated Personas" data-id="36">
+            <div class="card-badge">#36</div>
+            <div class="card-img-wrap">
+                <img src="36_Adventurer_Gamer_Hero.png" alt="Anime-Style Tech Creator Avatar" loading="lazy" />
+            </div>
+            <div class="card-info">
+                <span class="category-tag">Illustrated Personas</span>
+                <h3 class="title">Anime-Style Tech Creator Avatar</h3>
+                <p class="filename"><code>36_Adventurer_Gamer_Hero.png</code></p>
+                <button class="pick-btn" onclick="copySelection('36_Adventurer_Gamer_Hero.png', 'Anime-Style Tech Creator Avatar')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Copy Filename
+                </button>
+            </div>
+        </div>
+        
+        <div class="card" data-category="Illustrated Personas" data-id="37">
+            <div class="card-badge">#37</div>
+            <div class="card-img-wrap">
+                <img src="37_Lorelei_Modern_Creator.png" alt="Chic Modern Creative Lead" loading="lazy" />
+            </div>
+            <div class="card-info">
+                <span class="category-tag">Illustrated Personas</span>
+                <h3 class="title">Chic Modern Creative Lead</h3>
+                <p class="filename"><code>37_Lorelei_Modern_Creator.png</code></p>
+                <button class="pick-btn" onclick="copySelection('37_Lorelei_Modern_Creator.png', 'Chic Modern Creative Lead')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Copy Filename
+                </button>
+            </div>
+        </div>
+        
+        <div class="card" data-category="Illustrated Personas" data-id="38">
+            <div class="card-badge">#38</div>
+            <div class="card-img-wrap">
+                <img src="38_Thumbs_Dopamine_Guy.png" alt="Dynamic Expressive Mascot Face" loading="lazy" />
+            </div>
+            <div class="card-info">
+                <span class="category-tag">Illustrated Personas</span>
+                <h3 class="title">Dynamic Expressive Mascot Face</h3>
+                <p class="filename"><code>38_Thumbs_Dopamine_Guy.png</code></p>
+                <button class="pick-btn" onclick="copySelection('38_Thumbs_Dopamine_Guy.png', 'Dynamic Expressive Mascot Face')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Copy Filename
+                </button>
+            </div>
+        </div>
+        
+        <div class="card" data-category="Illustrated Personas" data-id="39">
+            <div class="card-badge">#39</div>
+            <div class="card-img-wrap">
+                <img src="39_3D_Hoodie_Video_Editor.png" alt="3D Stylized Boy with Neon Hoodie & Mic" loading="lazy" />
+            </div>
+            <div class="card-info">
+                <span class="category-tag">Illustrated Personas</span>
+                <h3 class="title">3D Stylized Boy with Neon Hoodie & Mic</h3>
+                <p class="filename"><code>39_3D_Hoodie_Video_Editor.png</code></p>
+                <button class="pick-btn" onclick="copySelection('39_3D_Hoodie_Video_Editor.png', '3D Stylized Boy with Neon Hoodie & Mic')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Copy Filename
+                </button>
+            </div>
+        </div>
+        
+        <div class="card" data-category="Illustrated Personas" data-id="40">
+            <div class="card-badge">#40</div>
+            <div class="card-img-wrap">
+                <img src="40_3D_Cyber_Girl_Editor.png" alt="3D Stylized Girl with Neon Pink Hair & Headset" loading="lazy" />
+            </div>
+            <div class="card-info">
+                <span class="category-tag">Illustrated Personas</span>
+                <h3 class="title">3D Stylized Girl with Neon Pink Hair & Headset</h3>
+                <p class="filename"><code>40_3D_Cyber_Girl_Editor.png</code></p>
+                <button class="pick-btn" onclick="copySelection('40_3D_Cyber_Girl_Editor.png', '3D Stylized Girl with Neon Pink Hair & Headset')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Copy Filename
+                </button>
+            </div>
+        </div>
+        
+        <div class="card" data-category="Illustrated Personas" data-id="41">
+            <div class="card-badge">#41</div>
+            <div class="card-img-wrap">
+                <img src="41_Adventurer_Cyber_Ninja.png" alt="Adventurer Cyber Nomad Avatar" loading="lazy" />
+            </div>
+            <div class="card-info">
+                <span class="category-tag">Illustrated Personas</span>
+                <h3 class="title">Adventurer Cyber Nomad Avatar</h3>
+                <p class="filename"><code>41_Adventurer_Cyber_Ninja.png</code></p>
+                <button class="pick-btn" onclick="copySelection('41_Adventurer_Cyber_Ninja.png', 'Adventurer Cyber Nomad Avatar')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Copy Filename
+                </button>
+            </div>
+        </div>
+        
+        <div class="card" data-category="Illustrated Personas" data-id="42">
+            <div class="card-badge">#42</div>
+            <div class="card-img-wrap">
+                <img src="42_Lorelei_Podcast_Host.png" alt="Lorelei Sleek Podcast Host" loading="lazy" />
+            </div>
+            <div class="card-info">
+                <span class="category-tag">Illustrated Personas</span>
+                <h3 class="title">Lorelei Sleek Podcast Host</h3>
+                <p class="filename"><code>42_Lorelei_Podcast_Host.png</code></p>
+                <button class="pick-btn" onclick="copySelection('42_Lorelei_Podcast_Host.png', 'Lorelei Sleek Podcast Host')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Copy Filename
+                </button>
+            </div>
+        </div>
+        
+        <div class="card" data-category="Illustrated Personas" data-id="43">
+            <div class="card-badge">#43</div>
+            <div class="card-img-wrap">
+                <img src="43_Thumbs_Happy_Spark.png" alt="Happy Spark Emoji Character" loading="lazy" />
+            </div>
+            <div class="card-info">
+                <span class="category-tag">Illustrated Personas</span>
+                <h3 class="title">Happy Spark Emoji Character</h3>
+                <p class="filename"><code>43_Thumbs_Happy_Spark.png</code></p>
+                <button class="pick-btn" onclick="copySelection('43_Thumbs_Happy_Spark.png', 'Happy Spark Emoji Character')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Copy Filename
+                </button>
+            </div>
+        </div>
+        
+        <div class="card" data-category="Illustrated Personas" data-id="44">
+            <div class="card-badge">#44</div>
+            <div class="card-img-wrap">
+                <img src="44_Avataaars_Cool_Director.png" alt="Cool Video Director with Sunglasses" loading="lazy" />
+            </div>
+            <div class="card-info">
+                <span class="category-tag">Illustrated Personas</span>
+                <h3 class="title">Cool Video Director with Sunglasses</h3>
+                <p class="filename"><code>44_Avataaars_Cool_Director.png</code></p>
+                <button class="pick-btn" onclick="copySelection('44_Avataaars_Cool_Director.png', 'Cool Video Director with Sunglasses')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Copy Filename
+                </button>
+            </div>
+        </div>
+        
+        <div class="card" data-category="Illustrated Personas" data-id="45">
+            <div class="card-badge">#45</div>
+            <div class="card-img-wrap">
+                <img src="45_FunEmoji_Hyped_Star.png" alt="Super Hyped Star-Eyed Mascot" loading="lazy" />
+            </div>
+            <div class="card-info">
+                <span class="category-tag">Illustrated Personas</span>
+                <h3 class="title">Super Hyped Star-Eyed Mascot</h3>
+                <p class="filename"><code>45_FunEmoji_Hyped_Star.png</code></p>
+                <button class="pick-btn" onclick="copySelection('45_FunEmoji_Hyped_Star.png', 'Super Hyped Star-Eyed Mascot')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Copy Filename
+                </button>
+            </div>
+        </div>
+        
+        <div class="card" data-category="Fantasy & Mythical" data-id="46">
+            <div class="card-badge">#46</div>
+            <div class="card-img-wrap">
+                <img src="46_Baby_Phoenix_Flame.png" alt="Baby Phoenix with Radiant Golden Feathers" loading="lazy" />
+            </div>
+            <div class="card-info">
+                <span class="category-tag">Fantasy & Mythical</span>
+                <h3 class="title">Baby Phoenix with Radiant Golden Feathers</h3>
+                <p class="filename"><code>46_Baby_Phoenix_Flame.png</code></p>
+                <button class="pick-btn" onclick="copySelection('46_Baby_Phoenix_Flame.png', 'Baby Phoenix with Radiant Golden Feathers')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Copy Filename
+                </button>
+            </div>
+        </div>
+        
+        <div class="card" data-category="Fantasy & Mythical" data-id="47">
+            <div class="card-badge">#47</div>
+            <div class="card-img-wrap">
+                <img src="47_Cosmic_Starlight_Whale.png" alt="Cute Starlight Whale Swimming in Stars" loading="lazy" />
+            </div>
+            <div class="card-info">
+                <span class="category-tag">Fantasy & Mythical</span>
+                <h3 class="title">Cute Starlight Whale Swimming in Stars</h3>
+                <p class="filename"><code>47_Cosmic_Starlight_Whale.png</code></p>
+                <button class="pick-btn" onclick="copySelection('47_Cosmic_Starlight_Whale.png', 'Cute Starlight Whale Swimming in Stars')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Copy Filename
+                </button>
+            </div>
+        </div>
+        
+        <div class="card" data-category="Fantasy & Mythical" data-id="48">
+            <div class="card-badge">#48</div>
+            <div class="card-img-wrap">
+                <img src="48_Baby_Griffin_Gold.png" alt="Playful Baby Griffin with Golden Beak" loading="lazy" />
+            </div>
+            <div class="card-info">
+                <span class="category-tag">Fantasy & Mythical</span>
+                <h3 class="title">Playful Baby Griffin with Golden Beak</h3>
+                <p class="filename"><code>48_Baby_Griffin_Gold.png</code></p>
+                <button class="pick-btn" onclick="copySelection('48_Baby_Griffin_Gold.png', 'Playful Baby Griffin with Golden Beak')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Copy Filename
+                </button>
+            </div>
+        </div>
+        
+        <div class="card" data-category="Fantasy & Mythical" data-id="49">
+            <div class="card-badge">#49</div>
+            <div class="card-img-wrap">
+                <img src="49_Joyful_Cloud_Spirit.png" alt="Fluffy Smiling Cloud Mascot with Lightning" loading="lazy" />
+            </div>
+            <div class="card-info">
+                <span class="category-tag">Fantasy & Mythical</span>
+                <h3 class="title">Fluffy Smiling Cloud Mascot with Lightning</h3>
+                <p class="filename"><code>49_Joyful_Cloud_Spirit.png</code></p>
+                <button class="pick-btn" onclick="copySelection('49_Joyful_Cloud_Spirit.png', 'Fluffy Smiling Cloud Mascot with Lightning')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Copy Filename
+                </button>
+            </div>
+        </div>
+        
+        <div class="card" data-category="Fantasy & Mythical" data-id="50">
+            <div class="card-badge">#50</div>
+            <div class="card-img-wrap">
+                <img src="50_Electric_Pika_Friend.png" alt="Electric Lightning Cute Furry Creature" loading="lazy" />
+            </div>
+            <div class="card-info">
+                <span class="category-tag">Fantasy & Mythical</span>
+                <h3 class="title">Electric Lightning Cute Furry Creature</h3>
+                <p class="filename"><code>50_Electric_Pika_Friend.png</code></p>
+                <button class="pick-btn" onclick="copySelection('50_Electric_Pika_Friend.png', 'Electric Lightning Cute Furry Creature')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Copy Filename
+                </button>
+            </div>
+        </div>
+        
+    </div>
+
+    <div class="toast" id="toast">Copied filename to clipboard!</div>
+
+    <script>
+        function filterCategory(cat) {
+            const btns = document.querySelectorAll('.filter-btn');
+            btns.forEach(b => b.classList.toggle('active', b.innerText.includes(cat)));
+
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                if (cat === 'All' || card.getAttribute('data-category') === cat) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        function copySelection(filename, title) {
+            navigator.clipboard.writeText(filename).then(() => {
+                const toast = document.getElementById('toast');
+                toast.innerText = 'Copied: ' + filename;
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 2500);
+            });
+        }
+    </script>
+</body>
+</html>
