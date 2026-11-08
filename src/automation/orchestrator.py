@@ -270,13 +270,23 @@ class AutonomousShortsOrchestrator:
                     alt_dir = batch_dir / "mode3_fallback"
                     alt_dir.mkdir(parents=True, exist_ok=True)
                     agent_alt = FacelessShortsAgent()
-                    alt_res = agent_alt.create_short(topic=alt_topic, output_dir=alt_dir)
+                    alt_res = agent_alt.create_short(topic=alt_topic)
+
+                    alt_vpath = Path(alt_res.video_path)
+                    batch_video_alt = alt_dir / alt_vpath.name
+                    shutil.copy2(alt_vpath, batch_video_alt)
+
+                    batch_meta_alt = None
+                    if alt_res.metadata_path:
+                        alt_mpath = Path(alt_res.metadata_path)
+                        batch_meta_alt = alt_dir / alt_mpath.name
+                        shutil.copy2(alt_mpath, batch_meta_alt)
 
                     self.state.mark_topic_done(
                         alt_topic,
                         mode="mode1_facts",
                         title=alt_res.title,
-                        metadata={"video_path": str(alt_res.video_path), "duration": alt_res.duration},
+                        metadata={"video_path": str(batch_video_alt), "duration": alt_res.duration_seconds},
                     )
 
                     manifest["mode3"] = {
@@ -284,12 +294,12 @@ class AutonomousShortsOrchestrator:
                         "is_fallback": True,
                         "topic": alt_topic,
                         "title": alt_res.title,
-                        "video_path": str(alt_res.video_path),
-                        "metadata_path": str(alt_res.metadata_path) if alt_res.metadata_path else None,
-                        "duration": round(alt_res.duration, 1),
+                        "video_path": str(batch_video_alt),
+                        "metadata_path": str(batch_meta_alt) if batch_meta_alt else None,
+                        "duration": round(alt_res.duration_seconds, 1),
                         "selected_clip": {
-                            "video_path": str(alt_res.video_path),
-                            "metadata_path": str(alt_res.metadata_path) if alt_res.metadata_path else None,
+                            "video_path": str(batch_video_alt),
+                            "metadata_path": str(batch_meta_alt) if batch_meta_alt else None,
                             "title": alt_res.title,
                             "rank": 1,
                             "composite_upload_score": 95.0,

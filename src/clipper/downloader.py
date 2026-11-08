@@ -44,7 +44,7 @@ class VideoDownloader:
                 "ffmpeg_location": self.ffmpeg_path,
                 "extractor_args": {
                     "youtube": {
-                        "player_client": ["android", "web_creator"]
+                        "player_client": ["android"]
                     }
                 },
             }
@@ -118,7 +118,7 @@ class VideoDownloader:
                 has_subs = any(save_dir.glob("*.json3"))
                 ydl_opts = {
                     # Best video up to 1080p (prefer direct https) + best audio, muxed to mp4
-                    "format": "bestvideo[height<=1080][ext=mp4][protocol^=http]+bestaudio[ext=m4a][protocol^=http]/bv*[height<=1080][ext=mp4]+ba[ext=m4a]/b[height<=1080] / best[height<=1080]/best",
+                    "format": "best[height<=720][ext=mp4]/best[height<=720]/best",
                     "outtmpl": str(save_dir / f"{video_id}.%(ext)s"),
                     "merge_output_format": "mp4",
                     "ffmpeg_location": self.ffmpeg_path,
@@ -129,7 +129,7 @@ class VideoDownloader:
                     "no_warnings": True,
                     "extractor_args": {
                         "youtube": {
-                            "player_client": ["android", "web_creator"]
+                            "player_client": ["android"]
                         }
                     },
                 }
