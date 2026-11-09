@@ -1,7 +1,16 @@
+"""Kinetic Typography and Production Caption Studio.
+Generates mobile-first, high-retention Advanced SubStation Alpha (.ass) subtitles:
+- 88pt Bold condensed typography with 6px deep black stroke and crisp drop shadow.
+- Real kinetic spring pop physics: instant 122% scale pop with overshoot settle (\t transforms).
+- Dynamic semantic color mapping: numbers/data (cyan), danger/crisis (coral), wealth (gold), insight (royal blue).
+- Strict 1 to 3 words per line RSVP chunking.
+- Monotonic zero-overlap timing synchronization with Whisper word alignments.
+"""
+
 import re
 from pathlib import Path
 from dataclasses import dataclass
-from typing import List, Tuple, Optional, Dict
+from typing import List, Tuple, Optional, Dict, Set
 from src.config import config
 from .emoji_manager import EmojiManager
 
@@ -21,115 +30,36 @@ class EmojiEvent:
     word: str
 
 
-GREEN_KEYWORDS = {"MONEY", "CASH", "POWER", "WIN", "PROFIT", "SUCCESS", "MILLIONS", "BILLIONS", "SAVES", "SAVING", "GOLD", "BITCOIN", "RICH"}
-CYAN_KEYWORDS = {"CODE", "DATA", "ROBOT", "AI", "COMPUTER", "NETWORK", "SERVERS", "SERVER", "TOKENS", "TECH", "SPACE", "ROCKET", "STAR"}
-RED_KEYWORDS = {"FAKE", "TRAP", "DANGER", "SECRET", "LOSE", "FAIL", "WARNING", "CRACK", "CRACKS", "FIRE", "HEAT", "BLOOD", "DEAD", "KILL"}
+# Semantic keyword categories for dynamic color accents (BGR in ASS format)
+# Cyan: &HFFF000& (#00F0FF) - Numbers, tech, data, physics, metrics
+# Gold: &H00D7FF& (#FFD700) - Wealth, currency, rewards, winning
+# Coral Red: &H3333FF& (#FF3333) - Disasters, crashes, deaths, traps, failures
+# Royal Amethyst: &HF88C81& (#818CF8) - Scientific breakthroughs, laws, secrets, discoveries
+# Electric Canary: &H00E5FF& (#FFE500) - General high-retention active pop
 
-# Inline Unicode Emojis mapped to key concepts (renders directly inside subtitle text before the word)
-INLINE_KEYWORD_EMOJIS: Dict[str, str] = {
-    # Tech, AI & Startups
-    "AI": "🤖",
-    "ROBOT": "🤖",
-    "ROBOTS": "🤖",
-    "CHATGPT": "🤖",
-    "OPENAI": "🤖",
-    "GPT": "🤖",
-    "TECH": "💻",
-    "TECHNOLOGY": "💻",
-    "COMPUTER": "💻",
-    "CODE": "💻",
-    "CODING": "💻",
-    "PROGRAM": "💻",
-    "SOFTWARE": "💻",
-    "LAUNCH": "🚀",
-    "LAUNCHED": "🚀",
-    "LAUNCHING": "🚀",
-    "ROCKET": "🚀",
-    "STARTUP": "🚀",
-    "STARTUPS": "🚀",
-    "FOUNDER": "🚀",
-    "SCALE": "📈",
-    "SCALING": "📈",
-    "GROWTH": "📈",
-    "MARKET": "📈",
-    "BIGGER": "📈",
-    "BIGGEST": "📈",
-    # Mindset, Ideas & Status
-    "IDEA": "💡",
-    "IDEAS": "💡",
-    "THINK": "💡",
-    "THOUGHT": "💡",
-    "SMART": "💡",
-    "INTELLIGENCE": "💡",
-    "SUPERINTELLIGENCE": "🧠",
-    "BRAIN": "🧠",
-    "MIND": "🧠",
-    "MINDSET": "🧠",
-    "PSYCHOLOGY": "🧠",
-    "POWER": "⚡",
-    "SUPERPOWER": "⚡",
-    "STATUS": "⚡",
-    "ENERGY": "⚡",
-    "FAST": "⚡",
-    "WIN": "🏆",
-    "WINNING": "🏆",
-    "WON": "🏆",
-    "BEST": "🏆",
-    "SUCCESS": "🏆",
-    # Fame, Freedom & People
-    "FAME": "⭐",
-    "FAMOUS": "⭐",
-    "STAR": "⭐",
-    "CELEBRITY": "⭐",
-    "FREEDOM": "🕊️",
-    "FREE": "🕊️",
-    "LIFE": "🌱",
-    "WORLD": "🌍",
-    "GLOBAL": "🌍",
-    "HUMAN": "👤",
-    "HUMANS": "👤",
-    "HUMANITY": "👥",
-    "PEOPLE": "👥",
-    "TEAM": "👥",
-    # Countries & Culture
-    "INDIA": "🇮🇳",
-    "INDIAN": "🇮🇳",
-    "AMERICA": "🇺🇸",
-    "US": "🇺🇸",
-    "USA": "🇺🇸",
-    # Money, Wealth & Equity
-    "MONEY": "💰",
-    "EQUITY": "💰",
-    "CASH": "💰",
-    "DOLLAR": "💵",
-    "DOLLARS": "💵",
-    "RICH": "💰",
-    "BILLION": "💰",
-    "BILLIONAIRE": "💰",
-    "MILLION": "💰",
-    # Emotions, Warnings & Shock
-    "FIRE": "🔥",
-    "BURNING": "🔥",
-    "HOT": "🔥",
-    "SHOCK": "💥",
-    "SHOCKING": "💥",
-    "CRAZY": "🤯",
-    "INSANE": "🤯",
-    "DEAD": "💀",
-    "DIED": "💀",
-    "DEATH": "💀",
-    "KILL": "💀",
-    "KILLED": "💀",
-    "DANGER": "⚠️",
-    "RISK": "⚠️",
-    "WARNING": "⚠️",
-    "SECRET": "🔒",
-    "TRUTH": "🔍",
-    "LOOK": "👀",
-    "SEE": "👀",
-    "WATCH": "👀",
-    "LOVE": "❤️",
-    "HEART": "❤️",
+CYAN_KEYWORDS: Set[str] = {
+    "CODE", "DATA", "ROBOT", "AI", "COMPUTER", "NETWORK", "SERVERS", "SERVER",
+    "TOKENS", "TECH", "SPACE", "ROCKET", "PRESSURE", "PHYSICS", "STRESS", "CORNER",
+    "CORNERS", "SQUARE", "ROUNDED", "WINDOW", "WINDOWS", "MICRO", "FRACTURE",
+    "ENGINEERING", "TEST", "TANK", "WATER", "CABIN", "ALTITUDE", "JET", "JETS", "AIRCRAFT"
+}
+
+GOLD_KEYWORDS: Set[str] = {
+    "MONEY", "CASH", "POWER", "WIN", "PROFIT", "SUCCESS", "MILLIONS", "BILLIONS",
+    "SAVES", "SAVING", "GOLD", "BITCOIN", "RICH", "BOUNTY", "BOUNTIES", "PAYOUT",
+    "PAYOUTS", "REWARD", "DOLLAR", "DOLLARS", "WEALTH", "PRICE", "COST", "MARGIN", "PROFITABLE"
+}
+
+RED_KEYWORDS: Set[str] = {
+    "FAKE", "TRAP", "DANGER", "SECRET", "LOSE", "FAIL", "WARNING", "CRACK", "CRACKS",
+    "FIRE", "HEAT", "BLOOD", "DEAD", "KILL", "DEATH", "EXPLODED", "EXPLODE",
+    "DISINTEGRATED", "DISASTER", "FATAL", "CHAOS", "POISON", "SNAKE", "SNAKES",
+    "COBRA", "COBRAS", "INFESTATION", "CATASTROPHE", "CRASH", "CRASHED", "CRASHES"
+}
+
+INSIGHT_KEYWORDS: Set[str] = {
+    "TRUTH", "REVEALED", "DISCOVERY", "BREAKTHROUGH", "SECRET", "SOLVED", "PUZZLE",
+    "PARADOX", "LAW", "PRINCIPLE", "CAUSE", "REASON", "FOUND", "ANSWER", "KEY", "EXPLAINED"
 }
 
 
@@ -137,15 +67,15 @@ class ASSSubtitleBuilder:
     def __init__(
         self,
         font_name: str = "Arial Black",
-        font_size: int = 70,
-        primary_color: str = "&H00FFFFFF",      # Crisp White (BGR format in ASS)
-        default_highlight: str = "&H0000FFFF",  # Electric Yellow/Gold
-        outline_color: str = "&H00000000",      # Pure Black
-        outline_width: int = 5,
-        shadow: int = 2,
-        alignment: int = 2,                     # 2 = Bottom-Center
-        margin_v: int = 420,                    # Above platform UI buttons
-        max_words_per_line: int = 3,            # 3 words for high retention
+        font_size: int = 86,
+        primary_color: str = "&H00FFFFFF",      # Crisp White
+        default_highlight: str = "&H00E5FF",    # Electric Canary Yellow (#FFE500 in BGR)
+        outline_color: str = "&H00000000",      # Pure Deep Black
+        outline_width: int = 6,                 # 6px stroke for high contrast
+        shadow: int = 3,                        # Directional 3px shadow
+        alignment: int = 2,                     # 2 = Bottom-Center (scales symmetrically)
+        margin_v: int = 430,                    # Safe area above platform UI buttons
+        max_words_per_line: int = 3,            # Strict 1-3 words RSVP chunking
     ):
         self.font_name = font_name
         self.font_size = font_size
@@ -159,14 +89,28 @@ class ASSSubtitleBuilder:
         self.max_words_per_line = max_words_per_line
         self.emoji_mgr = EmojiManager()
 
-    def _get_highlight_color(self, word: str) -> str:
+    def _get_highlight_color(self, word: str, custom_emphasis: Optional[Set[str]] = None) -> str:
+        """Determines semantic highlight color based on LLM emphasis, numbers, and categories."""
         clean = re.sub(r"[^\w]", "", word).upper()
-        if clean in GREEN_KEYWORDS:
-            return "&H0000FF00"  # Neon Green
-        if clean in CYAN_KEYWORDS:
-            return "&H00FFFF00"  # Neon Cyan
+
+        # 1. Any word containing digits (numbers, years, percentages, dollar amounts)
+        if re.search(r"\d", word):
+            return "&HFFF000&"  # Electric Cyan
+
+        # 2. Custom emphasis passed from LLM script director
+        if custom_emphasis and clean in custom_emphasis:
+            return "&HFFF000&"  # Electric Cyan for high-priority turning points
+
+        # 3. Categorical semantic mapping
         if clean in RED_KEYWORDS:
-            return "&H003333FF"  # Neon Red/Coral
+            return "&H3333FF&"  # Coral Red (#FF3333)
+        if clean in GOLD_KEYWORDS:
+            return "&H00D7FF&"  # Vivid Gold (#FFD700)
+        if clean in CYAN_KEYWORDS:
+            return "&HFFF000&"  # Electric Cyan (#00F0FF)
+        if clean in INSIGHT_KEYWORDS:
+            return "&HF88C81&"  # Royal Amethyst (#818CF8)
+
         return self.default_highlight
 
     def _format_time(self, seconds: float) -> str:
@@ -180,9 +124,17 @@ class ASSSubtitleBuilder:
         return f"{hours}:{minutes:02d}:{secs:02d}.{centisecs:02d}"
 
     def build_ass(
-        self, words: List[WordTimestamp], output_path: Path
+        self,
+        words: List[WordTimestamp],
+        output_path: Path,
+        header_hook: Optional[str] = None,
+        emphasis_keywords: Optional[List[str]] = None,
     ) -> Tuple[Path, List[EmojiEvent]]:
-        """Compile word timestamps into clean ASS subtitles with multi-color pops and extract universal 3D color emoji events."""
+        """Compile word timestamps into kinetic typography ASS subtitles with real spring pop physics."""
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+
+        emphasis_set = {re.sub(r"[^\w]", "", k).upper() for k in (emphasis_keywords or [])}
+
         header = f"""[Script Info]
 ScriptType: v4.00+
 PlayResX: 1080
@@ -191,14 +143,21 @@ ScaledBorderAndShadow: yes
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: Hormozi,{self.font_name},{self.font_size},{self.primary_color},&H000000FF,{self.outline_color},&H80000000,-1,0,0,0,100,100,1,0,1,{self.outline_width},{self.shadow},{self.alignment},40,40,{self.margin_v},1
+Style: KineticMain,{self.font_name},{self.font_size},{self.primary_color},&H000000FF,{self.outline_color},&H80000000,-1,0,0,0,100,100,1,0,1,{self.outline_width},{self.shadow},{self.alignment},40,40,{self.margin_v},1
+Style: HeaderHook,{self.font_name},58,&H0000FFFF,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,2,0,1,6,0,8,40,40,320,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 """
         dialogues = []
+        if header_hook:
+            clean_hook = header_hook.strip().upper()
+            dialogues.append(
+                f"Dialogue: 1,0:00:00.00,0:00:02.40,HeaderHook,,0,0,0,,{{\\fad(100,180)}}{clean_hook}"
+            )
         emoji_events: List[EmojiEvent] = []
 
+        # 1. Chunk words into short 1-3 word lines (RSVP pacing)
         chunks: List[List[WordTimestamp]] = []
         current_chunk: List[WordTimestamp] = []
 
@@ -215,34 +174,28 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
         if current_chunk:
             chunks.append(current_chunk)
 
-        # For each chunk, create dialogue entries where active word pops with dynamic color
-        # and inline emoji is attached directly before the keyword where it belongs
+        # 2. Build kinetic pop animation for each active word in each chunk
         raw_dialogues = []
         for chunk in chunks:
-            # Check if any word in this chunk has a keyword emoji (at most one per chunk)
-            emoji_word_idx = None
-            chosen_emoji = None
-            for idx, w in enumerate(chunk):
-                cw = re.sub(r"[^\w]", "", w.word)
-                if cw in INLINE_KEYWORD_EMOJIS:
-                    emoji_word_idx = idx
-                    chosen_emoji = INLINE_KEYWORD_EMOJIS[cw]
-                    break
-
             for active_idx, target_word in enumerate(chunk):
                 formatted_words = []
                 for i, w in enumerate(chunk):
                     clean_w = re.sub(r"[^\w]", "", w.word)
                     display_word = w.word
-                    # Place emoji inline just before the word where it belongs
-                    if i == emoji_word_idx:
-                        display_word = f"{chosen_emoji} {w.word}"
 
                     if i == active_idx:
-                        color = self._get_highlight_color(clean_w)
-                        formatted_words.append(
-                            f"{{\\c{color}&\\fscx108\\fscy108}}{display_word}{{\\c{self.primary_color}&\\fscx100\\fscy100}}"
+                        color = self._get_highlight_color(clean_w, emphasis_set)
+                        # Real kinetic spring pop: instant 122% scale, snaps to 100% at 90ms, slight bounce to 106% at 160ms, settles at 100%
+                        pop_tag = (
+                            f"{{\\c{color}&"
+                            f"\\fscx122\\fscy122"
+                            f"\\t(0,90,\\fscx100\\fscy100)"
+                            f"\\t(90,160,\\fscx106\\fscy106)"
+                            f"\\t(160,220,\\fscx100\\fscy100)}}"
+                            f"{display_word}"
+                            f"{{\\c{self.primary_color}&\\fscx100\\fscy100}}"
                         )
+                        formatted_words.append(pop_tag)
                     else:
                         formatted_words.append(display_word)
 
@@ -253,28 +206,23 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                     "text": line_text,
                 })
 
-        # STRICT ZERO-OVERLAP TIMING PASS:
-        # Guarantees that at any point in time, AT MOST ONE dialogue is active on screen.
+        # 3. Strict zero-overlap timing pass (ensures monotonic timeline and zero flickering)
         for i in range(len(raw_dialogues)):
             curr = raw_dialogues[i]
             if i + 1 < len(raw_dialogues):
                 nxt = raw_dialogues[i + 1]
-                # Ensure monotonic start times
                 if nxt["start"] <= curr["start"]:
                     nxt["start"] = curr["start"] + 0.08
 
-                # End of current MUST not exceed start of next
                 if curr["end"] > nxt["start"]:
                     curr["end"] = nxt["start"]
-                elif (nxt["start"] - curr["end"]) > 0.45:
-                    # Natural conversational pause: let subtitle disappear after brief hold
+                elif (nxt["start"] - curr["end"]) > 0.40:
                     curr["end"] = min(curr["end"] + 0.15, nxt["start"])
                 else:
                     curr["end"] = nxt["start"]
             else:
                 curr["end"] = curr["end"] + 0.25
 
-            # Guarantee positive duration
             if curr["end"] <= curr["start"]:
                 curr["end"] = curr["start"] + 0.08
 
@@ -282,12 +230,11 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
             start_str = self._format_time(d["start"])
             end_str = self._format_time(d["end"])
             dialogues.append(
-                f"Dialogue: 0,{start_str},{end_str},Hormozi,,0,0,0,,{d['text']}"
+                f"Dialogue: 0,{start_str},{end_str},KineticMain,,0,0,0,,{d['text']}"
             )
 
         full_content = header + "\n".join(dialogues) + "\n"
 
-        output_path.parent.mkdir(parents=True, exist_ok=True)
         with open(output_path, "w", encoding="utf-8") as f:
             f.write(full_content)
 

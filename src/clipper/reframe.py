@@ -28,6 +28,23 @@ YUNET_MODEL_URL = "https://github.com/opencv/opencv_zoo/raw/main/models/face_det
 DEFAULT_MODEL_PATH = config.assets_dir / "models" / "face_detection_yunet_2023mar.onnx"
 
 
+class DetectionSmoother:
+    """Legacy 2D coordinate smoother with exponential smoothing."""
+    def __init__(self, alpha: float = 0.15):
+        self.alpha = alpha
+        self.current_x: Optional[float] = None
+        self.current_y: Optional[float] = None
+
+    def update(self, x: float, y: float) -> Tuple[int, int]:
+        if self.current_x is None:
+            self.current_x = float(x)
+            self.current_y = float(y)
+        else:
+            self.current_x += self.alpha * (x - self.current_x)
+            self.current_y += self.alpha * (y - self.current_y)
+        return int(round(self.current_x)), int(round(self.current_y))
+
+
 class CinematicCameraOperator:
     """
     Tier 4 Kinematic Virtual Camera:
@@ -439,6 +456,28 @@ class SmartReframer:
         half_h = out_h // 2
 
         if not shots:
+            if analysis.get("layout") == "split_screen" and "speaker_1_crop" in analysis:
+                c1 = analysis["speaker_1_crop"]
+                c2 = analysis.get("speaker_2_crop", c1)
+                return (
+                    f"[0:v]split=2[top_src][bot_src];"
+                    f"[top_src]crop={c1['w']}:{c1['h']}:{c1['x']}:{c1['y']},"
+                    f"scale={out_w}:{half_h}:force_original_aspect_ratio=increase,"
+                    f"crop={out_w}:{half_h}:(iw-ow)/2:(ih-oh)/2[top];"
+                    f"[bot_src]crop={c2['w']}:{c2['h']}:{c2['x']}:{c2['y']},"
+                    f"scale={out_w}:{half_h}:force_original_aspect_ratio=increase,"
+                    f"crop={out_w}:{half_h}:(iw-ow)/2:(ih-oh)/2[bot];"
+                    f"[top][bot]vstack[st];"
+                    f"[st]drawbox=x=0:y={half_h - 1}:w={out_w}:h=2:color=#111116@0.95:t=fill[v_reframe]"
+                )
+            elif analysis.get("layout") == "blurred_fallback":
+                return (
+                    f"[0:v]split=2[bg_in][fg_in];"
+                    f"[bg_in]scale={out_w}:{out_h}:force_original_aspect_ratio=increase,"
+                    f"crop={out_w}:{out_h},boxblur=20:5[bg];"
+                    f"[fg_in]scale={out_w}:-1[fg];"
+                    f"[bg][fg]overlay=(W-w)/2:(H-h)/2[v_reframe]"
+                )
             c = analysis.get("crop", {"x": 0, "y": 0, "w": int(analysis["src_h"] * 9 / 16), "h": analysis["src_h"]})
             return (
                 f"[0:v]crop={c['w']}:{c['h']}:{c['x']}:{c['y']},"

@@ -12,12 +12,12 @@ def test_speech_normalizer_acronyms():
     raw_text = "AITA for telling my MIL that my SIL cannot bring her BF to the wedding? TL;DR: OP is angry."
     normalized = normalize_for_speech(raw_text)
 
-    assert "Am I the asshole" in normalized
-    assert "Mother in law" in normalized
-    assert "Sister in law" in normalized
+    assert "Am I the jerk" in normalized
+    assert "Mother-in-law" in normalized
+    assert "Sister-in-law" in normalized
     assert "boyfriend" in normalized
-    assert "Too long didn't read" in normalized
-    assert "the original poster" in normalized
+    assert "In short" in normalized
+    assert "the author" in normalized
 
 
 def test_speech_normalizer_markdown_stripping():

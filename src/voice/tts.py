@@ -1,5 +1,6 @@
 import asyncio
 import os
+import time
 import subprocess
 from pathlib import Path
 from dataclasses import dataclass
@@ -22,22 +23,30 @@ class TTSEngine:
     async def _synthesize_async(
         self, text: str, output_path: Path, rate: str = "+0%", pitch: str = "+0Hz"
     ) -> None:
-        """Async generation using edge-tts with timeout and retry."""
-        for attempt in range(3):
+        """Async generation using edge-tts with timeout, voice fallback and robust retry."""
+        candidate_voices = [self.voice, "en-US-GuyNeural", "en-US-AndrewNeural", "en-US-BrianNeural"]
+        last_err = None
+        for attempt in range(4):
+            voice_to_use = candidate_voices[attempt % len(candidate_voices)]
             try:
+                if output_path.exists():
+                    try:
+                        output_path.unlink()
+                    except Exception:
+                        pass
                 communicate = edge_tts.Communicate(
                     text=text,
-                    voice=self.voice,
+                    voice=voice_to_use,
                     rate=rate,
                     pitch=pitch,
                 )
-                await asyncio.wait_for(communicate.save(str(output_path)), timeout=25.0)
+                await asyncio.wait_for(communicate.save(str(output_path)), timeout=35.0)
                 if output_path.exists() and output_path.stat().st_size > 1000:
                     return
             except Exception as e:
-                if attempt == 2:
-                    raise RuntimeError(f"EdgeTTS failed after 3 attempts: {e}")
-                await asyncio.sleep(1.0)
+                last_err = e
+                await asyncio.sleep(2.0 * (attempt + 1))
+        raise RuntimeError(f"EdgeTTS failed after 4 attempts: {last_err}")
 
     def _get_audio_duration(self, audio_path: Path) -> float:
         """Extract exact audio duration using av or ffprobe / ffmpeg."""
@@ -109,6 +118,26 @@ class TTSEngine:
         subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
         return output_path
 
+    @staticmethod
+    def _safe_replace(src: Path, dst: Path):
+        """Safely move/replace a file on Windows handling lingering file handles."""
+        import shutil
+        for attempt in range(10):
+            try:
+                if dst.exists():
+                    dst.unlink(missing_ok=True)
+                shutil.move(str(src), str(dst))
+                return
+            except Exception:
+                time.sleep(0.15)
+        # Final fallback: copy then try unlink
+        try:
+            import shutil
+            shutil.copy2(str(src), str(dst))
+            src.unlink(missing_ok=True)
+        except Exception:
+            pass
+
     def synthesize(
         self,
         text: str,
@@ -158,7 +187,7 @@ class TTSEngine:
                     check=True,
                 )
                 if conformed_path.exists():
-                    conformed_path.replace(output_path)
+                    self._safe_replace(conformed_path, output_path)
                     duration = self._get_audio_duration(output_path)
 
         # Apply studio podcast mastering chain
@@ -166,7 +195,7 @@ class TTSEngine:
             studio_path = output_path.with_name(f"studio_{output_path.name}")
             self._apply_studio_vocal_chain(output_path, studio_path)
             if studio_path.exists():
-                studio_path.replace(output_path)
+                self._safe_replace(studio_path, output_path)
                 duration = self._get_audio_duration(output_path)
 
         return TTSResult(
@@ -259,9 +288,9 @@ class TTSEngine:
         if apply_studio_mastering:
             self._apply_studio_vocal_chain(raw_concat, output_path)
             if not output_path.exists():
-                raw_concat.replace(output_path)
+                self._safe_replace(raw_concat, output_path)
         else:
-            raw_concat.replace(output_path)
+            self._safe_replace(raw_concat, output_path)
 
         duration = self._get_audio_duration(output_path)
         print(f"[TTS] Multi-voice dialogue audio created: {duration:.2f}s across {len(concat_lines)} clips.")

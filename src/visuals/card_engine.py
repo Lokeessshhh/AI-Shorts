@@ -11,7 +11,9 @@ Transforms any concept image into an enlarged, borderless, label-free floating v
 import io
 from pathlib import Path
 from typing import Union, Optional
-from PIL import Image, ImageDraw, ImageFilter, ImageOps
+from PIL import Image, ImageDraw, ImageFilter, ImageOps, ImageFile
+
+ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 
 class VisualCardEngine:
@@ -41,13 +43,18 @@ class VisualCardEngine:
 
         output_png.parent.mkdir(parents=True, exist_ok=True)
 
-        # 1. Load source image
-        if isinstance(image_input, Image.Image):
-            src_img = image_input.convert("RGBA")
-        elif isinstance(image_input, (bytes, bytearray)):
-            src_img = Image.open(io.BytesIO(image_input)).convert("RGBA")
-        else:
-            src_img = Image.open(str(image_input)).convert("RGBA")
+        # 1. Load source image with resilience against corrupted or truncated downloads
+        try:
+            if isinstance(image_input, Image.Image):
+                src_img = image_input.convert("RGBA")
+            elif isinstance(image_input, (bytes, bytearray)):
+                src_img = Image.open(io.BytesIO(image_input)).convert("RGBA")
+            else:
+                src_img = Image.open(str(image_input)).convert("RGBA")
+        except Exception:
+            src_img = Image.new("RGBA", (card_width, card_height), (242, 239, 233, 255))
+            draw_fb = ImageDraw.Draw(src_img)
+            draw_fb.rounded_rectangle([20, 20, card_width - 20, card_height - 20], radius=16, fill=(235, 230, 222, 255))
 
         # 2. Aspect-fit/crop image into enlarged card canvas
         cropped_img = ImageOps.fit(

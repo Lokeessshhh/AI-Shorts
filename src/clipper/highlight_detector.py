@@ -557,10 +557,12 @@ CANDIDATES TO EVALUATE:
 
     def _snap_and_enrich_highlights(
         self,
-        selected_candidates: List[Dict[str, Any]],
-        all_words: List[Dict[str, Any]],
-        min_duration: float,
-        max_duration: float,
+        selected_candidates: Optional[List[Dict[str, Any]]] = None,
+        all_words: Optional[List[Dict[str, Any]]] = None,
+        min_duration: float = 30.0,
+        max_duration: float = 60.0,
+        raw_highlights: Optional[List[Dict[str, Any]]] = None,
+        **kwargs,
     ) -> List[Dict[str, Any]]:
         """
         Snap candidate timestamps to precise Whisper word boundaries.
@@ -568,8 +570,10 @@ CANDIDATES TO EVALUATE:
         """
         highlights: List[Dict[str, Any]] = []
         filler_words = {"so", "yeah", "and", "um", "uh", "like", "well", ">>", "you", "know"}
+        target_candidates = selected_candidates if selected_candidates is not None else (raw_highlights or [])
+        all_words = all_words or []
 
-        for rank, c in enumerate(selected_candidates, 1):
+        for rank, c in enumerate(target_candidates, 1):
             raw_start = float(c.get("start_time", 0))
             raw_end = float(c.get("end_time", raw_start + 40.0))
 

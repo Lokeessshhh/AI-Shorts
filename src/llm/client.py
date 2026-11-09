@@ -1,7 +1,7 @@
 import json
 import re
 import requests
-from typing import Optional
+from typing import Optional, List, Dict, Any
 from ..config import config
 from .prompts import (
     SYSTEM_PROMPT,
@@ -38,6 +38,57 @@ class OpenRouterClient:
         cleaned = re.sub(r"\(.*?\)", "", cleaned)
         cleaned = re.sub(r"\s+", " ", cleaned)
         return cleaned.strip()
+
+    def complete_vision(
+        self,
+        system_prompt: str,
+        user_text: str,
+        image_urls: List[str],
+        temperature: float = 0.2,
+        max_tokens: int = 1500,
+    ) -> str:
+        """Execute a multimodal vision completion using Muse Spark 1.3 Contributor via OpenRouter."""
+        headers = {
+            "Authorization": f"Bearer {self.api_key}",
+            "HTTP-Referer": "https://github.com/AI_Shorts",
+            "X-Title": "AI Shorts Agent",
+            "Content-Type": "application/json",
+        }
+
+        user_content: List[Dict[str, Any]] = [
+            {"type": "text", "text": user_text}
+        ]
+
+        for url in image_urls:
+            user_content.append({
+                "type": "image_url",
+                "image_url": {"url": url}
+            })
+
+        payload = {
+            "model": self.model,
+            "messages": [
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_content},
+            ],
+            "temperature": temperature,
+            "max_tokens": max_tokens,
+        }
+
+        response = requests.post(
+            self.base_url,
+            headers=headers,
+            json=payload,
+            timeout=75,
+        )
+
+        if response.status_code != 200:
+            raise RuntimeError(
+                f"OpenRouter Vision API error ({response.status_code}): {response.text}"
+            )
+
+        data = response.json()
+        return data["choices"][0]["message"]["content"]
 
     def complete(
         self,
@@ -79,7 +130,12 @@ class OpenRouterClient:
         data = response.json()
         return data["choices"][0]["message"]["content"]
 
-    def generate_script(self, topic: str) -> ScriptPayload:
+    def generate_script(
+        self,
+        topic: str,
+        format_type: str = "counter_intuitive_truth",
+        angle: str = "",
+    ) -> ScriptPayload:
         """Call OpenRouter model to generate structured viral short script conforming to ScriptPayload."""
         headers = {
             "Authorization": f"Bearer {self.api_key}",
@@ -88,7 +144,7 @@ class OpenRouterClient:
             "Content-Type": "application/json",
         }
 
-        user_prompt = build_script_prompt(topic)
+        user_prompt = build_script_prompt(topic, format_type=format_type, angle=angle)
 
         payload = {
             "model": self.model,
