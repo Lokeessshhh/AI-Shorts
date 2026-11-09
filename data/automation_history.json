@@ -6,7 +6,8 @@
     "the surprising connection between sports fans and superstitions",
     "the hidden science of team colors and fan psychology",
     "the hidden science behind why we root for underdogs in sports",
-    "the bizarre reason why your mood affects air quality perception"
+    "the bizarre reason why your mood affects air quality perception",
+    "the bizarre reason why your favorite tv show might influence your life choices"
   ],
   "clipped_youtube_ids": [
     "dNIef2fGLQY",
@@ -686,16 +687,49 @@
       },
       "errors": [],
       "total_batch_seconds": 233.5
+    },
+    {
+      "batch_id": "batch_20261109_083207",
+      "timestamp": "2026-11-09T08:32:07.158273",
+      "batch_dir": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261109_083207",
+      "modes_completed": [
+        "mode1_facts"
+      ],
+      "total_videos": 1,
+      "mode1": {
+        "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261109_083207/mode1_facts/the_bizarre_reason_why_your_favorite_tv__en_1794213180.mp4",
+        "title": "TV Shows Shape Your Life?",
+        "source_title": "TV Shows Shape Your Life?",
+        "source_channel": "AI Shorts Studio",
+        "source_url": "N/A",
+        "duration": 10.08,
+        "viral_score": 90,
+        "status": "SUCCESS",
+        "hook_sentence": "",
+        "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261109_083207/mode1_facts/the_bizarre_reason_why_your_favorite_tv__en_1794213180_metadata.txt",
+        "is_fallback": false,
+        "topic": "The Bizarre Reason Why Your Favorite TV Show Might Influence Your Life Choices",
+        "clips_count": 1,
+        "selected_clip": {},
+        "clips": [],
+        "execution_seconds": 60.1
+      },
+      "mode2": {},
+      "errors": [],
+      "total_batch_seconds": 62.7
     }
   ],
-  "last_updated": "2026-11-09T13:50:32.090475",
-  "clip_logs": [
+  "last_updated": "2026-11-09T08:33:09.846081",
+  "topic_logs": [
     {
-      "timestamp": "2026-11-09T13:50:32.081010",
-      "video_id": "zYxzRuXgAMo",
-      "title": "Who Killed the QUALIS? The Dark Reality Behind Toyota Qualis' Disappearance | Business Case Study",
+      "timestamp": "2026-11-09T08:33:09.844373",
+      "mode": "facts",
+      "topic": "The Bizarre Reason Why Your Favorite TV Show Might Influence Your Life Choices",
+      "normalized": "the bizarre reason why your favorite tv show might influence your life choices",
       "metadata": {
-        "clips_count": 1
+        "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261109_083207/mode1_facts/the_bizarre_reason_why_your_favorite_tv__en_1794213180.mp4",
+        "duration": 10.079791666666667,
+        "title": "TV Shows Shape Your Life?"
       }
     }
   ]
