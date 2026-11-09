@@ -4,6 +4,7 @@ Applies attention-reset micro-zooms, glowing progress bar, dynamic ASS subtitle 
 """
 
 import os
+import re
 import shutil
 import subprocess
 from pathlib import Path
@@ -22,11 +23,154 @@ class ShortEditor:
     def __init__(self, ffmpeg_path: Optional[str] = None):
         self.ffmpeg_path = ffmpeg_path or self._locate_ffmpeg()
         self.subtitle_builder = ASSSubtitleBuilder(
-            font_size=68,
-            margin_v=420,  # Perfectly centered above platform UI overlay
+            font_size=78,
+            margin_v=430,  # Perfectly centered above platform UI overlay
             max_words_per_line=3,
         )
         self.reframer = SmartReframer()
+
+    def _extract_exact_slice_words(self, video_path: Path, temp_dir: Path) -> List[Dict[str, Any]]:
+        """
+        Extract millisecond-accurate acoustic word timestamps directly from the sliced video's audio
+        using faster-whisper. Guarantees 100% synchronization with speech, eliminating any CDN keyframe drift.
+        """
+        import wave
+        import numpy as np
+        from faster_whisper import WhisperModel
+
+        slice_wav = temp_dir / "slice_audio_exact.wav"
+        cmd = [
+            self.ffmpeg_path, "-y",
+            "-i", str(video_path),
+            "-ar", "16000",
+            "-ac", "1",
+            str(slice_wav),
+        ]
+        try:
+            subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
+            with wave.open(str(slice_wav), "rb") as wf:
+                data = wf.readframes(wf.getnframes())
+                audio = np.frombuffer(data, dtype=np.int16).astype(np.float32) / 32768.0
+
+            model = WhisperModel("base", device="cpu", compute_type="int8")
+            segments, info = model.transcribe(audio, word_timestamps=True)
+            words = []
+            for s in segments:
+                if s.words:
+                    for w in s.words:
+                        w_text = w.word.strip()
+                        if w_text:
+                            words.append({
+                                "word": w_text,
+                                "start": round(float(w.start), 3),
+                                "end": round(float(w.end), 3),
+                            })
+            if words:
+                print(f"[Clipper/Editor] Acoustically resynced {len(words)} words directly from cut slice audio (Language: {info.language}).")
+                return words
+        except Exception as e:
+            print(f"[Clipper/Editor] Slice acoustic resync notice: {e}. Falling back to candidate timestamps.")
+        return []
+
+    @staticmethod
+    def _is_non_latin(text: str) -> bool:
+        """Check if string contains non-Latin scripts (Devanagari, Urdu, Arabic, etc.)."""
+        return any(
+            ("\u0900" <= ch <= "\u097f") or ("\u0600" <= ch <= "\u06ff") or (ord(ch) > 0x024F and ch.isalpha())
+            for ch in text
+        )
+
+    _has_devanagari = _is_non_latin
+
+    def _transliterate_text(self, text: str) -> str:
+        """Transliterate a non-Latin Hindi/Urdu phrase or hook to Roman Hinglish using LLM."""
+        if not self._is_non_latin(text):
+            return text
+        try:
+            from ..llm.client import OpenRouterClient
+            llm = OpenRouterClient()
+            prompt = (
+                f"Transliterate the following Hindi/Urdu text into conversational Roman Hindi (Hinglish) using Latin script (A-Za-z).\n"
+                f"Rules:\n"
+                f"1. Output ONLY English/Latin alphabet letters (A-Za-z). Do NOT use Devanagari or Urdu script.\n"
+                f"2. Keep it punchy, popular, and natural as used on YouTube Shorts and Instagram Reels.\n"
+                f"Input: {text}"
+            )
+            res = llm.complete(
+                system_prompt="You are an expert Hindi to Roman Hinglish transliterator.",
+                user_prompt=prompt,
+                temperature=0.1,
+            )
+            return res.strip()
+        except Exception:
+            return text
+
+    def _transliterate_and_align_hinglish(self, words_data: List[Dict[str, Any]]) -> List[WordTimestamp]:
+        """Convert non-Latin Hindi/Urdu transcript words into Roman Hinglish with millisecond timestamps."""
+        if not words_data:
+            return []
+
+        from ..llm.client import OpenRouterClient
+        from ..subtitles.acoustic_aligner import AcousticWordAligner
+
+        aligner = AcousticWordAligner()
+        llm = OpenRouterClient()
+
+        # Group words into sentence / phrase blocks
+        blocks = []
+        curr_words = []
+        for i, w in enumerate(words_data):
+            curr_words.append(w)
+            word_str = w.get("word", "")
+            is_punct = any(p in word_str for p in [".", "?", "!", "।", "॥"])
+            has_pause = (i < len(words_data) - 1 and (words_data[i+1].get("start", 0) - w.get("end", 0)) > 0.45)
+            is_long = len(curr_words) >= 8
+
+            if is_punct or has_pause or is_long or i == len(words_data) - 1:
+                start_t = float(curr_words[0].get("start", 0))
+                end_t = float(curr_words[-1].get("end", start_t + 1.0))
+                text_block = " ".join(item.get("word", "") for item in curr_words).strip()
+                if text_block:
+                    blocks.append((text_block, start_t, end_t))
+                curr_words = []
+
+        if not blocks:
+            return [WordTimestamp(word=w["word"], start=w["start"], end=w["end"]) for w in words_data]
+
+        full_hindi_text = "\n".join(f"[{i+1}] {b[0]}" for i, b in enumerate(blocks))
+        prompt = (
+            "Transliterate the following spoken Hindi/Urdu numbered sentences into natural conversational Roman Hindi (Hinglish) using Latin alphabet (A-Za-z).\n"
+            "Rules:\n"
+            "1. Output ONLY the numbered transliterations matching each [N].\n"
+            "2. Must be 100% Latin script (A-Za-z). Do NOT output any Devanagari or Arabic/Urdu characters.\n"
+            "3. Use standard popular Roman Hinglish spellings (e.g. 'Dukan to har aane par hi discount deti hai...').\n\n"
+            f"{full_hindi_text}"
+        )
+        try:
+            res = llm.complete(
+                system_prompt="You are an expert Hindi to Roman Hinglish transliterator.",
+                user_prompt=prompt,
+                temperature=0.1,
+            )
+            lines = [line.strip() for line in res.strip().split("\n") if line.strip()]
+            hinglish_map = {}
+            for line in lines:
+                m = re.match(r"^\[?(\d+)\]?[\.\:\s]*(.+)$", line)
+                if m:
+                    idx = int(m.group(1)) - 1
+                    hinglish_map[idx] = m.group(2).strip()
+
+            all_aligned: List[WordTimestamp] = []
+            for i, (orig_text, st, et) in enumerate(blocks):
+                h_text = hinglish_map.get(i) or orig_text
+                aligned_block = aligner.align_scene(h_text, st, et)
+                all_aligned.extend(aligned_block)
+
+            return all_aligned if all_aligned else [WordTimestamp(word=w["word"], start=w["start"], end=w["end"]) for w in words_data]
+        except Exception as e:
+            print(f"[Clipper/Editor] Transliteration note ({e}); falling back to phonetic alignment.")
+            full_text = " ".join(b[0] for b in blocks)
+            return aligner.align_scene(full_text, blocks[0][1], blocks[-1][2])
 
     def _locate_ffmpeg(self) -> str:
         sys_ffmpeg = shutil.which("ffmpeg")
@@ -103,14 +247,48 @@ class ShortEditor:
         layout_type = reframe_analysis.get("layout", "solo")
         print(f"[Clipper/Editor] Clip #{rank} Layout detected: {layout_type.upper()}")
 
-        # 2. Compile ASS Subtitles
-        words_data = highlight.get("words", [])
-        word_objs = [
-            WordTimestamp(word=w["word"], start=w["start"], end=w["end"])
-            for w in words_data
-        ]
+        # 2. Compile ASS Subtitles (100% Acoustic Sync & Hinglish Captions)
+        # Extract millisecond-accurate word timestamps directly from the cut video audio!
+        exact_words = self._extract_exact_slice_words(source_video, temp_dir)
+        words_data = exact_words if exact_words else highlight.get("words", [])
+
+        has_devanagari = any(self._has_devanagari(w.get("word", "")) for w in words_data)
+
+        if has_devanagari:
+            print(f"[Clipper/Editor] Devanagari Hindi speech detected. Transliterating into Roman Hinglish subtitles...")
+            word_objs = self._transliterate_and_align_hinglish(words_data)
+        else:
+            word_objs = [
+                WordTimestamp(word=w["word"], start=w["start"], end=w["end"])
+                for w in words_data
+            ]
+
+        # Extract bold text hook for frames 0-2.4s (same style as Mode 1)
+        raw_hook = highlight.get("clean_hook") or highlight.get("title") or "MIND-BLOWING MOMENT"
+        header_hook = self._transliterate_text(raw_hook).upper()[:35]
+
+        # Extract emphasis keywords for dynamic color accents (cyan, gold, red, canary yellow)
+        all_emphasis = []
+        for tag in highlight.get("hashtags", []):
+            all_emphasis.append(tag.lstrip("#").upper())
+        for token in re.findall(r"\b[A-Za-z0-9]{4,}\b", header_hook):
+            all_emphasis.append(token.upper())
+        for w in word_objs:
+            if any(ch.isdigit() for ch in w.word) or len(w.word) >= 7:
+                all_emphasis.append(w.word.upper())
+
+        # Extract channel attribution for on-screen copyright/fair-use credit
+        raw_channel = highlight.get("channel") or highlight.get("uploader") or ""
+        credit_badge = re.sub(r"[^\w\s@.]", "", raw_channel).strip() if raw_channel else None
+
         ass_path = temp_dir / f"clip_{rank}_subtitles.ass"
-        _, emoji_events = self.subtitle_builder.build_ass(word_objs, ass_path)
+        _, emoji_events = self.subtitle_builder.build_ass(
+            words=word_objs,
+            output_path=ass_path,
+            header_hook=header_hook,
+            emphasis_keywords=all_emphasis,
+            credit_attribution=credit_badge,
+        )
 
         # 3. Build FFmpeg Filtergraph
         reframe_filter = self.reframer.generate_ffmpeg_filtergraph(

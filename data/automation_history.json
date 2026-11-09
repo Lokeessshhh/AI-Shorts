@@ -9,7 +9,11 @@
     "the bizarre reason why your mood affects air quality perception"
   ],
   "clipped_youtube_ids": [
-    "dNIef2fGLQY"
+    "dNIef2fGLQY",
+    "MWxWitm-CWw",
+    "vzQuy_P5QX4",
+    "HGJTVviIZww",
+    "zYxzRuXgAMo"
   ],
   "batch_history": [
     {
@@ -386,19 +390,312 @@
       "mode2": {},
       "errors": [],
       "total_batch_seconds": 112.2
+    },
+    {
+      "batch_id": "batch_20261109_120228",
+      "timestamp": "2026-11-09T12:02:28.066310",
+      "batch_dir": "C:\\Users\\Samsung\\Documents\\Code\\AI_Shorts\\output\\batch_20261109_120228",
+      "modes_completed": [
+        "mode2_clipper"
+      ],
+      "total_videos": 1,
+      "mode1": {},
+      "mode2": {
+        "video_path": "C:\\Users\\Samsung\\Documents\\Code\\AI_Shorts\\output\\batch_20261109_120228\\mode2_clipper\\clip_1_lessons_from_mahabharata_characters_1794205951.mp4",
+        "title": "Lessons from Mahabharata Characters",
+        "source_title": "DIWALI SPECIAL- How To Attract VISHNU Quickly In Your Life - Dushyant Sridhar On TRS ",
+        "source_channel": "The Ranveer Show Hindi",
+        "source_url": "https://www.youtube.com/watch?v=MWxWitm-CWw",
+        "duration": 34.96,
+        "viral_score": 88,
+        "status": "SUCCESS",
+        "hook_sentence": "",
+        "metadata_path": "C:\\Users\\Samsung\\Documents\\Code\\AI_Shorts\\output\\batch_20261109_120228\\mode2_clipper\\clip_1_lessons_from_mahabharata_characters_1794205951_metadata.txt",
+        "is_fallback": false,
+        "topic": "Lessons from Mahabharata Characters",
+        "clips_count": 1,
+        "selected_clip": {
+          "rank": 1,
+          "title": "Lessons from Mahabharata Characters",
+          "viral_score": 88,
+          "hook_score": 30,
+          "narrative_score": 28,
+          "debate_score": 16,
+          "density_score": 14,
+          "virality_reason": "The relatable theme of personal growth through character lessons resonates deeply, encouraging viewers to reflect and share.",
+          "hook_sentence": "How we can mend our lives for the better.",
+          "category": "Personal Story & Mindset",
+          "mood": "high_energy",
+          "wpm": 173.3,
+          "video_path": "C:\\Users\\Samsung\\Documents\\Code\\AI_Shorts\\output\\batch_20261109_120228\\mode2_clipper\\clip_1_lessons_from_mahabharata_characters_1794205951.mp4",
+          "metadata_path": "C:\\Users\\Samsung\\Documents\\Code\\AI_Shorts\\output\\batch_20261109_120228\\mode2_clipper\\clip_1_lessons_from_mahabharata_characters_1794205951_metadata.txt",
+          "duration": 34.96,
+          "composite_upload_score": 87.71,
+          "selection_rank": 1,
+          "selected_for_upload": true,
+          "selection_verdict": "WINNER / SELECTED FOR UPLOAD",
+          "selection_reason": "Top Composite Score (87.71/100) with 30/35 hook strength ('How we can mend our lives for the better.') and 16/20 comment arousal."
+        },
+        "clips": [
+          {
+            "rank": 1,
+            "title": "Lessons from Mahabharata Characters",
+            "viral_score": 88,
+            "hook_score": 30,
+            "narrative_score": 28,
+            "debate_score": 16,
+            "density_score": 14,
+            "virality_reason": "The relatable theme of personal growth through character lessons resonates deeply, encouraging viewers to reflect and share.",
+            "hook_sentence": "How we can mend our lives for the better.",
+            "category": "Personal Story & Mindset",
+            "mood": "high_energy",
+            "wpm": 173.3,
+            "video_path": "C:\\Users\\Samsung\\Documents\\Code\\AI_Shorts\\output\\batch_20261109_120228\\mode2_clipper\\clip_1_lessons_from_mahabharata_characters_1794205951.mp4",
+            "metadata_path": "C:\\Users\\Samsung\\Documents\\Code\\AI_Shorts\\output\\batch_20261109_120228\\mode2_clipper\\clip_1_lessons_from_mahabharata_characters_1794205951_metadata.txt",
+            "duration": 34.96,
+            "composite_upload_score": 87.71,
+            "selection_rank": 1,
+            "selected_for_upload": true,
+            "selection_verdict": "WINNER / SELECTED FOR UPLOAD",
+            "selection_reason": "Top Composite Score (87.71/100) with 30/35 hook strength ('How we can mend our lives for the better.') and 16/20 comment arousal."
+          }
+        ],
+        "execution_seconds": 82.4
+      },
+      "errors": [],
+      "total_batch_seconds": 85.4
+    },
+    {
+      "batch_id": "batch_20261109_132241",
+      "timestamp": "2026-11-09T13:22:41.641111",
+      "batch_dir": "C:\\Users\\Samsung\\Documents\\Code\\AI_Shorts\\output\\batch_20261109_132241",
+      "modes_completed": [
+        "mode2_clipper"
+      ],
+      "total_videos": 1,
+      "mode1": {},
+      "mode2": {
+        "video_path": "C:\\Users\\Samsung\\Documents\\Code\\AI_Shorts\\output\\batch_20261109_132241\\mode2_clipper\\clip_1_the_dmart_strategy_1794210778.mp4",
+        "title": "The DMart Strategy",
+        "source_title": "How DMart Is Dying? The Problem Nobody Saw Coming | Business Case Study",
+        "source_channel": "HinExp",
+        "source_url": "https://www.youtube.com/watch?v=vzQuy_P5QX4",
+        "duration": 34.16,
+        "viral_score": 94,
+        "status": "SUCCESS",
+        "hook_sentence": "",
+        "metadata_path": "C:\\Users\\Samsung\\Documents\\Code\\AI_Shorts\\output\\batch_20261109_132241\\mode2_clipper\\clip_1_the_dmart_strategy_1794210778_metadata.txt",
+        "is_fallback": false,
+        "topic": "The DMart Strategy",
+        "clips_count": 1,
+        "selected_clip": {
+          "rank": 1,
+          "title": "The DMart Strategy",
+          "viral_score": 94,
+          "hook_score": 33,
+          "narrative_score": 28,
+          "debate_score": 19,
+          "density_score": 14,
+          "virality_reason": "The strategic insights into DMart's business model will resonate with entrepreneurs and provoke thought on pricing strategies.",
+          "hook_sentence": "की दुकान त्यौहार आने पर ही आज डिस्काउंट है बोलती है। दमानी का लॉजिक था डिस्काउंट की जरूरत ही क्यों पड़े?",
+          "category": "Business, Money & Career",
+          "mood": "high_energy",
+          "wpm": 142.3,
+          "video_path": "C:\\Users\\Samsung\\Documents\\Code\\AI_Shorts\\output\\batch_20261109_132241\\mode2_clipper\\clip_1_the_dmart_strategy_1794210778.mp4",
+          "metadata_path": "C:\\Users\\Samsung\\Documents\\Code\\AI_Shorts\\output\\batch_20261109_132241\\mode2_clipper\\clip_1_the_dmart_strategy_1794210778_metadata.txt",
+          "duration": 34.16,
+          "composite_upload_score": 96.29,
+          "selection_rank": 1,
+          "selected_for_upload": true,
+          "selection_verdict": "WINNER / SELECTED FOR UPLOAD",
+          "selection_reason": "Top Composite Score (96.29/100) with 33/35 hook strength ('की दुकान त्यौहार आने पर ही आज डिस्काउंट है बोलती है। दमानी का लॉजिक था डिस्काउंट की जरूरत ही क्यों पड़े?') and 19/20 comment arousal."
+        },
+        "clips": [
+          {
+            "rank": 1,
+            "title": "The DMart Strategy",
+            "viral_score": 94,
+            "hook_score": 33,
+            "narrative_score": 28,
+            "debate_score": 19,
+            "density_score": 14,
+            "virality_reason": "The strategic insights into DMart's business model will resonate with entrepreneurs and provoke thought on pricing strategies.",
+            "hook_sentence": "की दुकान त्यौहार आने पर ही आज डिस्काउंट है बोलती है। दमानी का लॉजिक था डिस्काउंट की जरूरत ही क्यों पड़े?",
+            "category": "Business, Money & Career",
+            "mood": "high_energy",
+            "wpm": 142.3,
+            "video_path": "C:\\Users\\Samsung\\Documents\\Code\\AI_Shorts\\output\\batch_20261109_132241\\mode2_clipper\\clip_1_the_dmart_strategy_1794210778.mp4",
+            "metadata_path": "C:\\Users\\Samsung\\Documents\\Code\\AI_Shorts\\output\\batch_20261109_132241\\mode2_clipper\\clip_1_the_dmart_strategy_1794210778_metadata.txt",
+            "duration": 34.16,
+            "composite_upload_score": 96.29,
+            "selection_rank": 1,
+            "selected_for_upload": true,
+            "selection_verdict": "WINNER / SELECTED FOR UPLOAD",
+            "selection_reason": "Top Composite Score (96.29/100) with 33/35 hook strength ('की दुकान त्यौहार आने पर ही आज डिस्काउंट है बोलती है। दमानी का लॉजिक था डिस्काउंट की जरूरत ही क्यों पड़े?') and 19/20 comment arousal."
+          }
+        ],
+        "execution_seconds": 91.1
+      },
+      "errors": [],
+      "total_batch_seconds": 107.9
+    },
+    {
+      "batch_id": "batch_20261109_132640",
+      "timestamp": "2026-11-09T13:26:40.748585",
+      "batch_dir": "C:\\Users\\Samsung\\Documents\\Code\\AI_Shorts\\output\\batch_20261109_132640",
+      "modes_completed": [
+        "mode2_clipper"
+      ],
+      "total_videos": 1,
+      "mode1": {},
+      "mode2": {
+        "video_path": "C:\\Users\\Samsung\\Documents\\Code\\AI_Shorts\\output\\batch_20261109_132640\\mode2_clipper\\clip_1_the_highest_paid_ceo_you_wont_believe_1794211015.mp4",
+        "title": "The Highest Paid CEO You Won't Believe",
+        "source_title": "A REFUGEE built India's LARGEST MASALA BRAND | Business Case Studies by Abhi and Niyu",
+        "source_channel": "Abhi and Niyu",
+        "source_url": "https://www.youtube.com/watch?v=HGJTVviIZww",
+        "duration": 31.48,
+        "viral_score": 94,
+        "status": "SUCCESS",
+        "hook_sentence": "",
+        "metadata_path": "C:\\Users\\Samsung\\Documents\\Code\\AI_Shorts\\output\\batch_20261109_132640\\mode2_clipper\\clip_1_the_highest_paid_ceo_you_wont_believe_1794211015_metadata.txt",
+        "is_fallback": false,
+        "topic": "The Highest Paid CEO You Won't Believe",
+        "clips_count": 1,
+        "selected_clip": {
+          "rank": 1,
+          "title": "The Highest Paid CEO You Won't Believe",
+          "viral_score": 94,
+          "hook_score": 34,
+          "narrative_score": 28,
+          "debate_score": 18,
+          "density_score": 14,
+          "virality_reason": "The surprising revelation about the CEO's background will intrigue viewers and spark discussions.",
+          "hook_sentence": "Who is the highest paid CEO of the FMCG sector?",
+          "category": "Business, Money & Career",
+          "mood": "high_energy",
+          "wpm": 154.4,
+          "video_path": "C:\\Users\\Samsung\\Documents\\Code\\AI_Shorts\\output\\batch_20261109_132640\\mode2_clipper\\clip_1_the_highest_paid_ceo_you_wont_believe_1794211015.mp4",
+          "metadata_path": "C:\\Users\\Samsung\\Documents\\Code\\AI_Shorts\\output\\batch_20261109_132640\\mode2_clipper\\clip_1_the_highest_paid_ceo_you_wont_believe_1794211015_metadata.txt",
+          "duration": 31.48,
+          "composite_upload_score": 96.14,
+          "selection_rank": 1,
+          "selected_for_upload": true,
+          "selection_verdict": "WINNER / SELECTED FOR UPLOAD",
+          "selection_reason": "Top Composite Score (96.14/100) with 34/35 hook strength ('Who is the highest paid CEO of the FMCG sector?') and 18/20 comment arousal."
+        },
+        "clips": [
+          {
+            "rank": 1,
+            "title": "The Highest Paid CEO You Won't Believe",
+            "viral_score": 94,
+            "hook_score": 34,
+            "narrative_score": 28,
+            "debate_score": 18,
+            "density_score": 14,
+            "virality_reason": "The surprising revelation about the CEO's background will intrigue viewers and spark discussions.",
+            "hook_sentence": "Who is the highest paid CEO of the FMCG sector?",
+            "category": "Business, Money & Career",
+            "mood": "high_energy",
+            "wpm": 154.4,
+            "video_path": "C:\\Users\\Samsung\\Documents\\Code\\AI_Shorts\\output\\batch_20261109_132640\\mode2_clipper\\clip_1_the_highest_paid_ceo_you_wont_believe_1794211015.mp4",
+            "metadata_path": "C:\\Users\\Samsung\\Documents\\Code\\AI_Shorts\\output\\batch_20261109_132640\\mode2_clipper\\clip_1_the_highest_paid_ceo_you_wont_believe_1794211015_metadata.txt",
+            "duration": 31.48,
+            "composite_upload_score": 96.14,
+            "selection_rank": 1,
+            "selected_for_upload": true,
+            "selection_verdict": "WINNER / SELECTED FOR UPLOAD",
+            "selection_reason": "Top Composite Score (96.14/100) with 34/35 hook strength ('Who is the highest paid CEO of the FMCG sector?') and 18/20 comment arousal."
+          }
+        ],
+        "execution_seconds": 102.4
+      },
+      "errors": [],
+      "total_batch_seconds": 117.1
+    },
+    {
+      "batch_id": "batch_20261109_134638",
+      "timestamp": "2026-11-09T13:46:38.608321",
+      "batch_dir": "C:\\Users\\Samsung\\Documents\\Code\\AI_Shorts\\output\\batch_20261109_134638",
+      "modes_completed": [
+        "mode2_clipper"
+      ],
+      "total_videos": 1,
+      "mode1": {},
+      "mode2": {
+        "video_path": "C:\\Users\\Samsung\\Documents\\Code\\AI_Shorts\\output\\batch_20261109_134638\\mode2_clipper\\clip_1_the_shocking_truth_about_toyota_qualis_1794212239.mp4",
+        "title": "The Shocking Truth About Toyota Qualis",
+        "source_title": "Who Killed the QUALIS? The Dark Reality Behind Toyota Qualis' Disappearance | Business Case Study",
+        "source_channel": "Rajnikant Sharma",
+        "source_url": "https://www.youtube.com/watch?v=zYxzRuXgAMo",
+        "duration": 39.26,
+        "viral_score": 91,
+        "status": "SUCCESS",
+        "hook_sentence": "",
+        "metadata_path": "C:\\Users\\Samsung\\Documents\\Code\\AI_Shorts\\output\\batch_20261109_134638\\mode2_clipper\\clip_1_the_shocking_truth_about_toyota_qualis_1794212239_metadata.txt",
+        "is_fallback": false,
+        "topic": "The Shocking Truth About Toyota Qualis",
+        "clips_count": 1,
+        "selected_clip": {
+          "rank": 1,
+          "title": "The Shocking Truth About Toyota Qualis",
+          "viral_score": 91,
+          "hook_score": 33,
+          "narrative_score": 25,
+          "debate_score": 19,
+          "density_score": 14,
+          "virality_reason": "The unexpected revelation about the Toyota Qualis hooks viewers, leading to curiosity about its impact on the market.",
+          "hook_sentence": "The Toyota Qualis will shock you to know that it never actually had a car engine.",
+          "category": "Business, Money & Career",
+          "mood": "high_energy",
+          "wpm": 204.8,
+          "video_path": "C:\\Users\\Samsung\\Documents\\Code\\AI_Shorts\\output\\batch_20261109_134638\\mode2_clipper\\clip_1_the_shocking_truth_about_toyota_qualis_1794212239.mp4",
+          "metadata_path": "C:\\Users\\Samsung\\Documents\\Code\\AI_Shorts\\output\\batch_20261109_134638\\mode2_clipper\\clip_1_the_shocking_truth_about_toyota_qualis_1794212239_metadata.txt",
+          "duration": 39.26,
+          "composite_upload_score": 94.79,
+          "selection_rank": 1,
+          "selected_for_upload": true,
+          "selection_verdict": "WINNER / SELECTED FOR UPLOAD",
+          "selection_reason": "Top Composite Score (94.79/100) with 33/35 hook strength ('The Toyota Qualis will shock you to know that it never actually had a car engine.') and 19/20 comment arousal."
+        },
+        "clips": [
+          {
+            "rank": 1,
+            "title": "The Shocking Truth About Toyota Qualis",
+            "viral_score": 91,
+            "hook_score": 33,
+            "narrative_score": 25,
+            "debate_score": 19,
+            "density_score": 14,
+            "virality_reason": "The unexpected revelation about the Toyota Qualis hooks viewers, leading to curiosity about its impact on the market.",
+            "hook_sentence": "The Toyota Qualis will shock you to know that it never actually had a car engine.",
+            "category": "Business, Money & Career",
+            "mood": "high_energy",
+            "wpm": 204.8,
+            "video_path": "C:\\Users\\Samsung\\Documents\\Code\\AI_Shorts\\output\\batch_20261109_134638\\mode2_clipper\\clip_1_the_shocking_truth_about_toyota_qualis_1794212239.mp4",
+            "metadata_path": "C:\\Users\\Samsung\\Documents\\Code\\AI_Shorts\\output\\batch_20261109_134638\\mode2_clipper\\clip_1_the_shocking_truth_about_toyota_qualis_1794212239_metadata.txt",
+            "duration": 39.26,
+            "composite_upload_score": 94.79,
+            "selection_rank": 1,
+            "selected_for_upload": true,
+            "selection_verdict": "WINNER / SELECTED FOR UPLOAD",
+            "selection_reason": "Top Composite Score (94.79/100) with 33/35 hook strength ('The Toyota Qualis will shock you to know that it never actually had a car engine.') and 19/20 comment arousal."
+          }
+        ],
+        "execution_seconds": 192.7
+      },
+      "errors": [],
+      "total_batch_seconds": 233.5
     }
   ],
-  "last_updated": "2026-11-09T11:45:01.698044",
-  "topic_logs": [
+  "last_updated": "2026-11-09T13:50:32.090475",
+  "clip_logs": [
     {
-      "timestamp": "2026-11-09T11:45:01.687010",
-      "mode": "facts",
-      "topic": "The Bizarre Reason Why Your Mood Affects Air Quality Perception",
-      "normalized": "the bizarre reason why your mood affects air quality perception",
+      "timestamp": "2026-11-09T13:50:32.081010",
+      "video_id": "zYxzRuXgAMo",
+      "title": "Who Killed the QUALIS? The Dark Reality Behind Toyota Qualis' Disappearance | Business Case Study",
       "metadata": {
-        "video_path": "C:\\Users\\Samsung\\Documents\\Code\\AI_Shorts\\output\\batch_20261109_114309\\mode1_facts\\the_bizarre_reason_why_your_mood_affects_en_1794204892.mp4",
-        "duration": 17.167166666666667,
-        "title": "Mood and Air Quality Connection"
+        "clips_count": 1
       }
     }
   ]

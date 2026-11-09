@@ -32,7 +32,7 @@ class LongFormTranscriber:
         self,
         audio_path: Path,
         cache_json_path: Optional[Path] = None,
-        language: Optional[str] = "en",
+        language: Optional[str] = None,
     ) -> Dict[str, Any]:
         """
         Transcribe audio file into word-level timestamps and formatted chunks.

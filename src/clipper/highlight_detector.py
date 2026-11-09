@@ -21,18 +21,21 @@ SPONSOR_AND_BANTER_PATTERNS = [
 ]
 
 VIRAL_KEYWORDS = {
-    # High emotional / curiosity triggers
+    # High emotional / curiosity triggers (English & Hindi)
     "money": 3, "billion": 3, "million": 3, "secret": 3, "truth": 3, "never": 2,
     "mistake": 3, "regret": 3, "failure": 3, "failed": 3, "hate": 2, "love": 2,
     "power": 2, "mindset": 2, "status": 3, "wealth": 3, "psychology": 3, "trap": 3,
     "crazy": 2, "danger": 2, "worst": 3, "best": 2, "lesson": 2, "rules": 2,
     "future": 2, "ai": 2, "world": 2, "human": 2, "god": 2, "death": 3, "died": 3,
+    "पैसा": 3, "करोड़": 3, "लाख": 3, "सच": 3, "राज़": 3, "गलती": 3, "मौत": 3,
+    "paisa": 3, "crore": 3, "lakh": 3, "sach": 3, "raaz": 3, "galti": 3, "dhyan": 2,
 }
 
 HOOK_STARTERS = [
     "what", "why", "how", "if you", "the biggest", "nobody", "most people",
     "i think", "i believe", "the truth", "the reason", "there is a", "you should",
-    "was there", "have you ever", "do you think", "one of the", "when i", "my biggest"
+    "was there", "have you ever", "do you think", "one of the", "when i", "my biggest",
+    "क्या", "क्यों", "कैसे", "अगर", "सच", "kya", "kyun", "kaise", "agar", "sabse"
 ]
 
 VIRALITY_TOURNAMENT_SYSTEM_PROMPT = """You are an elite short-form viral editor who has generated billions of views across YouTube Shorts, TikTok, and Instagram Reels for top podcasts (Diary of a CEO, Joe Rogan, Lex Fridman, Raj Shamani, Huberman Lab).
@@ -142,7 +145,7 @@ class HighlightDetector:
 
             # Check if this segment ends a sentence
             is_terminal = (
-                text[-1] in ".?!"
+                text[-1] in ".?!।॥"
                 or (cur_end - cur_start) >= 12.0
             )
 

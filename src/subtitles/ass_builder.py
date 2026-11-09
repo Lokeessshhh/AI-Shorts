@@ -129,6 +129,7 @@ class ASSSubtitleBuilder:
         output_path: Path,
         header_hook: Optional[str] = None,
         emphasis_keywords: Optional[List[str]] = None,
+        credit_attribution: Optional[str] = None,
     ) -> Tuple[Path, List[EmojiEvent]]:
         """Compile word timestamps into kinetic typography ASS subtitles with real spring pop physics."""
         output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -145,11 +146,18 @@ ScaledBorderAndShadow: yes
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
 Style: KineticMain,{self.font_name},{self.font_size},{self.primary_color},&H000000FF,{self.outline_color},&H80000000,-1,0,0,0,100,100,1,0,1,{self.outline_width},{self.shadow},{self.alignment},40,40,{self.margin_v},1
 Style: HeaderHook,{self.font_name},58,&H0000FFFF,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,2,0,1,6,0,8,40,40,320,1
+Style: CreditBadge,{self.font_name},30,&H00E0E0E0,&H000000FF,&H00000000,&H90000000,-1,0,0,0,100,100,1,0,1,3,0,9,40,40,140,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 """
         dialogues = []
+        if credit_attribution:
+            clean_credit = re.sub(r"[^\w\s@.]", "", credit_attribution).strip()
+            if clean_credit:
+                dialogues.append(
+                    f"Dialogue: 0,0:00:00.00,0:01:30.00,CreditBadge,,0,0,0,,{{\\fad(300,300)}}Credit: @{clean_credit}"
+                )
         if header_hook:
             clean_hook = header_hook.strip().upper()
             dialogues.append(

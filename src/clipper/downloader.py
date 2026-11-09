@@ -183,33 +183,41 @@ class VideoDownloader:
             except Exception as e_supa:
                 print(f"[Clipper] Supadata transcript notice: {e_supa}. Falling back to standard caption retrieval...")
 
-        # Tier 2: youtube-transcript-api (Direct extraction)
+        # Tier 2: youtube-transcript-api (Direct extraction with Hindi priority)
         if not raw_snippets:
             try:
                 from youtube_transcript_api import YouTubeTranscriptApi
                 api = YouTubeTranscriptApi()
+                lang_priority = ["hi", "hi-Latn", "en", "en-IN", "en-US", "en-GB"]
                 if hasattr(api, "fetch"):
-                    fetched = api.fetch(video_id, languages=["en", "en-US", "en-GB"])
+                    fetched = api.fetch(video_id, languages=lang_priority)
                     raw_snippets = [
-                        {"text": s.text, "start": float(s.start), "duration": float(s.duration)}
+                        {"text": s.text if hasattr(s, "text") else s.get("text", ""),
+                         "start": float(s.start if hasattr(s, "start") else s.get("start", 0)),
+                         "duration": float(s.duration if hasattr(s, "duration") else s.get("duration", 1))}
                         for s in fetched
                     ]
                 elif hasattr(YouTubeTranscriptApi, "get_transcript"):
-                    raw_snippets = YouTubeTranscriptApi.get_transcript(video_id, languages=["en", "en-US", "en-GB"])
+                    raw_snippets = YouTubeTranscriptApi.get_transcript(video_id, languages=lang_priority)
             except Exception as e:
-                print(f"[Clipper] Direct caption fetch skipped ({e}), attempting list_transcripts...")
+                print(f"[Clipper] Direct caption fetch skipped ({e}), attempting list method...")
                 try:
                     from youtube_transcript_api import YouTubeTranscriptApi
-                    if hasattr(YouTubeTranscriptApi, "list_transcripts"):
-                        tlist = YouTubeTranscriptApi.list_transcripts(video_id)
+                    api = YouTubeTranscriptApi()
+                    list_func = getattr(api, "list", None) or getattr(YouTubeTranscriptApi, "list_transcripts", None)
+                    if list_func:
+                        tlist = list_func(video_id)
                         t = None
                         try:
-                            t = tlist.find_transcript(["en", "en-US", "en-GB"])
+                            t = tlist.find_transcript(["hi", "hi-Latn", "en", "en-IN", "en-US", "en-GB"])
                         except Exception:
                             try:
-                                t = tlist.find_generated_transcript(["en"])
+                                t = tlist.find_generated_transcript(["hi", "hi-Latn", "en"])
                             except Exception:
-                                pass
+                                try:
+                                    t = next(iter(tlist), None)
+                                except Exception:
+                                    pass
                         if t:
                             fetched = t.fetch()
                             raw_snippets = [
@@ -219,7 +227,7 @@ class VideoDownloader:
                                 for s in fetched
                             ]
                 except Exception as e2:
-                    print(f"[Clipper] youtube-transcript-api unavailable: {e2}")
+                    print(f"[Clipper] youtube-transcript-api list unavailable: {e2}")
 
         if raw_snippets:
             all_words: List[Dict[str, Any]] = []
