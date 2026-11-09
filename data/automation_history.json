@@ -8,7 +8,8 @@
     "the hidden science behind why we root for underdogs in sports",
     "the bizarre reason why your mood affects air quality perception",
     "the bizarre reason why your favorite tv show might influence your life choices",
-    "the surprising science of ice that can explode"
+    "the surprising science of ice that can explode",
+    "ai midnight breakdown"
   ],
   "clipped_youtube_ids": [
     "dNIef2fGLQY",
@@ -756,19 +757,46 @@
         "Mode 2 Clipper Failed: yt-dlp slice download failed: WARNING: [youtube] No title found in player responses; falling back to title from initial data. Other metadata may also be missing\nERROR: [youtube] mLf3KYTkGuA: Sign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies\n"
       ],
       "total_batch_seconds": 182.3
+    },
+    {
+      "batch_id": "batch_20261109_113758",
+      "timestamp": "2026-11-09T11:37:58.672184",
+      "batch_dir": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261109_113758",
+      "modes_completed": [
+        "mode3"
+      ],
+      "total_videos": 1,
+      "mode1": {},
+      "mode2": {},
+      "errors": [],
+      "mode3": {
+        "status": "SUCCESS",
+        "title": "AI's Midnight Breakdown",
+        "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261109_113758/mode3/mode3_ais_midnight_breakdown_1794224281.mp4",
+        "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261109_113758/mode3/mode3_ais_midnight_breakdown_1794224281_metadata.txt",
+        "duration": 27.4,
+        "selected_clip": {
+          "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261109_113758/mode3/mode3_ais_midnight_breakdown_1794224281.mp4",
+          "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261109_113758/mode3/mode3_ais_midnight_breakdown_1794224281_metadata.txt",
+          "title": "AI's Midnight Breakdown",
+          "rank": 1,
+          "composite_upload_score": 96.0
+        }
+      },
+      "total_batch_seconds": 70.1
     }
   ],
-  "last_updated": "2026-11-09T08:45:40.952208",
+  "last_updated": "2026-11-09T11:39:08.735497",
   "topic_logs": [
     {
-      "timestamp": "2026-11-09T08:45:40.949549",
-      "mode": "mode1_facts",
-      "topic": "The Surprising Science of Ice That Can Explode",
-      "normalized": "the surprising science of ice that can explode",
+      "timestamp": "2026-11-09T11:39:08.734099",
+      "mode": "mode3_chatgpt",
+      "topic": "AI's Midnight Breakdown",
+      "normalized": "ai midnight breakdown",
       "metadata": {
-        "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261109_084238/mode2_fallback/the_surprising_science_of_ice_that_can_e_en_1794213923.mp4",
-        "duration": 18.1245,
-        "title": "The Explosive Truth About Ice"
+        "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261109_113758/mode3/mode3_ais_midnight_breakdown_1794224281.mp4",
+        "duration": 27.368028000000002,
+        "title": "AI's Midnight Breakdown"
       }
     }
   ]
