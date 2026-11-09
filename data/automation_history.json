@@ -9,7 +9,8 @@
     "the bizarre reason why your mood affects air quality perception",
     "the bizarre reason why your favorite tv show might influence your life choices",
     "the surprising science of ice that can explode",
-    "ai midnight breakdown"
+    "ai midnight breakdown",
+    "the bizarre reason why video game releases make us feel nostalgic"
   ],
   "clipped_youtube_ids": [
     "dNIef2fGLQY",
@@ -784,19 +785,49 @@
         }
       },
       "total_batch_seconds": 70.1
+    },
+    {
+      "batch_id": "batch_20261109_115537",
+      "timestamp": "2026-11-09T11:55:37.663344",
+      "batch_dir": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261109_115537",
+      "modes_completed": [
+        "mode1_facts"
+      ],
+      "total_videos": 1,
+      "mode1": {
+        "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261109_115537/mode1_facts/the_bizarre_reason_why_video_game_releas_en_1794225434.mp4",
+        "title": "The Hidden Chemistry of Nostalgia",
+        "source_title": "The Hidden Chemistry of Nostalgia",
+        "source_channel": "AI Shorts Studio",
+        "source_url": "N/A",
+        "duration": 14.72,
+        "viral_score": 90,
+        "status": "SUCCESS",
+        "hook_sentence": "",
+        "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261109_115537/mode1_facts/the_bizarre_reason_why_video_game_releas_en_1794225434_metadata.txt",
+        "is_fallback": false,
+        "topic": "The Bizarre Reason Why Video Game Releases Make Us Feel Nostalgic",
+        "clips_count": 1,
+        "selected_clip": {},
+        "clips": [],
+        "execution_seconds": 108.5
+      },
+      "mode2": {},
+      "errors": [],
+      "total_batch_seconds": 110.8
     }
   ],
-  "last_updated": "2026-11-09T11:39:08.735497",
+  "last_updated": "2026-11-09T11:57:28.480858",
   "topic_logs": [
     {
-      "timestamp": "2026-11-09T11:39:08.734099",
-      "mode": "mode3_chatgpt",
-      "topic": "AI's Midnight Breakdown",
-      "normalized": "ai midnight breakdown",
+      "timestamp": "2026-11-09T11:57:28.479086",
+      "mode": "facts",
+      "topic": "The Bizarre Reason Why Video Game Releases Make Us Feel Nostalgic",
+      "normalized": "the bizarre reason why video game releases make us feel nostalgic",
       "metadata": {
-        "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261109_113758/mode3/mode3_ais_midnight_breakdown_1794224281.mp4",
-        "duration": 27.368028000000002,
-        "title": "AI's Midnight Breakdown"
+        "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261109_115537/mode1_facts/the_bizarre_reason_why_video_game_releas_en_1794225434.mp4",
+        "duration": 14.722583333333333,
+        "title": "The Hidden Chemistry of Nostalgia"
       }
     }
   ]
