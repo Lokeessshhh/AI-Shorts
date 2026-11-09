@@ -39,9 +39,9 @@ def main():
     parser.add_argument(
         "--mode",
         type=str,
-        choices=["facts", "clipper", "auto"],
+        choices=["facts", "clipper", "chatgpt", "mode3", "auto"],
         default="facts",
-        help="Content mode: 'facts' (Mode 1), 'clipper' (Mode 2), or 'auto' (Autonomous 2-Mode Batch)",
+        help="Content mode: 'facts' (Mode 1), 'clipper' (Mode 2), 'mode3'/'chatgpt' (Mode 3: ChatGPT Conversation Shorts), or 'auto' (Autonomous Batch)",
     )
 
     # Language Mode Argument
@@ -232,6 +232,22 @@ def main():
         print(f"\n[SUCCESS] Mode 2 Clipper Generated {len(results)} Shorts!")
         for r in results:
             print(f"  * #{r['rank']} ({r['viral_score']}/100): {r['video_path']}")
+
+    # -------------------------------------------------------------
+    # ROUTE: Mode 3 (ChatGPT Conversation Shorts)
+    # -------------------------------------------------------------
+    elif args.mode in ("chatgpt", "mode3"):
+        from src.mode3.pipeline import Mode3Pipeline
+
+        pipeline = Mode3Pipeline()
+        bgm_path = Path(args.bgm) if args.bgm else None
+        res = pipeline.run(
+            topic=args.topic,
+            bgm_path=bgm_path,
+        )
+        print(f"\n[SUCCESS] Mode 3 Short Created: {res['video_path']}")
+        if res.get("metadata_path"):
+            print(f"  * Metadata: {res['metadata_path']}")
 
     # -------------------------------------------------------------
     # ROUTE: Mode 1 (Faceless Narrative & Facts)

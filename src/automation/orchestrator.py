@@ -74,10 +74,12 @@ class AutonomousShortsOrchestrator:
                 m_norm = m.lower().strip()
                 if m_norm in ("mode1", "facts", "1"):
                     active_modes.add("mode1")
-                elif m_norm in ("mode2", "clipper", "2", "mode3", "3"):
+                elif m_norm in ("mode2", "clipper", "2"):
                     active_modes.add("mode2")
+                elif m_norm in ("mode3", "chatgpt", "3"):
+                    active_modes.add("mode3")
         else:
-            active_modes = {"mode1", "mode2"}
+            active_modes = {"mode1", "mode2", "mode3"}
 
         if skip_mode2 or skip_mode3:
             active_modes.discard("mode2")
@@ -289,6 +291,53 @@ class AutonomousShortsOrchestrator:
                 except Exception as fe:
                     print(f"[ERROR/Fallback] Fallback short generation failed: {fe}")
                     manifest["mode2"] = normalize_short_record({"status": "FAILED", "error": str(fe)})
+
+        # -------------------------------------------------------------
+        # STEP 3B: MODE 3 (CHATGPT CONVERSATION COMEDY SHORTS)
+        # -------------------------------------------------------------
+        if "mode3" in active_modes:
+            print("\n" + "=" * 70)
+            print("[STEP 3B] EXECUTING MODE 3: CHATGPT CONVERSATION COMEDY SHORTS")
+            print("=" * 70)
+            try:
+                from src.mode3.pipeline import Mode3Pipeline
+                m3_dir = batch_dir / "mode3"
+                m3_dir.mkdir(parents=True, exist_ok=True)
+                pipeline_m3 = Mode3Pipeline()
+                m3_res = pipeline_m3.run(output_dir=m3_dir)
+
+                vpath = Path(m3_res["video_path"])
+                mpath = Path(m3_res["metadata_path"]) if m3_res.get("metadata_path") else None
+
+                manifest["mode3"] = {
+                    "status": "SUCCESS",
+                    "title": m3_res["title"],
+                    "video_path": str(vpath),
+                    "metadata_path": str(mpath) if mpath else None,
+                    "duration": round(m3_res["duration"], 1),
+                    "selected_clip": {
+                        "video_path": str(vpath),
+                        "metadata_path": str(mpath) if mpath else None,
+                        "title": m3_res["title"],
+                        "rank": 1,
+                        "composite_upload_score": 96.0,
+                    }
+                }
+                manifest["modes_completed"].append("mode3")
+                manifest["total_videos"] += 1
+
+                self.state.mark_topic_done(
+                    m3_res["title"],
+                    mode="mode3_chatgpt",
+                    title=m3_res["title"],
+                    metadata={"video_path": str(vpath), "duration": m3_res["duration"]},
+                )
+                print(f"[SUCCESS/Mode 3] Rendered ChatGPT Comedy Short: {m3_res['title']}")
+            except Exception as e:
+                err_msg = f"Mode 3 Pipeline Failed: {e}"
+                print(f"[ERROR/Mode 3] {err_msg}")
+                manifest["errors"].append(err_msg)
+                manifest["mode3"] = {"status": "FAILED", "error": str(e)}
 
         # -------------------------------------------------------------
         # STEP 4: COMPILE BATCH MANIFEST & SUMMARY

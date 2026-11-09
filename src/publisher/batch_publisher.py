@@ -80,11 +80,11 @@ class BatchPublisher:
                 "metadata_path": Path(m1["metadata_path"]) if m1.get("metadata_path") else None,
             })
 
-        # 2. Mode 2 (Smart Clipper Winning Clip - supports mode2 & legacy mode3 key)
-        m2 = manifest.get("mode2", {}) or manifest.get("mode3", {})
+        # 2. Mode 2 (Smart Clipper Winning Clip)
+        m2 = manifest.get("mode2", {})
         selected_clip = m2.get("selected_clip")
         if not selected_clip:
-            for cand_dir in ["mode2_clipper", "mode3_clipper"]:
+            for cand_dir in ["mode2_clipper", "mode2"]:
                 p_selected = batch_dir / cand_dir / "selected_for_upload.json"
                 if p_selected.exists():
                     try:
@@ -102,6 +102,16 @@ class BatchPublisher:
                 "label": f"Mode 2 Winning Clip (#{selected_clip.get('rank', 1)})",
                 "video_path": Path(selected_clip["video_path"]),
                 "metadata_path": Path(selected_clip["metadata_path"]) if selected_clip.get("metadata_path") else None,
+            })
+
+        # 3. Mode 3 (ChatGPT Conversation Comedy Short)
+        m3 = manifest.get("mode3", {})
+        if m3.get("status") == "SUCCESS" and m3.get("video_path"):
+            items_to_upload.append({
+                "mode": "mode3_chatgpt",
+                "label": "Mode 3 (ChatGPT Comedy Short)",
+                "video_path": Path(m3["video_path"]),
+                "metadata_path": Path(m3["metadata_path"]) if m3.get("metadata_path") else None,
             })
 
         print(f"\n[BatchPublisher] Identified {len(items_to_upload)} premier shorts to upload:")
