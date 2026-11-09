@@ -1,16 +1,24 @@
 import time
 import re
+import sys
 import concurrent.futures
 from pathlib import Path
 from dataclasses import dataclass
 from typing import Optional, List, Dict, Any
+
+if sys.platform == "win32":
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")
+        sys.stderr.reconfigure(encoding="utf-8")
+    except Exception:
+        pass
 
 from ..config import config
 from ..llm.client import OpenRouterClient
 from ..llm.prompts import ScriptPayload
 from ..voice.tts import TTSEngine, TTSResult
 from ..visuals.visual_director import ContextVisualDirector
-from ..subtitles.whisper_stt import WhisperTranscriber
+from ..subtitles.acoustic_aligner import AcousticWordAligner
 from ..subtitles.ass_builder import ASSSubtitleBuilder, WordTimestamp
 from ..compositor.ffmpeg_engine import FFmpegEngine
 from ..compositor.audio_mixer import AudioMixer
@@ -27,6 +35,7 @@ class GenerationResult:
     script: ScriptPayload
     tts_result: TTSResult
     ass_subtitle_path: Path
+    language: str = "en"
     evaluation: Optional[TopicEvaluation] = None
     metadata_path: Optional[Path] = None
     score_plan: Optional[AudioScorePlan] = None
@@ -38,7 +47,7 @@ class FacelessShortsAgent:
         openrouter_client: Optional[OpenRouterClient] = None,
         tts_engine: Optional[TTSEngine] = None,
         visual_director: Optional[ContextVisualDirector] = None,
-        whisper_transcriber: Optional[WhisperTranscriber] = None,
+        acoustic_aligner: Optional[AcousticWordAligner] = None,
         ass_builder: Optional[ASSSubtitleBuilder] = None,
         ffmpeg_engine: Optional[FFmpegEngine] = None,
         audio_mixer: Optional[AudioMixer] = None,
@@ -48,7 +57,7 @@ class FacelessShortsAgent:
         self.llm = openrouter_client or OpenRouterClient()
         self.tts = tts_engine or TTSEngine()
         self.visuals = visual_director or ContextVisualDirector()
-        self.whisper = whisper_transcriber or WhisperTranscriber()
+        self.aligner = acoustic_aligner or AcousticWordAligner()
         self.ass_builder = ass_builder or ASSSubtitleBuilder()
         self.ffmpeg = ffmpeg_engine or FFmpegEngine()
         self.audio_mixer = audio_mixer or AudioMixer(self.ffmpeg)
@@ -64,6 +73,7 @@ class FacelessShortsAgent:
         self,
         script: ScriptPayload,
         output_path: Path,
+        language: str = "en",
         evaluation: Optional[TopicEvaluation] = None,
         attributions: Optional[List[Dict[str, str]]] = None,
         verification_audit: Optional[List[Dict[str, Any]]] = None,
@@ -82,6 +92,7 @@ class FacelessShortsAgent:
                 tags.append(f"#{w}")
 
         score_info = f"TOPIC EVALUATION SCORE: {evaluation.total_score}/100" if evaluation else ""
+        lang_label = "HINDI (Devanagari Spoken + Hinglish Captions)" if language in ("hi", "hindi") else "ENGLISH"
 
         audio_lines = []
         if score_plan:
@@ -102,6 +113,15 @@ class FacelessShortsAgent:
             pacing_lines.append(f"- Dynamic Diagram Ratio: {pacing_metrics.get('diag_pct', 0):.1f}% ({pacing_metrics.get('diag_dur', 0):.1f}s)")
             pacing_lines.append("- Design Theme: Bright Editorial Studio (Off-White/Cream, High-Contrast Mobile Typography)")
 
+        script_transcript_lines = []
+        if language in ("hi", "hindi"):
+            script_transcript_lines.append("\n=== HINDI NARRATION & HINGLISH TRANSCRIPT ===")
+            script_transcript_lines.append("SPOKEN DEVANAGARI HINDI:")
+            script_transcript_lines.append(f'"{script.full_narration}"\n')
+            script_transcript_lines.append("DISPLAYED HINGLISH (ROMAN HINDI) CAPTIONS:")
+            for sc in script.scenes:
+                script_transcript_lines.append(f"- Scene {sc.scene_id}: \"{sc.hinglish_caption or sc.narration}\"")
+
         attrib_lines = []
         if attributions:
             attrib_lines.append("\n=== MEDIA ATTRIBUTIONS & LICENSING ===")
@@ -115,6 +135,7 @@ class FacelessShortsAgent:
                 audit_lines.append(f"- Cut {v.get('scene_id')}: [{v.get('status')}] {v.get('selected_source')} (Score: {v.get('score')}/100) -> {v.get('reason')}")
 
         content = f"""=== YOUTUBE SHORTS / INSTAGRAM REELS AUDIENCE-FIRST METADATA ===
+LANGUAGE: {lang_label}
 {score_info}
 TITLE:
 {clean_title}
@@ -136,6 +157,7 @@ HASHTAGS:
 
 PINNED ENGAGEMENT QUESTION:
 What would you do in this situation? Let us know below! 👇
+{chr(10).join(script_transcript_lines)}
 {chr(10).join(audio_lines)}
 {chr(10).join(pacing_lines)}
 {chr(10).join(attrib_lines)}
@@ -148,24 +170,26 @@ What would you do in this situation? Let us know below! 👇
     def create_short(
         self,
         topic: Optional[str] = None,
+        language: str = "en",
         custom_voice: Optional[str] = None,
         custom_bgm: Optional[Path] = None,
         format_type: Optional[str] = None,
         angle: Optional[str] = None,
         skip_evaluation: bool = False,
-        target_duration: float = 34.0,
+        target_duration: float = 27.5,
         explicit_output_path: Optional[Path] = None,
         log_callback=print,
     ) -> GenerationResult:
-        """Run the end-to-end Mode 1 automated generation pipeline with audience-first evaluation."""
+        """Run the end-to-end Mode 1 automated generation pipeline with bilingual support (English/Hindi)."""
         start_time = time.time()
+        lang_code = "hi" if language in ("hi", "hindi") else "en"
 
         # Step 0: Autonomous Topic Discovery or 100-Point Topic Evaluation Gate
         evaluation: Optional[TopicEvaluation] = None
         if not topic:
             log_callback(f"\n=======================================================")
             log_callback(f"[START] Autonomous Audience-Driven AI Shorts Generator")
-            log_callback(f"[TOPIC] (Auto-Discovery Mode Active)")
+            log_callback(f"[LANGUAGE] {lang_code.upper()} | [TOPIC] (Auto-Discovery Active)")
             log_callback(f"=======================================================")
             log_callback("\n[0/5] Brainstorming and evaluating candidates against 100-Point Audience Retention Rubric...")
             evaluation = self.evaluator.discover_and_select_best_topic()
@@ -178,7 +202,7 @@ What would you do in this situation? Let us know below! 👇
         else:
             log_callback(f"\n=======================================================")
             log_callback(f"[START] Audience-Driven AI Shorts Generator (Mode 1)")
-            log_callback(f"[TOPIC] {topic}")
+            log_callback(f"[LANGUAGE] {lang_code.upper()} | [TOPIC] {topic}")
             log_callback(f"=======================================================")
             if not skip_evaluation:
                 log_callback("\n[0/5] Evaluating topic candidate against 100-Point Audience Retention Rubric...")
@@ -205,41 +229,43 @@ What would you do in this situation? Let us know below! 👇
         self.visuals.reset_session()
 
         # Step 1: Viral Script Generation with Triple Stack Hook
-        log_callback(f"\n[1/5] Generating viral script via OpenRouter (Format: {active_format})...")
+        log_callback(f"\n[1/5] Generating viral script via OpenRouter (Language: {lang_code.upper()} | Format: {active_format})...")
         script = self.llm.generate_script(
             topic=topic,
             format_type=active_format,
             angle=active_angle,
+            language=lang_code,
         )
         log_callback(f"  * Title:      {script.title}")
         log_callback(f"  * Text Hook:  '{script.text_hook}' (Frames 0-2s)")
-        log_callback(f"  * Spoken Hook:'{script.hook}'")
+        log_callback(f"  * Spoken Hook:'{script.text_hook_hinglish or script.text_hook}'")
         log_callback(f"  * Cuts:       {len(script.scenes)} narrative scenes")
 
-        # Step 2: Voiceover Synthesis with Studio Mastering
-        log_callback("\n[2/5] Synthesizing natural conversational voiceover via edge-tts...")
+        slug = self._slugify(topic)
+        video_temp_dir = config.temp_dir / f"{slug}_{lang_code}"
+        video_temp_dir.mkdir(parents=True, exist_ok=True)
+
+        # Step 2: Voiceover Synthesis with Per-Scene Acoustic Alignment (Zero-Trial)
+        log_callback(f"\n[2/5] Synthesizing natural conversational voiceover via edge-tts (Language: {lang_code.upper()})...")
         if custom_voice:
             self.tts.voice = custom_voice
-        tts_filename = f"voice_{self._slugify(topic)}.mp3"
-        tts_result = self.tts.synthesize(
-            text=script.full_narration,
+        tts_filename = f"voice_{slug}_{lang_code}.mp3"
+        tts_result, scene_timelines = self.tts.synthesize_scenes(
+            scenes=script.scenes,
             output_filename=tts_filename,
+            language=lang_code,
             target_duration=target_duration,
+            apply_studio_mastering=True,
         )
         total_duration = tts_result.duration_seconds
-        log_callback(f"  * Audio Master: {tts_result.audio_path.name}")
-        log_callback(f"  * Duration:     {total_duration:.2f} seconds")
+        log_callback(f"  * Audio Master: {tts_result.audio_path.name} (Voice: {tts_result.voice_name})")
+        log_callback(f"  * Duration:     {total_duration:.2f} seconds across {len(scene_timelines)} scenes")
 
         # Step 3: Context-Aware Visual Sourcing (Semantic Video + Graphic Cards)
         log_callback("\n[3/5] Directing & formatting context-aware 9:16 visuals in parallel...")
-        total_words = max(1, sum(len(s.narration.split()) for s in script.scenes))
         scene_jobs = []
-        scene_durations: List[float] = []
+        shot_durations: List[float] = []
         transition_duration = 0.20
-
-        slug = self._slugify(topic)
-        video_temp_dir = config.temp_dir / slug
-        video_temp_dir.mkdir(parents=True, exist_ok=True)
 
         # Ensure Scene 1 is NEVER a diagram (must be image-first real visual media)
         if script.scenes and script.scenes[0].visual_intent:
@@ -260,19 +286,11 @@ What would you do in this situation? Let us know below! 👇
                         s.visual_intent.visual_spec = None
                     s.visual_type = "video"
 
-        scene_timelines: List[Dict[str, Any]] = []
-        cum_scene_t = 0.0
+        timeline_map = {st["scene_id"]: st for st in scene_timelines}
         for i, scene in enumerate(script.scenes):
-            scene_words = len(scene.narration.split())
-            base_duration = max(2.2, (scene_words / total_words) * total_duration)
-            scene_durations.append(base_duration)
-            scene_timelines.append({
-                "scene_id": scene.scene_id,
-                "start_time": cum_scene_t,
-                "end_time": cum_scene_t + base_duration,
-                "narration": scene.narration,
-            })
-            cum_scene_t += base_duration
+            sc_id = scene.scene_id
+            t_info = timeline_map.get(sc_id)
+            base_duration = t_info["duration"] if t_info else 3.5
             prep_duration = base_duration + (transition_duration if i < len(script.scenes) - 1 else 0.0)
             scene_jobs.append((scene, prep_duration))
 
@@ -303,40 +321,36 @@ What would you do in this situation? Let us know below! 👇
                     input_path=shot_file,
                     output_path=norm_out,
                     duration=sub_dur,
-                    width=config.video_width,
-                    height=config.video_height,
-                    fps=config.video_fps,
                     motion_type=sub_motion,
                     subject_focus=focus_choice,
                 )
-                sub_shot_clips.append((
-                    scene.scene_id,
-                    sub_idx + 1,
-                    norm_out,
-                    sub_dur,
-                    shot_kind,
-                    src_name,
-                    shot_file.name
-                ))
+                sub_shot_clips.append((norm_out, sub_dur, shot_kind, src_name, scene.scene_id, sub_idx + 1))
             return sub_shot_clips
 
-        # Run parallel workers (max 4 concurrent)
-        with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
-            processed_results = list(executor.map(process_single_scene, scene_jobs))
-
-        # Flatten in sequential scene order
+        # Process visuals in parallel with thread pool
+        normalized_clips: List[Path] = []
         all_shots = []
-        for scene_shots in processed_results:
-            all_shots.extend(scene_shots)
+        with concurrent.futures.ThreadPoolExecutor(max_workers=3) as executor:
+            future_to_job = {executor.submit(process_single_scene, job): job[0].scene_id for job in scene_jobs}
+            results_by_id = {}
+            for future in concurrent.futures.as_completed(future_to_job):
+                sc_id = future_to_job[future]
+                try:
+                    results_by_id[sc_id] = future.result()
+                except Exception as e:
+                    log_callback(f"  * Scene {sc_id} visual processing error: {e}")
+                    raise
 
-        normalized_clips = []
-        shot_durations = []
-        for sid, subid, norm_path, sub_dur, kind, src_name, asset_name in all_shots:
-            log_callback(f"  * Shot {sid}.{subid} ({sub_dur:.2f}s, {kind}): {asset_name} -> {norm_path.name}")
-            normalized_clips.append(norm_path)
-            shot_durations.append(sub_dur)
+        # Assemble shots in sequential order
+        for scene in script.scenes:
+            shots = results_by_id.get(scene.scene_id, [])
+            for norm_out, sub_dur, shot_kind, src_name, sc_id, sub_idx in shots:
+                normalized_clips.append(norm_out)
+                shot_durations.append(sub_dur)
+                all_shots.append((norm_out, sc_id, sub_idx, sub_dur, shot_kind, src_name))
+                log_callback(f"  * Shot {sc_id}.{sub_idx} ({sub_dur:.2f}s, {shot_kind}): {norm_out.name}")
 
-        # Calculate exact 80/20 Visual Metrics
+        # Calculate exact visual metrics
         media_dur = sum(s[3] for s in all_shots if s[4] == "media")
         diag_dur = sum(s[3] for s in all_shots if s[4] == "diagram")
         tot_visual_dur = max(0.1, media_dur + diag_dur)
@@ -349,16 +363,9 @@ What would you do in this situation? Let us know below! 👇
         log_callback(f"  * Average Shot Length: {avg_shot_dur:.2f} seconds")
         log_callback(f"  * Visual Ratio:        {media_pct:.1f}% Real Media / {diag_pct:.1f}% Dynamic Graphics")
 
-        # Calculate exact cut timestamps for whoosh SFX
-        cum_cut = 0.0
-        cut_timestamps = []
-        for d in shot_durations[:-1]:
-            cum_cut += d
-            cut_timestamps.append(cum_cut)
-
         # Concatenate video clips with seamless transitions
         log_callback("\n  * Concatenating visual sequence with seamless crossfade transitions...")
-        concat_video = video_temp_dir / f"concat_{slug}.mp4"
+        concat_video = video_temp_dir / f"concat_{slug}_{lang_code}.mp4"
         self.ffmpeg.concat_clips(
             clip_paths=normalized_clips,
             output_path=concat_video,
@@ -367,24 +374,33 @@ What would you do in this situation? Let us know below! 👇
             transition_duration=transition_duration,
         )
 
-        # Step 4: Word-Level Subtitle Alignment & Kinetic ASS Compilation with Pop Physics
-        log_callback("\n[4/5] Transcribing words & generating kinetic typography subtitles with pop physics...")
-        words: List[WordTimestamp] = self.whisper.transcribe_words(tts_result.audio_path)
-        log_callback(f"  * Transcribed {len(words)} individual words with precise timing.")
+        # Step 4: Zero-Trial Acoustic Word Alignment & Kinetic ASS Subtitle Generation
+        log_callback(f"\n[4/5] Aligning words & generating kinetic typography subtitles ({'Hinglish' if lang_code == 'hi' else 'English'})...")
+        words: List[WordTimestamp] = self.aligner.align_script_scenes(
+            scenes=script.scenes,
+            scene_timelines=scene_timelines,
+            language=lang_code,
+        )
+        log_callback(f"  * Acoustically aligned {len(words)} individual words with exact millisecond boundaries.")
 
         all_emphasis = []
         for s in script.scenes:
             if hasattr(s, "emphasis_words") and s.emphasis_words:
                 all_emphasis.extend(s.emphasis_words)
+            if lang_code == "hi" and getattr(s, "hinglish_caption", None):
+                for token in re.findall(r"\b[A-Za-z0-9]+\b", s.hinglish_caption):
+                    if len(token) > 4 or any(c.isdigit() for c in token):
+                        all_emphasis.append(token)
 
-        ass_file = video_temp_dir / f"subtitles_{slug}.ass"
+        text_hook_to_show = (script.text_hook_hinglish if lang_code == "hi" and script.text_hook_hinglish else script.text_hook)
+        ass_file = video_temp_dir / f"subtitles_{slug}_{lang_code}.ass"
         ass_file, emoji_events = self.ass_builder.build_ass(
             words=words,
             output_path=ass_file,
-            header_hook=script.text_hook,
+            header_hook=text_hook_to_show,
             emphasis_keywords=all_emphasis,
         )
-        log_callback(f"  * Compiled kinetic ASS captions: {ass_file.name} (Text Hook: '{script.text_hook}', {len(all_emphasis)} emphasis words)")
+        log_callback(f"  * Compiled kinetic ASS captions: {ass_file.name} (Text Hook: '{text_hook_to_show}', {len(all_emphasis)} emphasis words)")
 
         # Step 5: Dynamic Story-Aware Audio Direction & Master Audio Mix
         log_callback("\n[5/5] AI Music Director: Selecting video-aware soundtrack & composing dynamic score...")
@@ -404,7 +420,7 @@ What would you do in this situation? Let us know below! 👇
             f"{len(score_plan.sfx_cues)} J-Cut Narrative SFX"
         )
 
-        master_audio = config.temp_dir / f"master_audio_{self._slugify(topic)}.m4a"
+        master_audio = config.temp_dir / f"master_audio_{slug}_{lang_code}.m4a"
         self.audio_mixer.mix_with_score_plan(
             voice_audio=tts_result.audio_path,
             output_path=master_audio,
@@ -413,14 +429,13 @@ What would you do in this situation? Let us know below! 👇
             voice_volume=config.voice_volume,
         )
 
-        base_slug = self._slugify(topic)
         timestamp_id = int(time.time())
         if explicit_output_path:
             final_video_path = explicit_output_path
             metadata_file = explicit_output_path.parent / f"{explicit_output_path.stem}_metadata.txt"
         else:
-            final_video_path = config.output_dir / f"{base_slug}_{timestamp_id}.mp4"
-            metadata_file = config.output_dir / f"{base_slug}_{timestamp_id}_metadata.txt"
+            final_video_path = config.output_dir / f"{slug}_{lang_code}_{timestamp_id}.mp4"
+            metadata_file = config.output_dir / f"{slug}_{lang_code}_{timestamp_id}_metadata.txt"
 
         final_video_path.parent.mkdir(parents=True, exist_ok=True)
 
@@ -445,6 +460,7 @@ What would you do in this situation? Let us know below! 👇
         self._save_social_metadata(
             script=script,
             output_path=metadata_file,
+            language=lang_code,
             evaluation=evaluation,
             attributions=self.visuals.get_attributions(),
             verification_audit=self.visuals.get_verification_audit(),
@@ -465,6 +481,7 @@ What would you do in this situation? Let us know below! 👇
             script=script,
             tts_result=tts_result,
             ass_subtitle_path=ass_file,
+            language=lang_code,
             evaluation=evaluation,
             metadata_path=metadata_file,
             score_plan=score_plan,

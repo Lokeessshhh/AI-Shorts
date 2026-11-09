@@ -1,6 +1,6 @@
 """AI Shorts Production CLI Engine
 Supported Modes:
-  - Mode 1: Faceless Narrative & Facts (LLM Script + Edge-TTS + ASS Subtitles + Pexels B-Roll + FFmpeg)
+  - Mode 1: Faceless Narrative & Facts (LLM Script + Bilingual Edge-TTS + Kinetic ASS Subtitles + Pexels B-Roll + FFmpeg)
   - Mode 2: Video & Podcast Smart Clipper (yt-dlp + youtube-transcript-api + OpenRouter Highlights + OpenCV Reframe + Polish)
   - Mode auto: Autonomous Trend Scout & 2-Mode Batch Orchestrator (Google Trends & Podcast Watchlist)
 """
@@ -44,6 +44,16 @@ def main():
         help="Content mode: 'facts' (Mode 1), 'clipper' (Mode 2), or 'auto' (Autonomous 2-Mode Batch)",
     )
 
+    # Language Mode Argument
+    parser.add_argument(
+        "--language",
+        "-l",
+        type=str,
+        default="en",
+        choices=["en", "hi", "english", "hindi"],
+        help="Language mode: 'en' / 'english' (Default) or 'hi' / 'hindi' (Natural Indian Voice + Hinglish Captions)",
+    )
+
     # Mode 1 Arguments
     parser.add_argument(
         "--topic",
@@ -55,7 +65,7 @@ def main():
         "--voice",
         type=str,
         default=None,
-        help="[Mode 1] edge-tts voice name (e.g. en-US-ChristopherNeural, en-US-AndrewNeural)",
+        help="[Mode 1] edge-tts voice name (e.g. en-US-ChristopherNeural for EN, hi-IN-MadhurNeural for HI)",
     )
     parser.add_argument(
         "--bgm",
@@ -150,6 +160,7 @@ def main():
     )
 
     args = parser.parse_args()
+    lang = "hi" if args.language in ("hi", "hindi") else "en"
 
     # Direct publishing of an existing batch
     if args.publish_batch:
@@ -181,6 +192,7 @@ def main():
                 num_clipper_shorts=args.clips,
                 skip_mode2=args.skip_mode2,
                 modes=args.modes,
+                language=lang,
             )
 
             # Auto-publish to YouTube Shorts and Instagram Reels if requested
@@ -225,19 +237,17 @@ def main():
     # ROUTE: Mode 1 (Faceless Narrative & Facts)
     # -------------------------------------------------------------
     else:
-        if not args.topic:
-            parser.error("Mode 'facts' requires --topic <Topic String>.")
-
         from src.pipeline.faceless_agent import FacelessShortsAgent
 
         bgm_path = Path(args.bgm) if args.bgm else None
         agent = FacelessShortsAgent()
         result = agent.create_short(
             topic=args.topic,
+            language=lang,
             custom_voice=args.voice,
             custom_bgm=bgm_path,
         )
-        print(f"\n[SUCCESS] Mode 1 Short Created: {result.video_path}")
+        print(f"\n[SUCCESS] Mode 1 Short Created ({lang.upper()}): {result.video_path}")
         if result.metadata_path:
             print(f"  * Metadata: {result.metadata_path}")
 

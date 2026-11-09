@@ -135,6 +135,7 @@ class OpenRouterClient:
         topic: str,
         format_type: str = "counter_intuitive_truth",
         angle: str = "",
+        language: str = "en",
     ) -> ScriptPayload:
         """Call OpenRouter model to generate structured viral short script conforming to ScriptPayload."""
         headers = {
@@ -144,7 +145,12 @@ class OpenRouterClient:
             "Content-Type": "application/json",
         }
 
-        user_prompt = build_script_prompt(topic, format_type=format_type, angle=angle)
+        user_prompt = build_script_prompt(
+            topic=topic,
+            format_type=format_type,
+            angle=angle,
+            language=language,
+        )
 
         payload = {
             "model": self.model,
@@ -188,6 +194,8 @@ class OpenRouterClient:
         # Sanitize narration texts
         for scene in script_obj.scenes:
             scene.narration = self._sanitize_narration(scene.narration)
+            if scene.hinglish_caption:
+                scene.hinglish_caption = self._sanitize_narration(scene.hinglish_caption)
 
         # Ensure full_narration is clean and assembled
         full_text = " ".join([s.narration for s in script_obj.scenes])

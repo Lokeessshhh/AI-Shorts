@@ -120,7 +120,8 @@ class AutonomousShortsOrchestrator:
             try:
                 mode1_dir.mkdir(parents=True, exist_ok=True)
                 agent_m1 = FacelessShortsAgent()
-                res_m1 = agent_m1.create_short(topic=topic_m1)
+                lang_code = kwargs.get("language", "en")
+                res_m1 = agent_m1.create_short(topic=topic_m1, language=lang_code)
 
                 # Copy to batch directory
                 batch_video_m1 = mode1_dir / res_m1.video_path.name

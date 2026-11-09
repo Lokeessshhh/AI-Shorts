@@ -22,35 +22,49 @@ def main():
         epilog="""
 Examples:
   python run.py --mode facts --topic "3 Dark Psychology Secrets"
+  python run.py --mode facts --language hindi --topic "The Cobra Effect"
   python run.py --mode facts --topic "The Bizarre Reason Why Rome Fell" --voice en-US-ChristopherNeural
         """,
     )
     parser.add_argument(
         "--mode",
         type=str,
-        default="story",
+        default="facts",
         choices=["facts", "gameplay", "story", "clipper"],
-        help="Content mode (story = Mode 2: Dev vs Claude Encyclopedic Media, facts = Mode 1, clipper = Mode 3)",
+        help="Content mode (facts = Mode 1, story = Mode 2 Dev vs Claude, clipper = Mode 3)",
+    )
+    parser.add_argument(
+        "--language",
+        "-l",
+        type=str,
+        default="en",
+        choices=["en", "hi", "english", "hindi"],
+        help="Language mode: 'en' / 'english' (Default) or 'hi' / 'hindi' (Natural Indian Voice + Hinglish Captions)",
     )
     parser.add_argument(
         "--topic",
         type=str,
-        required=True,
-        help="The topic, premise, or title of the Short",
+        default=None,
+        help="The topic, premise, or title of the Short (leave empty for autonomous discovery)",
     )
     parser.add_argument(
         "--voice",
         type=str,
         default=None,
-        help="Voice name for edge-tts (default: en-US-ChristopherNeural)",
+        help="Voice name for edge-tts (default: en-US-ChristopherNeural for EN, hi-IN-MadhurNeural for HI)",
     )
 
     args = parser.parse_args()
+    lang = "hi" if args.language in ("hi", "hindi") else "en"
 
     if args.mode == "facts":
         agent = FacelessShortsAgent()
-        result = agent.create_short(topic=args.topic, custom_voice=args.voice)
-        print(f"\n[DONE] Render complete: {result.video_path}")
+        result = agent.create_short(
+            topic=args.topic,
+            language=lang,
+            custom_voice=args.voice,
+        )
+        print(f"\n[DONE] Render complete ({lang.upper()}): {result.video_path}")
     elif args.mode in ("story", "gameplay"):
         from src.story.dev_claude_pipeline import DevClaudePipeline
         pipeline = DevClaudePipeline()

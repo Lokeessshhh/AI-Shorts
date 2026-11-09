@@ -5,7 +5,8 @@
     "the surprising connection between stock market cycles and human emotion",
     "the surprising connection between sports fans and superstitions",
     "the hidden science of team colors and fan psychology",
-    "the hidden science behind why we root for underdogs in sports"
+    "the hidden science behind why we root for underdogs in sports",
+    "the bizarre reason why your mood affects air quality perception"
   ],
   "clipped_youtube_ids": [
     "dNIef2fGLQY"
@@ -355,16 +356,49 @@
       },
       "errors": [],
       "total_batch_seconds": 202.4
+    },
+    {
+      "batch_id": "batch_20261109_114309",
+      "timestamp": "2026-11-09T11:43:09.490579",
+      "batch_dir": "C:\\Users\\Samsung\\Documents\\Code\\AI_Shorts\\output\\batch_20261109_114309",
+      "modes_completed": [
+        "mode1_facts"
+      ],
+      "total_videos": 1,
+      "mode1": {
+        "video_path": "C:\\Users\\Samsung\\Documents\\Code\\AI_Shorts\\output\\batch_20261109_114309\\mode1_facts\\the_bizarre_reason_why_your_mood_affects_en_1794204892.mp4",
+        "title": "Mood and Air Quality Connection",
+        "source_title": "Mood and Air Quality Connection",
+        "source_channel": "AI Shorts Studio",
+        "source_url": "N/A",
+        "duration": 17.17,
+        "viral_score": 90,
+        "status": "SUCCESS",
+        "hook_sentence": "",
+        "metadata_path": "C:\\Users\\Samsung\\Documents\\Code\\AI_Shorts\\output\\batch_20261109_114309\\mode1_facts\\the_bizarre_reason_why_your_mood_affects_en_1794204892_metadata.txt",
+        "is_fallback": false,
+        "topic": "The Bizarre Reason Why Your Mood Affects Air Quality Perception",
+        "clips_count": 1,
+        "selected_clip": {},
+        "clips": [],
+        "execution_seconds": 108.1
+      },
+      "mode2": {},
+      "errors": [],
+      "total_batch_seconds": 112.2
     }
   ],
-  "last_updated": "2026-11-08T19:30:34.417069",
-  "clip_logs": [
+  "last_updated": "2026-11-09T11:45:01.698044",
+  "topic_logs": [
     {
-      "timestamp": "2026-11-08T19:30:34.414513",
-      "video_id": "dNIef2fGLQY",
-      "title": "Why the US Dollar Will Remain the Dominant Currency for 20 Years | Gita Gopinath | FO585 Raj Shamani",
+      "timestamp": "2026-11-09T11:45:01.687010",
+      "mode": "facts",
+      "topic": "The Bizarre Reason Why Your Mood Affects Air Quality Perception",
+      "normalized": "the bizarre reason why your mood affects air quality perception",
       "metadata": {
-        "clips_count": 3
+        "video_path": "C:\\Users\\Samsung\\Documents\\Code\\AI_Shorts\\output\\batch_20261109_114309\\mode1_facts\\the_bizarre_reason_why_your_mood_affects_en_1794204892.mp4",
+        "duration": 17.167166666666667,
+        "title": "Mood and Air Quality Connection"
       }
     }
   ]

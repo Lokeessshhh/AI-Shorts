@@ -74,7 +74,7 @@ class VisualIntent(BaseModel):
     )
     search_queries: List[str] = Field(
         default_factory=list,
-        description="3-4 precise, targeted search queries for media APIs across archives and stock libraries",
+        description="3-4 precise, targeted search queries for media APIs across archives and stock libraries (ALWAYS in English)",
     )
     preferred_modality: str = Field(
         default="video",
@@ -92,21 +92,24 @@ class VisualIntent(BaseModel):
 
 class Scene(BaseModel):
     scene_id: int = Field(description="Sequential index of the visual cut, starting from 1")
-    narration: str = Field(description="Single spoken sentence or phrase for this cut (~8-12 words, approx 3.0-3.8s)")
+    narration: str = Field(description="Single spoken sentence or phrase for this cut (~8-12 words, approx 3.0-3.8s). In Hindi mode, this is natural conversational Devanagari Hindi.")
+    hinglish_caption: Optional[str] = Field(default=None, description="Conversational Roman Hindi / Hinglish text for on-screen captions in Hindi mode (e.g. '1954 mein duniya ka pehla commercial jet achanak gayab ho gaya'). Clean Latin script, zero Devanagari. None for English mode.")
     visual_keywords: List[str] = Field(default_factory=list, description="1-2 atomic visual search terms for backward compatibility")
     visual_type: str = Field(default="video", description="'video' for B-roll, or 'graphic_card' for diagrams, documents, or data cards")
     concept_query: Optional[str] = Field(default=None, description="Specific subject query for encyclopedic card if visual_type is graphic_card")
     visual_intent: Optional[VisualIntent] = Field(default=None, description="Structured visual intent for multi-source search and reranking")
-    emphasis_words: List[str] = Field(default_factory=list, description="1-3 critical words in this sentence to receive kinetic pop and semantic color highlight (e.g. shocking numbers, costs, turning points, core verbs)")
+    emphasis_words: List[str] = Field(default_factory=list, description="1-3 critical words in this sentence to receive kinetic pop and semantic color highlight. In Hindi mode, these are Hinglish words.")
     camera_motion: str = Field(default="push_in_focus", description="Cinematic camera move: 'push_in_focus' | 'pull_out_reveal' | 'pan_horizontal' | 'tilt_vertical' | 'subtle_drift'")
     subject_focus: str = Field(default="upper_third", description="Subject framing anchor: 'upper_third' (portraits/people/documents) | 'center' | 'wide_landscape'")
 
 
 class ScriptPayload(BaseModel):
     title: str = Field(description="Catchy, viral YouTube Shorts / Reels title")
+    language: str = Field(default="en", description="Script language: 'en' (English) | 'hi' (Hindi)")
     story_structure: str = Field(default="custom", description="The creative narrative architecture selected by LLM (e.g. 'inverted_mystery', 'perverse_incentive_trap', 'cognitive_dilemma', 'monopoly_exploit', 'domino_cascade', or custom)")
     hook: str = Field(description="Opening spoken hook (0-2s) designed to stop the scroll")
     text_hook: str = Field(default="", description="Bold, center-safe on-screen text hook (3-6 words, all caps, punchy)")
+    text_hook_hinglish: Optional[str] = Field(default=None, description="Hinglish/Roman Hindi text hook for on-screen display in Hindi mode")
     visual_hook: str = Field(default="", description="Immediate visual action description for frame 0-1.5s")
     format_type: str = Field(default="mystery_breakdown", description="Story format classification")
     scenes: List[Scene] = Field(description="6 to 8 fast-paced narrative cuts")
@@ -119,12 +122,12 @@ You craft high-retention, high-shareability documentary-style scripts that stop 
 CRITICAL RULES:
 1. BAN ALL AI INTROS & ROBOTIC CLICHÉS:
    - NEVER use: "Have you ever wondered", "Did you know", "In today's video", "Delve", "Tapestry", "Fascinating", "Hold onto your seats".
-   - NEVER start with pleasantries, greetings, channel names, or throat-clearing.
+   - In Hindi: NEVER use robotic textbook greetings like "क्या आप जानते हैं", "आज के इस वीडियो में", "नमस्ते दोस्तों".
    - Jump IMMEDIATELY into the core contradiction, catastrophic mystery, or high-stakes paradox in word one.
 
 2. TRIPLE-STACK HOOK (0.0s - 2.0s):
    - Spoken Hook: A bold, intriguing opening sentence opening a high-stakes curiosity gap (Loewenstein Information Gap Principle).
-   - Text Hook: 3 to 6 words maximum, center-safe, high punch (e.g. "SQUARE WINDOWS = DISASTER", "THE COBRA PARADOX", "WHY WE FAIL TO HELP").
+   - Text Hook: 3 to 6 words maximum, center-safe, high punch (e.g. "SQUARE WINDOWS = DISASTER", "COBRA TRAP = 10X SNAKES").
    - Visual Hook: Concrete real-world visual described in visual_hook.
 
 3. STRICT 25-30 SECOND DURATION & SPOKEN WORD BUDGET:
@@ -141,19 +144,26 @@ CRITICAL RULES:
      * Domino Cascade: Overlooked Micro-Flaw -> Accelerating Failure Chain -> Historic Climax -> Permanent Lesson.
      * Or any custom narrative progression that best builds tension and delivers a memorable payoff.
 
-5. KINETIC EMPHASIS & CINEMATIC MOTION DIRECTING:
+5. BILINGUAL DUAL-SCRIPT IN HINDI MODE (CRITICAL):
+   - When language is 'hi':
+     * 'narration' & 'full_narration': MUST be written in natural conversational Devanagari Hindi (the way a real Indian YouTuber speaks to an audience). Use common English loanwords written phonetically in Devanagari (e.g. 'विंडो', 'कंपनी', 'प्लेन', 'प्रेशर', 'क्रैश', 'लूपहोल', 'बाउंटी'). Do NOT use artificial Sanskritized Hindi or literal software translations.
+     * 'hinglish_caption': For EVERY scene, provide the authentic Roman Hindi (Hinglish) text for on-screen captions (e.g. '1954 mein duniya ka pehla commercial jet achanak gayab ho gaya'). Use clean Latin script with zero Devanagari characters.
+     * 'text_hook': Punchy Roman Hindi or English hook (e.g. 'COBRA TRAP = 10X SNAKES').
+     * 'visual_intent.search_queries': MUST ALWAYS be in English so media search APIs find authentic footage.
+
+6. KINETIC EMPHASIS & CINEMATIC MOTION DIRECTING:
    - For every scene:
-     * Tag 1-3 emphasis_words: Words containing critical numbers, costs, shock verbs, or turning points for kinetic pop animations.
+     * Tag 1-3 emphasis_words: Words containing critical numbers, costs, shock verbs, or turning points for kinetic pop animations (in Hinglish if Hindi mode).
      * Select camera_motion: 'push_in_focus' (escalation/intimacy) | 'pull_out_reveal' (scale/landscape) | 'pan_horizontal' (archival tracking) | 'tilt_vertical' (upward reveal) | 'subtle_drift' (contemplation).
      * Set subject_focus: 'upper_third' (portraits/figures) | 'center' | 'wide_landscape'.
 
-6. IMAGE-FIRST VISUAL DIRECTION (90/10 RULE & UNCONSTRAINED GRAPHICS):
+7. IMAGE-FIRST VISUAL DIRECTION (90/10 RULE & UNCONSTRAINED GRAPHICS):
    - Scene 1 (Hook) MUST ALWAYS be 100% authentic real visual media (archival photo or documentary footage).
    - Most videos work best with 100% real imagery. If photography and footage tell the story best, use preferred_modality: "archival_photo" for ALL scenes. Zero diagrams is completely valid and encouraged.
    - ONLY propose an infographic for at most ONE scene (typically Scene 5) IF a visual model (feedback loop, milestone timeline, mind map, decision tree, data bars) genuinely makes the concept dramatically clearer than imagery alone.
    - Pacing: 1 or maximum 2 images per narration sentence. Smooth documentary pacing, no flashing cuts.
 
-7. FORMAT: Output ONLY valid, parseable JSON conforming strictly to the requested schema.
+8. FORMAT: Output ONLY valid, parseable JSON conforming strictly to the requested schema.
 """
 
 
@@ -161,6 +171,7 @@ def build_script_prompt(
     topic: str,
     format_type: str = "counter_intuitive_truth",
     angle: str = "",
+    language: str = "en",
 ) -> str:
     format_guidelines = {
         "counter_intuitive_truth": """STORY FORMAT: COUNTER-INTUITIVE TRUTH (Business / Tech / Money)
@@ -182,16 +193,35 @@ def build_script_prompt(
 
     selected_format_guide = format_guidelines.get(format_type, format_guidelines["counter_intuitive_truth"])
 
+    lang_code = "hi" if language in ("hi", "hindi") else "en"
+
+    if lang_code == "hi":
+        lang_instructions = """LANGUAGE MODE: HINDI (Spoken Devanagari Hindi + Displayed Hinglish Captions)
+- 'narration' & 'full_narration': MUST be written in conversational Indian Hindi using Devanagari script. Natural Indian creator cadence with common English loanwords (e.g. 'विंडो', 'कंपनी', 'प्लेन', 'प्रेशर', 'क्रैश', 'लूपहोल', 'बाउंटी'). Strictly 68-82 spoken words!
+- 'hinglish_caption': MUST be provided for every single scene in clean, conversational Roman Hindi (Latin alphabet). For example: "1954 mein duniya ka pehla commercial jet achanak gayab ho gaya."
+- 'text_hook': High-impact Roman Hindi or English (e.g. "SQUARE WINDOWS = DISASTER" or "THE COBRA TRAP").
+- 'emphasis_words': 1-3 critical Hinglish words per scene to receive kinetic pop animations.
+- 'visual_intent.search_queries': MUST be in English for image/media search engines."""
+    else:
+        lang_instructions = """LANGUAGE MODE: ENGLISH
+- 'narration' & 'full_narration': Sharp, conversational documentary English. Strictly 68-82 spoken words!
+- 'hinglish_caption': Leave as null.
+- 'text_hook': BOLD 3-5 WORD ENGLISH TEXT HOOK.
+- 'visual_intent.search_queries': English search queries."""
+
     return f"""Generate an audience-driven viral short-form script for the following topic:
 Topic: "{topic}"
 Angle: "{angle if angle else topic}"
 Format: {format_type}
+Language: {lang_code.upper()}
 
 {selected_format_guide}
 
+{lang_instructions}
+
 STRICT CONSTRAINTS:
-1. TOTAL WORD COUNT: Strictly 75 to 92 spoken words across the entire script (32 to 40 seconds).
-2. Number of cuts: Exactly 7 to 9 visual scenes (approx 8-10 words per cut).
+1. TOTAL WORD COUNT: Strictly 68 to 82 spoken words across the entire script (25.0 to 30.0 seconds runtime).
+2. Number of cuts: Exactly 6 to 8 visual scenes (~8-12 words per cut).
 3. First 2 seconds: MUST have a punchy Text Hook (3-6 words, all caps) and Spoken Hook.
 4. NO AI CLICHÉS. Write like a sharp, compelling human storyteller speaking to a friend.
 5. EVERY scene MUST have a complete visual_intent detailing exact entity, era, action, queries, and modality.
@@ -199,14 +229,18 @@ STRICT CONSTRAINTS:
 Return strictly JSON matching this structure:
 {{
   "title": "Short punchy title",
+  "language": "{lang_code}",
+  "story_structure": "inverted_mystery | perverse_incentive_trap | cognitive_dilemma | monopoly_exploit | domino_cascade | custom",
   "hook": "Opening spoken hook sentence",
   "text_hook": "BOLD 3-5 WORD TEXT HOOK",
+  "text_hook_hinglish": "BOLD HINGLISH HOOK IF HINDI ELSE null",
   "visual_hook": "Concrete visual description for frame 0-1.5s",
   "format_type": "{format_type}",
   "scenes": [
     {{
       "scene_id": 1,
       "narration": "First spoken sentence...",
+      "hinglish_caption": "First sentence in Roman Hindi / Hinglish if Hindi mode else null",
       "visual_keywords": ["keyword1", "keyword2"],
       "visual_type": "video",
       "concept_query": null,
@@ -218,10 +252,13 @@ Return strictly JSON matching this structure:
         "search_queries": ["query 1", "query 2", "query 3"],
         "preferred_modality": "archival_photo",
         "diagram_type": null
-      }}
+      }},
+      "emphasis_words": ["word1", "word2"],
+      "camera_motion": "push_in_focus",
+      "subject_focus": "upper_third"
     }}
   ],
-  "full_narration": "The complete voiceover narration text (75-92 words)."
+  "full_narration": "The complete voiceover narration text (68-82 words)."
 }}
 """
 
