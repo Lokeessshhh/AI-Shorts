@@ -10,7 +10,8 @@
     "the bizarre reason why your favorite tv show might influence your life choices",
     "the surprising science of ice that can explode",
     "ai midnight breakdown",
-    "the bizarre reason why video game releases make us feel nostalgic"
+    "the bizarre reason why video game releases make us feel nostalgic",
+    "zero errors wrong file buddy"
   ],
   "clipped_youtube_ids": [
     "dNIef2fGLQY",
@@ -815,19 +816,46 @@
       "mode2": {},
       "errors": [],
       "total_batch_seconds": 110.8
+    },
+    {
+      "batch_id": "batch_20261110_033948",
+      "timestamp": "2026-11-10T03:39:48.650125",
+      "batch_dir": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261110_033948",
+      "modes_completed": [
+        "mode3"
+      ],
+      "total_videos": 1,
+      "mode1": {},
+      "mode2": {},
+      "errors": [],
+      "mode3": {
+        "status": "SUCCESS",
+        "title": "Zero Errors? Wrong File, Buddy!",
+        "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261110_033948/mode3/mode3_zero_errors_wrong_file_buddy_1794281991.mp4",
+        "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261110_033948/mode3/mode3_zero_errors_wrong_file_buddy_1794281991_metadata.txt",
+        "duration": 30.0,
+        "selected_clip": {
+          "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261110_033948/mode3/mode3_zero_errors_wrong_file_buddy_1794281991.mp4",
+          "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261110_033948/mode3/mode3_zero_errors_wrong_file_buddy_1794281991_metadata.txt",
+          "title": "Zero Errors? Wrong File, Buddy!",
+          "rank": 1,
+          "composite_upload_score": 96.0
+        }
+      },
+      "total_batch_seconds": 99.8
     }
   ],
-  "last_updated": "2026-11-09T11:57:28.480858",
+  "last_updated": "2026-11-10T03:41:28.437558",
   "topic_logs": [
     {
-      "timestamp": "2026-11-09T11:57:28.479086",
-      "mode": "facts",
-      "topic": "The Bizarre Reason Why Video Game Releases Make Us Feel Nostalgic",
-      "normalized": "the bizarre reason why video game releases make us feel nostalgic",
+      "timestamp": "2026-11-10T03:41:28.436189",
+      "mode": "mode3_chatgpt",
+      "topic": "Zero Errors? Wrong File, Buddy!",
+      "normalized": "zero errors wrong file buddy",
       "metadata": {
-        "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261109_115537/mode1_facts/the_bizarre_reason_why_video_game_releas_en_1794225434.mp4",
-        "duration": 14.722583333333333,
-        "title": "The Hidden Chemistry of Nostalgia"
+        "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261110_033948/mode3/mode3_zero_errors_wrong_file_buddy_1794281991.mp4",
+        "duration": 29.984038,
+        "title": "Zero Errors? Wrong File, Buddy!"
       }
     }
   ]
