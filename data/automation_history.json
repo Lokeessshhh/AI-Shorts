@@ -14,7 +14,8 @@
     "zero errors wrong file buddy",
     "why weather can influence your mood more than you think",
     "the surprising science behind why weather affects our decision making",
-    "wi fi the coward connection"
+    "wi fi the coward connection",
+    "the hidden psychology behind why we celebrate sports victories"
   ],
   "clipped_youtube_ids": [
     "dNIef2fGLQY",
@@ -941,6 +942,36 @@
         }
       },
       "total_batch_seconds": 75.0
+    },
+    {
+      "batch_id": "batch_20261110_184748",
+      "timestamp": "2026-11-10T18:47:48.052674",
+      "batch_dir": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261110_184748",
+      "modes_completed": [
+        "mode1_facts"
+      ],
+      "total_videos": 1,
+      "mode1": {
+        "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261110_184748/mode1_facts/the_hidden_psychology_behind_why_we_cele_en_1794336554.mp4",
+        "title": "The Surprising Psychology of Sports Wins",
+        "source_title": "The Surprising Psychology of Sports Wins",
+        "source_channel": "AI Shorts Studio",
+        "source_url": "N/A",
+        "duration": 13.26,
+        "viral_score": 90,
+        "status": "SUCCESS",
+        "hook_sentence": "",
+        "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261110_184748/mode1_facts/the_hidden_psychology_behind_why_we_cele_en_1794336554_metadata.txt",
+        "is_fallback": false,
+        "topic": "The Hidden Psychology Behind Why We Celebrate Sports Victories",
+        "clips_count": 1,
+        "selected_clip": {},
+        "clips": [],
+        "execution_seconds": 95.0
+      },
+      "mode2": {},
+      "errors": [],
+      "total_batch_seconds": 97.2
     }
   ],
   "last_updated": "2026-11-10T03:41:28.437558",
