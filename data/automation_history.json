@@ -12,7 +12,8 @@
     "ai midnight breakdown",
     "the bizarre reason why video game releases make us feel nostalgic",
     "zero errors wrong file buddy",
-    "why weather can influence your mood more than you think"
+    "why weather can influence your mood more than you think",
+    "the surprising science behind why weather affects our decision making"
   ],
   "clipped_youtube_ids": [
     "dNIef2fGLQY",
@@ -874,6 +875,44 @@
       "mode2": {},
       "errors": [],
       "total_batch_seconds": 122.1
+    },
+    {
+      "batch_id": "batch_20261110_113825",
+      "timestamp": "2026-11-10T11:38:25.583785",
+      "batch_dir": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261110_113825",
+      "modes_completed": [
+        "mode2_fallback"
+      ],
+      "total_videos": 1,
+      "mode1": {},
+      "mode2": {
+        "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261110_113825/mode2_fallback/the_surprising_science_behind_why_weathe_en_1794310884.mp4",
+        "title": "Weather's Hidden Impact",
+        "source_title": "Weather's Hidden Impact",
+        "source_channel": "Google Trends RSS",
+        "source_url": "N/A",
+        "duration": 18.0,
+        "viral_score": 90,
+        "status": "SUCCESS",
+        "hook_sentence": "",
+        "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261110_113825/mode2_fallback/the_surprising_science_behind_why_weathe_en_1794310884_metadata.txt",
+        "is_fallback": true,
+        "topic": "The Surprising Science Behind Why Weather Affects Our Decision-Making",
+        "clips_count": 1,
+        "selected_clip": {
+          "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261110_113825/mode2_fallback/the_surprising_science_behind_why_weathe_en_1794310884.mp4",
+          "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261110_113825/mode2_fallback/the_surprising_science_behind_why_weathe_en_1794310884_metadata.txt",
+          "title": "Weather's Hidden Impact",
+          "rank": 1,
+          "composite_upload_score": 95.0
+        },
+        "clips": [],
+        "execution_seconds": 0.0
+      },
+      "errors": [
+        "Mode 2 Clipper Failed: yt-dlp slice download failed: WARNING: [youtube] No title found in player responses; falling back to title from initial data. Other metadata may also be missing\nERROR: [youtube] X0wCocxbxIs: Sign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies\n"
+      ],
+      "total_batch_seconds": 196.2
     }
   ],
   "last_updated": "2026-11-10T03:41:28.437558",
