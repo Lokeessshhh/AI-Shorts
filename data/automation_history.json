@@ -15,7 +15,8 @@
     "why weather can influence your mood more than you think",
     "the surprising science behind why weather affects our decision making",
     "wi fi the coward connection",
-    "the hidden psychology behind why we celebrate sports victories"
+    "the hidden psychology behind why we celebrate sports victories",
+    "the bizarre reason why shopping carts are designed to keep you buying"
   ],
   "clipped_youtube_ids": [
     "dNIef2fGLQY",
@@ -1091,6 +1092,36 @@
       },
       "errors": [],
       "total_batch_seconds": 288.8
+    },
+    {
+      "batch_id": "batch_20261111_111746",
+      "timestamp": "2026-11-11T11:17:46.380015",
+      "batch_dir": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261111_111746",
+      "modes_completed": [
+        "mode1_facts"
+      ],
+      "total_videos": 1,
+      "mode1": {
+        "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261111_111746/mode1_facts/the_bizarre_reason_why_shopping_carts_ar_en_1794395933.mp4",
+        "title": "The Shopping Cart Conspiracy",
+        "source_title": "The Shopping Cart Conspiracy",
+        "source_channel": "AI Shorts Studio",
+        "source_url": "N/A",
+        "duration": 14.56,
+        "viral_score": 90,
+        "status": "SUCCESS",
+        "hook_sentence": "",
+        "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261111_111746/mode1_facts/the_bizarre_reason_why_shopping_carts_ar_en_1794395933_metadata.txt",
+        "is_fallback": false,
+        "topic": "The Bizarre Reason Why Shopping Carts Are Designed to Keep You Buying",
+        "clips_count": 1,
+        "selected_clip": {},
+        "clips": [],
+        "execution_seconds": 80.4
+      },
+      "mode2": {},
+      "errors": [],
+      "total_batch_seconds": 81.7
     }
   ],
   "last_updated": "2026-11-10T03:41:28.437558",
