@@ -19,7 +19,8 @@
     "the bizarre reason why shopping carts are designed to keep you buying",
     "code deletion celebration",
     "the surprising science behind why landfills are more than just trash",
-    "zero errors not so fast"
+    "zero errors not so fast",
+    "the bizarre reason why fast food menus trick your brain"
   ],
   "clipped_youtube_ids": [
     "dNIef2fGLQY",
@@ -1328,6 +1329,44 @@
         }
       },
       "total_batch_seconds": 80.4
+    },
+    {
+      "batch_id": "batch_20261111_185045",
+      "timestamp": "2026-11-11T18:50:45.487075",
+      "batch_dir": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261111_185045",
+      "modes_completed": [
+        "mode2_fallback"
+      ],
+      "total_videos": 1,
+      "mode1": {},
+      "mode2": {
+        "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261111_185045/mode2_fallback/the_bizarre_reason_why_fast_food_menus_t_en_1794423302.mp4",
+        "title": "Fast Food Mind Tricks",
+        "source_title": "Fast Food Mind Tricks",
+        "source_channel": "Google Trends RSS",
+        "source_url": "N/A",
+        "duration": 12.9,
+        "viral_score": 90,
+        "status": "SUCCESS",
+        "hook_sentence": "",
+        "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261111_185045/mode2_fallback/the_bizarre_reason_why_fast_food_menus_t_en_1794423302_metadata.txt",
+        "is_fallback": true,
+        "topic": "The Bizarre Reason Why Fast Food Menus Trick Your Brain",
+        "clips_count": 1,
+        "selected_clip": {
+          "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261111_185045/mode2_fallback/the_bizarre_reason_why_fast_food_menus_t_en_1794423302.mp4",
+          "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261111_185045/mode2_fallback/the_bizarre_reason_why_fast_food_menus_t_en_1794423302_metadata.txt",
+          "title": "Fast Food Mind Tricks",
+          "rank": 1,
+          "composite_upload_score": 95.0
+        },
+        "clips": [],
+        "execution_seconds": 0.0
+      },
+      "errors": [
+        "Mode 2 Clipper Failed: yt-dlp slice download failed: WARNING: [youtube] bgP297eGqf8: Some android client https formats have been skipped as they are missing a URL. YouTube may have enabled the SABR-only streaming experiment for the current session. See  https://github.com/yt-dlp/yt-dlp/issues/12482  for more details\n[https @ 0x578853976c80] HTTP error 403 Forbidden\n[in#0 @ 0x578853975d40] Error opening input: Server returned 403 Forbidden (access denied)\nError opening input file https://rr4---sn-2imern7r.googlevideo.com/videoplayback?expire=1794444830&ei=vrn0atapCfL8sfIP4-u--Qo&ip=134.33.77.208&id=o-AJPo8fdguK2fIg8Q8KcbGhWd5I27GI-f_iipyCOHOYqN&itag=18&source=youtube&requiressl=yes&xpc=EgVo2aDSNQ%3D%3D&cps=295&met=1794423230%2C&mh=iB&mm=31%2C26&mn=sn-2imern7r%2Csn-a5msen7s&ms=au%2Conr&mv=m&mvi=4&pl=16&rms=au%2Cau&pcm2=no&initcwndbps=7196875&bui=AZFAFb-Nvb7ZM6l1CjaXUvWGbl9e7AIE_cBdbrp32aHel_6vE3fw7pkGetGloU4_UaddIOT7IWT-uh1F&spc=mpRQ_6ssOVv0jxLmItlcIED4INfmSJHT-FM54q3rjDZrqrxwlQXDbXvIk8NDpUw&vprv=1&svpuc=1&mime=video%2Fmp4&rqh=1&cnr=14&ratebypass=yes&dur=772.063&lmt=1666536617762658&mt=1794422908&fvip=2&epbp=1&fexp=51565116&c=ANDROID&txp=5538434&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cxpc%2Cpcm2%2Cbui%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Crqh%2Ccnr%2Cratebypass%2Cdur%2Clmt&sig=AE0s2JYwRQIhAKKL8tkOcnYJHhNdCzD054OizroihgTS-n8prpuEYZ-IAiAc-ZkwTcQN7yTNOKkLdz2WqIfS1PP8jLyi5rOuDXf86w%3D%3D&lsparams=cps%2Cmet%2Cmh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Crms%2Cinitcwndbps&lsig=APaTxxMwRgIhAJ97eseGbe5isP1xe-mc_rEVI3OuoByeSLKhXcixohLlAiEAwHHJV2FiIXM3rsG6z1I_zNkZiJkoa10EizPQxMKLQTk%3D.\nError opening input files: Server returned 403 Forbidden (access denied)\n\n\nERROR: ffmpeg exited with code 8\n"
+      ],
+      "total_batch_seconds": 265.4
     }
   ],
   "last_updated": "2026-11-10T03:41:28.437558",
