@@ -18,7 +18,8 @@
     "the hidden psychology behind why we celebrate sports victories",
     "the bizarre reason why shopping carts are designed to keep you buying",
     "code deletion celebration",
-    "the surprising science behind why landfills are more than just trash"
+    "the surprising science behind why landfills are more than just trash",
+    "zero errors not so fast"
   ],
   "clipped_youtube_ids": [
     "dNIef2fGLQY",
@@ -1300,6 +1301,33 @@
       "mode2": {},
       "errors": [],
       "total_batch_seconds": 97.0
+    },
+    {
+      "batch_id": "batch_20261111_185058",
+      "timestamp": "2026-11-11T18:50:58.848955",
+      "batch_dir": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261111_185058",
+      "modes_completed": [
+        "mode3"
+      ],
+      "total_videos": 1,
+      "mode1": {},
+      "mode2": {},
+      "errors": [],
+      "mode3": {
+        "status": "SUCCESS",
+        "title": "Zero Errors? Not So Fast!",
+        "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261111_185058/mode3/mode3_zero_errors_not_so_fast_1794423061.mp4",
+        "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261111_185058/mode3/mode3_zero_errors_not_so_fast_1794423061_metadata.txt",
+        "duration": 31.7,
+        "selected_clip": {
+          "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261111_185058/mode3/mode3_zero_errors_not_so_fast_1794423061.mp4",
+          "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261111_185058/mode3/mode3_zero_errors_not_so_fast_1794423061_metadata.txt",
+          "title": "Zero Errors? Not So Fast!",
+          "rank": 1,
+          "composite_upload_score": 96.0
+        }
+      },
+      "total_batch_seconds": 80.4
     }
   ],
   "last_updated": "2026-11-10T03:41:28.437558",
