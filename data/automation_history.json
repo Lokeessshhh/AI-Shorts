@@ -21,7 +21,8 @@
     "the surprising science behind why landfills are more than just trash",
     "zero errors not so fast",
     "the bizarre reason why fast food menus trick your brain",
-    "the bizarre reason why measles symptoms can mimic other diseases"
+    "the bizarre reason why measles symptoms can mimic other diseases",
+    "quantum banking the 47 dilemma"
   ],
   "clipped_youtube_ids": [
     "dNIef2fGLQY",
@@ -1398,6 +1399,33 @@
       "mode2": {},
       "errors": [],
       "total_batch_seconds": 113.8
+    },
+    {
+      "batch_id": "batch_20261112_114238",
+      "timestamp": "2026-11-12T11:42:38.764096",
+      "batch_dir": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261112_114238",
+      "modes_completed": [
+        "mode3"
+      ],
+      "total_videos": 1,
+      "mode1": {},
+      "mode2": {},
+      "errors": [],
+      "mode3": {
+        "status": "SUCCESS",
+        "title": "Quantum Banking: The $47 Dilemma",
+        "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261112_114238/mode3/mode3_quantum_banking_the_47_dilemma_1794483760.mp4",
+        "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261112_114238/mode3/mode3_quantum_banking_the_47_dilemma_1794483760_metadata.txt",
+        "duration": 28.7,
+        "selected_clip": {
+          "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261112_114238/mode3/mode3_quantum_banking_the_47_dilemma_1794483760.mp4",
+          "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261112_114238/mode3/mode3_quantum_banking_the_47_dilemma_1794483760_metadata.txt",
+          "title": "Quantum Banking: The $47 Dilemma",
+          "rank": 1,
+          "composite_upload_score": 96.0
+        }
+      },
+      "total_batch_seconds": 76.8
     }
   ],
   "last_updated": "2026-11-10T03:41:28.437558",
