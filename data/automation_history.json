@@ -22,7 +22,8 @@
     "zero errors not so fast",
     "the bizarre reason why fast food menus trick your brain",
     "the bizarre reason why measles symptoms can mimic other diseases",
-    "quantum banking the 47 dilemma"
+    "quantum banking the 47 dilemma",
+    "what actually happens when storm hits your brain trust levels"
   ],
   "clipped_youtube_ids": [
     "dNIef2fGLQY",
@@ -1545,6 +1546,36 @@
       },
       "errors": [],
       "total_batch_seconds": 292.4
+    },
+    {
+      "batch_id": "batch_20261113_112101",
+      "timestamp": "2026-11-13T11:21:01.172854",
+      "batch_dir": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261113_112101",
+      "modes_completed": [
+        "mode1_facts"
+      ],
+      "total_videos": 1,
+      "mode1": {
+        "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261113_112101/mode1_facts/what_actually_happens_when_a_storm_hits__en_1794568961.mp4",
+        "title": "Storms and Your Brain's Trust",
+        "source_title": "Storms and Your Brain's Trust",
+        "source_channel": "AI Shorts Studio",
+        "source_url": "N/A",
+        "duration": 14.12,
+        "viral_score": 90,
+        "status": "SUCCESS",
+        "hook_sentence": "",
+        "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261113_112101/mode1_facts/what_actually_happens_when_a_storm_hits__en_1794568961_metadata.txt",
+        "is_fallback": false,
+        "topic": "What Actually Happens When a Storm Hits Your Brain's Trust Levels",
+        "clips_count": 1,
+        "selected_clip": {},
+        "clips": [],
+        "execution_seconds": 108.7
+      },
+      "mode2": {},
+      "errors": [],
+      "total_batch_seconds": 112.7
     }
   ],
   "last_updated": "2026-11-10T03:41:28.437558",
