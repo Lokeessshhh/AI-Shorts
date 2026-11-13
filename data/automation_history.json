@@ -26,7 +26,8 @@
     "what actually happens when storm hits your brain trust levels",
     "the bizarre reason why storms can affect our trust in others",
     "css centering meltdown",
-    "what actually happens when el niño disrupts your brain mood regulation"
+    "what actually happens when el niño disrupts your brain mood regulation",
+    "chatgpt midnight breakdown"
   ],
   "clipped_youtube_ids": [
     "dNIef2fGLQY",
@@ -1674,6 +1675,33 @@
       "mode2": {},
       "errors": [],
       "total_batch_seconds": 87.3
+    },
+    {
+      "batch_id": "batch_20261113_184110",
+      "timestamp": "2026-11-13T18:41:10.220135",
+      "batch_dir": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261113_184110",
+      "modes_completed": [
+        "mode3"
+      ],
+      "total_videos": 1,
+      "mode1": {},
+      "mode2": {},
+      "errors": [],
+      "mode3": {
+        "status": "SUCCESS",
+        "title": "ChatGPT's Midnight Breakdown",
+        "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261113_184110/mode3/mode3_chatgpts_midnight_breakdown_1794595272.mp4",
+        "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261113_184110/mode3/mode3_chatgpts_midnight_breakdown_1794595272_metadata.txt",
+        "duration": 22.7,
+        "selected_clip": {
+          "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261113_184110/mode3/mode3_chatgpts_midnight_breakdown_1794595272.mp4",
+          "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261113_184110/mode3/mode3_chatgpts_midnight_breakdown_1794595272_metadata.txt",
+          "title": "ChatGPT's Midnight Breakdown",
+          "rank": 1,
+          "composite_upload_score": 96.0
+        }
+      },
+      "total_batch_seconds": 60.5
     }
   ],
   "last_updated": "2026-11-10T03:41:28.437558",
