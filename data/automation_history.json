@@ -24,7 +24,8 @@
     "the bizarre reason why measles symptoms can mimic other diseases",
     "quantum banking the 47 dilemma",
     "what actually happens when storm hits your brain trust levels",
-    "the bizarre reason why storms can affect our trust in others"
+    "the bizarre reason why storms can affect our trust in others",
+    "css centering meltdown"
   ],
   "clipped_youtube_ids": [
     "dNIef2fGLQY",
@@ -1615,6 +1616,33 @@
         "Mode 2 Clipper Failed: ERROR: [youtube] FPVhEEPmRaQ: Sign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies"
       ],
       "total_batch_seconds": 143.5
+    },
+    {
+      "batch_id": "batch_20261113_112535",
+      "timestamp": "2026-11-13T11:25:35.759583",
+      "batch_dir": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261113_112535",
+      "modes_completed": [
+        "mode3"
+      ],
+      "total_videos": 1,
+      "mode1": {},
+      "mode2": {},
+      "errors": [],
+      "mode3": {
+        "status": "SUCCESS",
+        "title": "CSS Centering Meltdown",
+        "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261113_112535/mode3/mode3_css_centering_meltdown_1794569138.mp4",
+        "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261113_112535/mode3/mode3_css_centering_meltdown_1794569138_metadata.txt",
+        "duration": 28.4,
+        "selected_clip": {
+          "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261113_112535/mode3/mode3_css_centering_meltdown_1794569138.mp4",
+          "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261113_112535/mode3/mode3_css_centering_meltdown_1794569138_metadata.txt",
+          "title": "CSS Centering Meltdown",
+          "rank": 1,
+          "composite_upload_score": 96.0
+        }
+      },
+      "total_batch_seconds": 53.5
     }
   ],
   "last_updated": "2026-11-10T03:41:28.437558",
