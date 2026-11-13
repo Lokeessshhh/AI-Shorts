@@ -25,7 +25,8 @@
     "quantum banking the 47 dilemma",
     "what actually happens when storm hits your brain trust levels",
     "the bizarre reason why storms can affect our trust in others",
-    "css centering meltdown"
+    "css centering meltdown",
+    "what actually happens when el niño disrupts your brain mood regulation"
   ],
   "clipped_youtube_ids": [
     "dNIef2fGLQY",
@@ -1643,6 +1644,36 @@
         }
       },
       "total_batch_seconds": 53.5
+    },
+    {
+      "batch_id": "batch_20261113_183903",
+      "timestamp": "2026-11-13T18:39:03.655840",
+      "batch_dir": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261113_183903",
+      "modes_completed": [
+        "mode1_facts"
+      ],
+      "total_videos": 1,
+      "mode1": {
+        "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261113_183903/mode1_facts/what_actually_happens_when_el_niño_disru_en_1794595212.mp4",
+        "title": "El Niño's Hidden Impact",
+        "source_title": "El Niño's Hidden Impact",
+        "source_channel": "AI Shorts Studio",
+        "source_url": "N/A",
+        "duration": 18.5,
+        "viral_score": 90,
+        "status": "SUCCESS",
+        "hook_sentence": "",
+        "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261113_183903/mode1_facts/what_actually_happens_when_el_niño_disru_en_1794595212_metadata.txt",
+        "is_fallback": false,
+        "topic": "What Actually Happens When El Niño Disrupts Your Brain's Mood Regulation",
+        "clips_count": 1,
+        "selected_clip": {},
+        "clips": [],
+        "execution_seconds": 85.6
+      },
+      "mode2": {},
+      "errors": [],
+      "total_batch_seconds": 87.3
     }
   ],
   "last_updated": "2026-11-10T03:41:28.437558",
