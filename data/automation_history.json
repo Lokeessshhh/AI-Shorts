@@ -31,7 +31,8 @@
     "the bizarre reason why your brain craves patterns during stormy weather",
     "the tab hoarder chronicles",
     "the surprising science behind why your brain loves rivalries",
-    "the surprising connection between college rivalries and your brain stress response"
+    "the surprising connection between college rivalries and your brain stress response",
+    "chrome tab mourning"
   ],
   "clipped_youtube_ids": [
     "dNIef2fGLQY",
@@ -2069,6 +2070,33 @@
         "Mode 2 Clipper Failed: ERROR: [youtube] FPVhEEPmRaQ: Sign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies"
       ],
       "total_batch_seconds": 124.5
+    },
+    {
+      "batch_id": "batch_20261114_171655",
+      "timestamp": "2026-11-14T17:16:55.674843",
+      "batch_dir": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261114_171655",
+      "modes_completed": [
+        "mode3"
+      ],
+      "total_videos": 1,
+      "mode1": {},
+      "mode2": {},
+      "errors": [],
+      "mode3": {
+        "status": "SUCCESS",
+        "title": "Chrome Tab Mourning",
+        "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261114_171655/mode3/mode3_chrome_tab_mourning_1794676618.mp4",
+        "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261114_171655/mode3/mode3_chrome_tab_mourning_1794676618_metadata.txt",
+        "duration": 35.2,
+        "selected_clip": {
+          "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261114_171655/mode3/mode3_chrome_tab_mourning_1794676618.mp4",
+          "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261114_171655/mode3/mode3_chrome_tab_mourning_1794676618_metadata.txt",
+          "title": "Chrome Tab Mourning",
+          "rank": 1,
+          "composite_upload_score": 96.0
+        }
+      },
+      "total_batch_seconds": 75.5
     }
   ],
   "last_updated": "2026-11-10T03:41:28.437558",
