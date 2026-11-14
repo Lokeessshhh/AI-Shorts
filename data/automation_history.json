@@ -29,7 +29,8 @@
     "what actually happens when el niño disrupts your brain mood regulation",
     "chatgpt midnight breakdown",
     "the bizarre reason why your brain craves patterns during stormy weather",
-    "the tab hoarder chronicles"
+    "the tab hoarder chronicles",
+    "the surprising science behind why your brain loves rivalries"
   ],
   "clipped_youtube_ids": [
     "dNIef2fGLQY",
@@ -1999,6 +2000,36 @@
       },
       "errors": [],
       "total_batch_seconds": 212.1
+    },
+    {
+      "batch_id": "batch_20261114_171544",
+      "timestamp": "2026-11-14T17:15:44.376164",
+      "batch_dir": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261114_171544",
+      "modes_completed": [
+        "mode1_facts"
+      ],
+      "total_videos": 1,
+      "mode1": {
+        "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261114_171544/mode1_facts/the_surprising_science_behind_why_your_b_en_1794676619.mp4",
+        "title": "Why Rivalries Fuel Us",
+        "source_title": "Why Rivalries Fuel Us",
+        "source_channel": "AI Shorts Studio",
+        "source_url": "N/A",
+        "duration": 15.26,
+        "viral_score": 90,
+        "status": "SUCCESS",
+        "hook_sentence": "",
+        "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261114_171544/mode1_facts/the_surprising_science_behind_why_your_b_en_1794676619_metadata.txt",
+        "is_fallback": false,
+        "topic": "The Surprising Science Behind Why Your Brain Loves Rivalries",
+        "clips_count": 1,
+        "selected_clip": {},
+        "clips": [],
+        "execution_seconds": 85.3
+      },
+      "mode2": {},
+      "errors": [],
+      "total_batch_seconds": 87.7
     }
   ],
   "last_updated": "2026-11-10T03:41:28.437558",
