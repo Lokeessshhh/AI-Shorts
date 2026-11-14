@@ -27,7 +27,8 @@
     "the bizarre reason why storms can affect our trust in others",
     "css centering meltdown",
     "what actually happens when el niño disrupts your brain mood regulation",
-    "chatgpt midnight breakdown"
+    "chatgpt midnight breakdown",
+    "the bizarre reason why your brain craves patterns during stormy weather"
   ],
   "clipped_youtube_ids": [
     "dNIef2fGLQY",
@@ -1821,6 +1822,36 @@
       },
       "errors": [],
       "total_batch_seconds": 238.4
+    },
+    {
+      "batch_id": "batch_20261114_104433",
+      "timestamp": "2026-11-14T10:44:33.496816",
+      "batch_dir": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261114_104433",
+      "modes_completed": [
+        "mode1_facts"
+      ],
+      "total_videos": 1,
+      "mode1": {
+        "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261114_104433/mode1_facts/the_bizarre_reason_why_your_brain_craves_en_1794653134.mp4",
+        "title": "Why Storms Make You Seek Patterns",
+        "source_title": "Why Storms Make You Seek Patterns",
+        "source_channel": "AI Shorts Studio",
+        "source_url": "N/A",
+        "duration": 18.3,
+        "viral_score": 90,
+        "status": "SUCCESS",
+        "hook_sentence": "",
+        "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261114_104433/mode1_facts/the_bizarre_reason_why_your_brain_craves_en_1794653134_metadata.txt",
+        "is_fallback": false,
+        "topic": "The Bizarre Reason Why Your Brain Craves Patterns During Stormy Weather",
+        "clips_count": 1,
+        "selected_clip": {},
+        "clips": [],
+        "execution_seconds": 68.3
+      },
+      "mode2": {},
+      "errors": [],
+      "total_batch_seconds": 70.8
     }
   ],
   "last_updated": "2026-11-10T03:41:28.437558",
