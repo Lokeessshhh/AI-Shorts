@@ -32,7 +32,8 @@
     "the tab hoarder chronicles",
     "the surprising science behind why your brain loves rivalries",
     "the surprising connection between college rivalries and your brain stress response",
-    "chrome tab mourning"
+    "chrome tab mourning",
+    "the bizarre reason why airplane turbulence can trigger anxiety"
   ],
   "clipped_youtube_ids": [
     "dNIef2fGLQY",
@@ -2097,6 +2098,36 @@
         }
       },
       "total_batch_seconds": 75.5
+    },
+    {
+      "batch_id": "batch_20261115_112000",
+      "timestamp": "2026-11-15T11:20:00.081117",
+      "batch_dir": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261115_112000",
+      "modes_completed": [
+        "mode1_facts"
+      ],
+      "total_videos": 1,
+      "mode1": {
+        "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261115_112000/mode1_facts/the_bizarre_reason_why_airplane_turbulen_en_1794741669.mp4",
+        "title": "Turbulence and Your Brain",
+        "source_title": "Turbulence and Your Brain",
+        "source_channel": "AI Shorts Studio",
+        "source_url": "N/A",
+        "duration": 12.93,
+        "viral_score": 90,
+        "status": "SUCCESS",
+        "hook_sentence": "",
+        "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261115_112000/mode1_facts/the_bizarre_reason_why_airplane_turbulen_en_1794741669_metadata.txt",
+        "is_fallback": false,
+        "topic": "The Bizarre Reason Why Airplane Turbulence Can Trigger Anxiety",
+        "clips_count": 1,
+        "selected_clip": {},
+        "clips": [],
+        "execution_seconds": 79.0
+      },
+      "mode2": {},
+      "errors": [],
+      "total_batch_seconds": 81.2
     }
   ],
   "last_updated": "2026-11-10T03:41:28.437558",
