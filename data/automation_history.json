@@ -33,7 +33,8 @@
     "the surprising science behind why your brain loves rivalries",
     "the surprising connection between college rivalries and your brain stress response",
     "chrome tab mourning",
-    "the bizarre reason why airplane turbulence can trigger anxiety"
+    "the bizarre reason why airplane turbulence can trigger anxiety",
+    "crying for mercy at am"
   ],
   "clipped_youtube_ids": [
     "dNIef2fGLQY",
@@ -2128,6 +2129,33 @@
       "mode2": {},
       "errors": [],
       "total_batch_seconds": 81.2
+    },
+    {
+      "batch_id": "batch_20261115_112345",
+      "timestamp": "2026-11-15T11:23:45.771593",
+      "batch_dir": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261115_112345",
+      "modes_completed": [
+        "mode3"
+      ],
+      "total_videos": 1,
+      "mode1": {},
+      "mode2": {},
+      "errors": [],
+      "mode3": {
+        "status": "SUCCESS",
+        "title": "Crying for Mercy at 3 AM",
+        "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261115_112345/mode3/mode3_crying_for_mercy_at_3_am_1794741828.mp4",
+        "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261115_112345/mode3/mode3_crying_for_mercy_at_3_am_1794741828_metadata.txt",
+        "duration": 31.3,
+        "selected_clip": {
+          "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261115_112345/mode3/mode3_crying_for_mercy_at_3_am_1794741828.mp4",
+          "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261115_112345/mode3/mode3_crying_for_mercy_at_3_am_1794741828_metadata.txt",
+          "title": "Crying for Mercy at 3 AM",
+          "rank": 1,
+          "composite_upload_score": 96.0
+        }
+      },
+      "total_batch_seconds": 72.9
     }
   ],
   "last_updated": "2026-11-10T03:41:28.437558",
