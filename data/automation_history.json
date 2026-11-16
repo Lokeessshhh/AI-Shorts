@@ -38,7 +38,8 @@
     "the bizarre reason why airplanes are designed to handle unruly passengers",
     "the surprising science behind why team rivalries boost your brain power",
     "what actually happens when drones and weather collide",
-    "the bizarre reason why weather can affect your decision making skills"
+    "the bizarre reason why weather can affect your decision making skills",
+    "the email dilemma"
   ],
   "clipped_youtube_ids": [
     "dNIef2fGLQY",
@@ -2442,6 +2443,33 @@
         "Mode 2 Clipper Failed: ERROR: [youtube] FPVhEEPmRaQ: Sign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies"
       ],
       "total_batch_seconds": 148.9
+    },
+    {
+      "batch_id": "batch_20261116_115547",
+      "timestamp": "2026-11-16T11:55:47.457488",
+      "batch_dir": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261116_115547",
+      "modes_completed": [
+        "mode3"
+      ],
+      "total_videos": 1,
+      "mode1": {},
+      "mode2": {},
+      "errors": [],
+      "mode3": {
+        "status": "SUCCESS",
+        "title": "The Email Dilemma",
+        "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261116_115547/mode3/mode3_the_email_dilemma_1794830149.mp4",
+        "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261116_115547/mode3/mode3_the_email_dilemma_1794830149_metadata.txt",
+        "duration": 30.1,
+        "selected_clip": {
+          "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261116_115547/mode3/mode3_the_email_dilemma_1794830149.mp4",
+          "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261116_115547/mode3/mode3_the_email_dilemma_1794830149_metadata.txt",
+          "title": "The Email Dilemma",
+          "rank": 1,
+          "composite_upload_score": 96.0
+        }
+      },
+      "total_batch_seconds": 66.3
     }
   ],
   "last_updated": "2026-11-10T03:41:28.437558",
