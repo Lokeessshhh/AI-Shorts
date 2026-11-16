@@ -37,7 +37,8 @@
     "crying for mercy at am",
     "the bizarre reason why airplanes are designed to handle unruly passengers",
     "the surprising science behind why team rivalries boost your brain power",
-    "what actually happens when drones and weather collide"
+    "what actually happens when drones and weather collide",
+    "the bizarre reason why weather can affect your decision making skills"
   ],
   "clipped_youtube_ids": [
     "dNIef2fGLQY",
@@ -2403,6 +2404,44 @@
       "mode2": {},
       "errors": [],
       "total_batch_seconds": 89.4
+    },
+    {
+      "batch_id": "batch_20261116_115407",
+      "timestamp": "2026-11-16T11:54:07.877208",
+      "batch_dir": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261116_115407",
+      "modes_completed": [
+        "mode2_fallback"
+      ],
+      "total_videos": 1,
+      "mode1": {},
+      "mode2": {
+        "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261116_115407/mode2_fallback/the_bizarre_reason_why_weather_can_affec_en_1794830177.mp4",
+        "title": "Weather's Hidden Influence",
+        "source_title": "Weather's Hidden Influence",
+        "source_channel": "Google Trends RSS",
+        "source_url": "N/A",
+        "duration": 18.7,
+        "viral_score": 90,
+        "status": "SUCCESS",
+        "hook_sentence": "",
+        "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261116_115407/mode2_fallback/the_bizarre_reason_why_weather_can_affec_en_1794830177_metadata.txt",
+        "is_fallback": true,
+        "topic": "The Bizarre Reason Why Weather Can Affect Your Decision-Making Skills",
+        "clips_count": 1,
+        "selected_clip": {
+          "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261116_115407/mode2_fallback/the_bizarre_reason_why_weather_can_affec_en_1794830177.mp4",
+          "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261116_115407/mode2_fallback/the_bizarre_reason_why_weather_can_affec_en_1794830177_metadata.txt",
+          "title": "Weather's Hidden Influence",
+          "rank": 1,
+          "composite_upload_score": 95.0
+        },
+        "clips": [],
+        "execution_seconds": 0.0
+      },
+      "errors": [
+        "Mode 2 Clipper Failed: ERROR: [youtube] FPVhEEPmRaQ: Sign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies"
+      ],
+      "total_batch_seconds": 148.9
     }
   ],
   "last_updated": "2026-11-10T03:41:28.437558",
