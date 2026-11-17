@@ -40,7 +40,8 @@
     "what actually happens when drones and weather collide",
     "the bizarre reason why weather can affect your decision making skills",
     "the email dilemma",
-    "what actually happens when your brain faces airport security stress"
+    "what actually happens when your brain faces airport security stress",
+    "midnight ai meltdown"
   ],
   "clipped_youtube_ids": [
     "dNIef2fGLQY",
@@ -2501,6 +2502,33 @@
       "mode2": {},
       "errors": [],
       "total_batch_seconds": 89.2
+    },
+    {
+      "batch_id": "batch_20261117_121927",
+      "timestamp": "2026-11-17T12:19:27.433165",
+      "batch_dir": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261117_121927",
+      "modes_completed": [
+        "mode3"
+      ],
+      "total_videos": 1,
+      "mode1": {},
+      "mode2": {},
+      "errors": [],
+      "mode3": {
+        "status": "SUCCESS",
+        "title": "Midnight Q&A: AI's Meltdown",
+        "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261117_121927/mode3/mode3_midnight_qa_ais_meltdown_1794917970.mp4",
+        "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261117_121927/mode3/mode3_midnight_qa_ais_meltdown_1794917970_metadata.txt",
+        "duration": 24.4,
+        "selected_clip": {
+          "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261117_121927/mode3/mode3_midnight_qa_ais_meltdown_1794917970.mp4",
+          "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261117_121927/mode3/mode3_midnight_qa_ais_meltdown_1794917970_metadata.txt",
+          "title": "Midnight Q&A: AI's Meltdown",
+          "rank": 1,
+          "composite_upload_score": 96.0
+        }
+      },
+      "total_batch_seconds": 51.0
     }
   ],
   "last_updated": "2026-11-10T03:41:28.437558",
