@@ -39,7 +39,8 @@
     "the surprising science behind why team rivalries boost your brain power",
     "what actually happens when drones and weather collide",
     "the bizarre reason why weather can affect your decision making skills",
-    "the email dilemma"
+    "the email dilemma",
+    "what actually happens when your brain faces airport security stress"
   ],
   "clipped_youtube_ids": [
     "dNIef2fGLQY",
@@ -2470,6 +2471,36 @@
         }
       },
       "total_batch_seconds": 66.3
+    },
+    {
+      "batch_id": "batch_20261117_121207",
+      "timestamp": "2026-11-17T12:12:07.842181",
+      "batch_dir": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261117_121207",
+      "modes_completed": [
+        "mode1_facts"
+      ],
+      "total_videos": 1,
+      "mode1": {
+        "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261117_121207/mode1_facts/what_actually_happens_when_your_brain_fa_en_1794917601.mp4",
+        "title": "Airport Anxiety Explained",
+        "source_title": "Airport Anxiety Explained",
+        "source_channel": "AI Shorts Studio",
+        "source_url": "N/A",
+        "duration": 15.21,
+        "viral_score": 90,
+        "status": "SUCCESS",
+        "hook_sentence": "",
+        "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261117_121207/mode1_facts/what_actually_happens_when_your_brain_fa_en_1794917601_metadata.txt",
+        "is_fallback": false,
+        "topic": "What Actually Happens When Your Brain Faces Airport Security Stress",
+        "clips_count": 1,
+        "selected_clip": {},
+        "clips": [],
+        "execution_seconds": 86.7
+      },
+      "mode2": {},
+      "errors": [],
+      "total_batch_seconds": 89.2
     }
   ],
   "last_updated": "2026-11-10T03:41:28.437558",
