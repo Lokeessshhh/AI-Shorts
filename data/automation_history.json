@@ -41,7 +41,8 @@
     "the bizarre reason why weather can affect your decision making skills",
     "the email dilemma",
     "what actually happens when your brain faces airport security stress",
-    "midnight ai meltdown"
+    "midnight ai meltdown",
+    "quantum money problems"
   ],
   "clipped_youtube_ids": [
     "dNIef2fGLQY",
@@ -2648,6 +2649,33 @@
       },
       "errors": [],
       "total_batch_seconds": 387.8
+    },
+    {
+      "batch_id": "batch_20261118_120623",
+      "timestamp": "2026-11-18T12:06:23.463340",
+      "batch_dir": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261118_120623",
+      "modes_completed": [
+        "mode3"
+      ],
+      "total_videos": 1,
+      "mode1": {},
+      "mode2": {},
+      "errors": [],
+      "mode3": {
+        "status": "SUCCESS",
+        "title": "Quantum Money Problems",
+        "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261118_120623/mode3/mode3_quantum_money_problems_1795003586.mp4",
+        "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261118_120623/mode3/mode3_quantum_money_problems_1795003586_metadata.txt",
+        "duration": 30.6,
+        "selected_clip": {
+          "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261118_120623/mode3/mode3_quantum_money_problems_1795003586.mp4",
+          "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261118_120623/mode3/mode3_quantum_money_problems_1795003586_metadata.txt",
+          "title": "Quantum Money Problems",
+          "rank": 1,
+          "composite_upload_score": 96.0
+        }
+      },
+      "total_batch_seconds": 85.2
     }
   ],
   "last_updated": "2026-11-10T03:41:28.437558",
