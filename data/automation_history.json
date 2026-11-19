@@ -45,7 +45,8 @@
     "quantum money problems",
     "the bizarre reason why your brain reacts to stock market trends like roller coaster",
     "the bizarre reason why your brain reacts to stock market fluctuations like natural disaster",
-    "the bizarre reason why your brain equates bitcoin prices with emotional turmoil"
+    "the bizarre reason why your brain equates bitcoin prices with emotional turmoil",
+    "wi fi the fear sensing villain"
   ],
   "clipped_youtube_ids": [
     "dNIef2fGLQY",
@@ -2777,6 +2778,33 @@
       "mode2": {},
       "errors": [],
       "total_batch_seconds": 88.8
+    },
+    {
+      "batch_id": "batch_20261119_120338",
+      "timestamp": "2026-11-19T12:03:38.371418",
+      "batch_dir": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261119_120338",
+      "modes_completed": [
+        "mode3"
+      ],
+      "total_videos": 1,
+      "mode1": {},
+      "mode2": {},
+      "errors": [],
+      "mode3": {
+        "status": "SUCCESS",
+        "title": "Wi-Fi: The Fear-Sensing Villain",
+        "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261119_120338/mode3/mode3_wi-fi_the_fear-sensing_villain_1795089821.mp4",
+        "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261119_120338/mode3/mode3_wi-fi_the_fear-sensing_villain_1795089821_metadata.txt",
+        "duration": 26.6,
+        "selected_clip": {
+          "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261119_120338/mode3/mode3_wi-fi_the_fear-sensing_villain_1795089821.mp4",
+          "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261119_120338/mode3/mode3_wi-fi_the_fear-sensing_villain_1795089821_metadata.txt",
+          "title": "Wi-Fi: The Fear-Sensing Villain",
+          "rank": 1,
+          "composite_upload_score": 96.0
+        }
+      },
+      "total_batch_seconds": 111.8
     }
   ],
   "last_updated": "2026-11-10T03:41:28.437558",
