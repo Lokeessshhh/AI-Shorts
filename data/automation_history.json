@@ -48,7 +48,8 @@
     "the bizarre reason why your brain equates bitcoin prices with emotional turmoil",
     "wi fi the fear sensing villain",
     "the surprising connection between ice hockey and your brain decision making",
-    "what actually happens when you experience an earthquake at sea"
+    "what actually happens when you experience an earthquake at sea",
+    "the code deletion party"
   ],
   "clipped_youtube_ids": [
     "dNIef2fGLQY",
@@ -2875,6 +2876,33 @@
       "mode2": {},
       "errors": [],
       "total_batch_seconds": 86.0
+    },
+    {
+      "batch_id": "batch_20261120_120234",
+      "timestamp": "2026-11-20T12:02:34.229385",
+      "batch_dir": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261120_120234",
+      "modes_completed": [
+        "mode3"
+      ],
+      "total_videos": 1,
+      "mode1": {},
+      "mode2": {},
+      "errors": [],
+      "mode3": {
+        "status": "SUCCESS",
+        "title": "The Code Deletion Party",
+        "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261120_120234/mode3/mode3_the_code_deletion_party_1795176157.mp4",
+        "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261120_120234/mode3/mode3_the_code_deletion_party_1795176157_metadata.txt",
+        "duration": 26.8,
+        "selected_clip": {
+          "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261120_120234/mode3/mode3_the_code_deletion_party_1795176157.mp4",
+          "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261120_120234/mode3/mode3_the_code_deletion_party_1795176157_metadata.txt",
+          "title": "The Code Deletion Party",
+          "rank": 1,
+          "composite_upload_score": 96.0
+        }
+      },
+      "total_batch_seconds": 60.9
     }
   ],
   "last_updated": "2026-11-10T03:41:28.437558",
