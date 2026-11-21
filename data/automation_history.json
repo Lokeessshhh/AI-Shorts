@@ -50,7 +50,8 @@
     "the surprising connection between ice hockey and your brain decision making",
     "what actually happens when you experience an earthquake at sea",
     "the code deletion party",
-    "the bizarre reason why weather forecasts can influence your shopping habits"
+    "the bizarre reason why weather forecasts can influence your shopping habits",
+    "wi fi the meeting saboteur"
   ],
   "clipped_youtube_ids": [
     "dNIef2fGLQY",
@@ -3053,6 +3054,33 @@
       "mode2": {},
       "errors": [],
       "total_batch_seconds": 89.8
+    },
+    {
+      "batch_id": "batch_20261121_113710",
+      "timestamp": "2026-11-21T11:37:10.557980",
+      "batch_dir": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261121_113710",
+      "modes_completed": [
+        "mode3"
+      ],
+      "total_videos": 1,
+      "mode1": {},
+      "mode2": {},
+      "errors": [],
+      "mode3": {
+        "status": "SUCCESS",
+        "title": "Wi-Fi: The Meeting Saboteur",
+        "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261121_113710/mode3/mode3_wi-fi_the_meeting_saboteur_1795261032.mp4",
+        "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261121_113710/mode3/mode3_wi-fi_the_meeting_saboteur_1795261032_metadata.txt",
+        "duration": 27.2,
+        "selected_clip": {
+          "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261121_113710/mode3/mode3_wi-fi_the_meeting_saboteur_1795261032.mp4",
+          "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261121_113710/mode3/mode3_wi-fi_the_meeting_saboteur_1795261032_metadata.txt",
+          "title": "Wi-Fi: The Meeting Saboteur",
+          "rank": 1,
+          "composite_upload_score": 96.0
+        }
+      },
+      "total_batch_seconds": 67.9
     }
   ],
   "last_updated": "2026-11-10T03:41:28.437558",
