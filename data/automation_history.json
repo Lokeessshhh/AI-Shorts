@@ -52,7 +52,8 @@
     "the code deletion party",
     "the bizarre reason why weather forecasts can influence your shopping habits",
     "wi fi the meeting saboteur",
-    "what actually happens when your favorite team loses game"
+    "what actually happens when your favorite team loses game",
+    "aws keys to financial ruin"
   ],
   "clipped_youtube_ids": [
     "dNIef2fGLQY",
@@ -3261,6 +3262,33 @@
         "Mode 2 Clipper Failed: ERROR: [youtube] FPVhEEPmRaQ: Sign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies"
       ],
       "total_batch_seconds": 51.6
+    },
+    {
+      "batch_id": "batch_20261122_115055",
+      "timestamp": "2026-11-22T11:50:55.897320",
+      "batch_dir": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261122_115055",
+      "modes_completed": [
+        "mode3"
+      ],
+      "total_videos": 1,
+      "mode1": {},
+      "mode2": {},
+      "errors": [],
+      "mode3": {
+        "status": "SUCCESS",
+        "title": "AWS Keys to Financial Ruin",
+        "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261122_115055/mode3/mode3_aws_keys_to_financial_ruin_1795348259.mp4",
+        "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261122_115055/mode3/mode3_aws_keys_to_financial_ruin_1795348259_metadata.txt",
+        "duration": 32.3,
+        "selected_clip": {
+          "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261122_115055/mode3/mode3_aws_keys_to_financial_ruin_1795348259.mp4",
+          "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261122_115055/mode3/mode3_aws_keys_to_financial_ruin_1795348259_metadata.txt",
+          "title": "AWS Keys to Financial Ruin",
+          "rank": 1,
+          "composite_upload_score": 96.0
+        }
+      },
+      "total_batch_seconds": 76.3
     }
   ],
   "last_updated": "2026-11-10T03:41:28.437558",
