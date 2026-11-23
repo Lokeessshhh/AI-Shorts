@@ -53,7 +53,8 @@
     "the bizarre reason why weather forecasts can influence your shopping habits",
     "wi fi the meeting saboteur",
     "what actually happens when your favorite team loses game",
-    "aws keys to financial ruin"
+    "aws keys to financial ruin",
+    "what actually happens when tensions rise in the strait of hormuz"
   ],
   "clipped_youtube_ids": [
     "dNIef2fGLQY",
@@ -3289,6 +3290,36 @@
         }
       },
       "total_batch_seconds": 76.3
+    },
+    {
+      "batch_id": "batch_20261123_133036",
+      "timestamp": "2026-11-23T13:30:36.806301",
+      "batch_dir": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261123_133036",
+      "modes_completed": [
+        "mode1_facts"
+      ],
+      "total_videos": 1,
+      "mode1": {
+        "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261123_133036/mode1_facts/what_actually_happens_when_tensions_rise_en_1795440701.mp4",
+        "title": "Strait of Hormuz: Tensions Rising",
+        "source_title": "Strait of Hormuz: Tensions Rising",
+        "source_channel": "AI Shorts Studio",
+        "source_url": "N/A",
+        "duration": 15.94,
+        "viral_score": 90,
+        "status": "SUCCESS",
+        "hook_sentence": "",
+        "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261123_133036/mode1_facts/what_actually_happens_when_tensions_rise_en_1795440701_metadata.txt",
+        "is_fallback": false,
+        "topic": "What Actually Happens When Tensions Rise in the Strait of Hormuz",
+        "clips_count": 1,
+        "selected_clip": {},
+        "clips": [],
+        "execution_seconds": 70.0
+      },
+      "mode2": {},
+      "errors": [],
+      "total_batch_seconds": 74.2
     }
   ],
   "last_updated": "2026-11-10T03:41:28.437558",
