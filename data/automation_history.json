@@ -54,7 +54,8 @@
     "wi fi the meeting saboteur",
     "what actually happens when your favorite team loses game",
     "aws keys to financial ruin",
-    "what actually happens when tensions rise in the strait of hormuz"
+    "what actually happens when tensions rise in the strait of hormuz",
+    "girlfriend or gaming choose wisely"
   ],
   "clipped_youtube_ids": [
     "dNIef2fGLQY",
@@ -3320,6 +3321,33 @@
       "mode2": {},
       "errors": [],
       "total_batch_seconds": 74.2
+    },
+    {
+      "batch_id": "batch_20261123_133041",
+      "timestamp": "2026-11-23T13:30:41.099394",
+      "batch_dir": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261123_133041",
+      "modes_completed": [
+        "mode3"
+      ],
+      "total_videos": 1,
+      "mode1": {},
+      "mode2": {},
+      "errors": [],
+      "mode3": {
+        "status": "SUCCESS",
+        "title": "Girlfriend or Gaming? Choose Wisely!",
+        "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261123_133041/mode3/mode3_girlfriend_or_gaming_choose_wisely_1795440644.mp4",
+        "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261123_133041/mode3/mode3_girlfriend_or_gaming_choose_wisely_1795440644_metadata.txt",
+        "duration": 28.6,
+        "selected_clip": {
+          "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261123_133041/mode3/mode3_girlfriend_or_gaming_choose_wisely_1795440644.mp4",
+          "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261123_133041/mode3/mode3_girlfriend_or_gaming_choose_wisely_1795440644_metadata.txt",
+          "title": "Girlfriend or Gaming? Choose Wisely!",
+          "rank": 1,
+          "composite_upload_score": 96.0
+        }
+      },
+      "total_batch_seconds": 56.5
     }
   ],
   "last_updated": "2026-11-10T03:41:28.437558",
