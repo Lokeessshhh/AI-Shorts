@@ -57,7 +57,8 @@
     "what actually happens when tensions rise in the strait of hormuz",
     "girlfriend or gaming choose wisely",
     "the bizarre reason why your shopping habits change when black friday approaches",
-    "the bizarre reason why your brain trusts prices you see online"
+    "the bizarre reason why your brain trusts prices you see online",
+    "aws secrets on github yikes"
   ],
   "clipped_youtube_ids": [
     "dNIef2fGLQY",
@@ -3537,6 +3538,33 @@
         "Mode 2 Clipper Failed: ERROR: [youtube] FPVhEEPmRaQ: This content isn’t available."
       ],
       "total_batch_seconds": 112.6
+    },
+    {
+      "batch_id": "batch_20261124_140908",
+      "timestamp": "2026-11-24T14:09:08.942234",
+      "batch_dir": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261124_140908",
+      "modes_completed": [
+        "mode3"
+      ],
+      "total_videos": 1,
+      "mode1": {},
+      "mode2": {},
+      "errors": [],
+      "mode3": {
+        "status": "SUCCESS",
+        "title": "AWS Secrets on GitHub? Yikes!",
+        "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261124_140908/mode3/mode3_aws_secrets_on_github_yikes_1795529352.mp4",
+        "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261124_140908/mode3/mode3_aws_secrets_on_github_yikes_1795529352_metadata.txt",
+        "duration": 29.6,
+        "selected_clip": {
+          "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261124_140908/mode3/mode3_aws_secrets_on_github_yikes_1795529352.mp4",
+          "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261124_140908/mode3/mode3_aws_secrets_on_github_yikes_1795529352_metadata.txt",
+          "title": "AWS Secrets on GitHub? Yikes!",
+          "rank": 1,
+          "composite_upload_score": 96.0
+        }
+      },
+      "total_batch_seconds": 66.6
     }
   ],
   "last_updated": "2026-11-10T03:41:28.437558",
