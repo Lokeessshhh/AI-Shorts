@@ -58,7 +58,8 @@
     "girlfriend or gaming choose wisely",
     "the bizarre reason why your shopping habits change when black friday approaches",
     "the bizarre reason why your brain trusts prices you see online",
-    "aws secrets on github yikes"
+    "aws secrets on github yikes",
+    "the bizarre reason why your choices change when you see celebrity brands"
   ],
   "clipped_youtube_ids": [
     "dNIef2fGLQY",
@@ -3565,6 +3566,36 @@
         }
       },
       "total_batch_seconds": 66.6
+    },
+    {
+      "batch_id": "batch_20261125_131943",
+      "timestamp": "2026-11-25T13:19:43.989421",
+      "batch_dir": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261125_131943",
+      "modes_completed": [
+        "mode1_facts"
+      ],
+      "total_videos": 1,
+      "mode1": {
+        "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261125_131943/mode1_facts/the_bizarre_reason_why_your_choices_chan_en_1795612850.mp4",
+        "title": "Why Celebs Influence Your Choices",
+        "source_title": "Why Celebs Influence Your Choices",
+        "source_channel": "AI Shorts Studio",
+        "source_url": "N/A",
+        "duration": 13.98,
+        "viral_score": 90,
+        "status": "SUCCESS",
+        "hook_sentence": "",
+        "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261125_131943/mode1_facts/the_bizarre_reason_why_your_choices_chan_en_1795612850_metadata.txt",
+        "is_fallback": false,
+        "topic": "The Bizarre Reason Why Your Choices Change When You See Celebrity Brands",
+        "clips_count": 1,
+        "selected_clip": {},
+        "clips": [],
+        "execution_seconds": 75.8
+      },
+      "mode2": {},
+      "errors": [],
+      "total_batch_seconds": 78.8
     }
   ],
   "last_updated": "2026-11-10T03:41:28.437558",
