@@ -3596,6 +3596,33 @@
       "mode2": {},
       "errors": [],
       "total_batch_seconds": 78.8
+    },
+    {
+      "batch_id": "batch_20261125_132221",
+      "timestamp": "2026-11-25T13:22:21.390789",
+      "batch_dir": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261125_132221",
+      "modes_completed": [
+        "mode3"
+      ],
+      "total_videos": 1,
+      "mode1": {},
+      "mode2": {},
+      "errors": [],
+      "mode3": {
+        "status": "SUCCESS",
+        "title": "Wi-Fi: The Meeting Saboteur",
+        "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261125_132221/mode3/mode3_wi-fi_the_meeting_saboteur_1795612944.mp4",
+        "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261125_132221/mode3/mode3_wi-fi_the_meeting_saboteur_1795612944_metadata.txt",
+        "duration": 27.5,
+        "selected_clip": {
+          "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261125_132221/mode3/mode3_wi-fi_the_meeting_saboteur_1795612944.mp4",
+          "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261125_132221/mode3/mode3_wi-fi_the_meeting_saboteur_1795612944_metadata.txt",
+          "title": "Wi-Fi: The Meeting Saboteur",
+          "rank": 1,
+          "composite_upload_score": 96.0
+        }
+      },
+      "total_batch_seconds": 67.3
     }
   ],
   "last_updated": "2026-11-10T03:41:28.437558",
