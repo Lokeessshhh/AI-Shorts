@@ -59,7 +59,8 @@
     "the bizarre reason why your shopping habits change when black friday approaches",
     "the bizarre reason why your brain trusts prices you see online",
     "aws secrets on github yikes",
-    "the bizarre reason why your choices change when you see celebrity brands"
+    "the bizarre reason why your choices change when you see celebrity brands",
+    "css centering catastrophe"
   ],
   "clipped_youtube_ids": [
     "dNIef2fGLQY",
@@ -3772,6 +3773,33 @@
         "Mode 1 Generation Failed: Topic rejected by quality gate (Score 68/100): Total score 68/100 is below the 75-point quality threshold."
       ],
       "total_batch_seconds": 6.4
+    },
+    {
+      "batch_id": "batch_20261126_130058",
+      "timestamp": "2026-11-26T13:00:58.474339",
+      "batch_dir": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261126_130058",
+      "modes_completed": [
+        "mode3"
+      ],
+      "total_videos": 1,
+      "mode1": {},
+      "mode2": {},
+      "errors": [],
+      "mode3": {
+        "status": "SUCCESS",
+        "title": "CSS Centering Catastrophe",
+        "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261126_130058/mode3/mode3_css_centering_catastrophe_1795698061.mp4",
+        "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261126_130058/mode3/mode3_css_centering_catastrophe_1795698061_metadata.txt",
+        "duration": 29.8,
+        "selected_clip": {
+          "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261126_130058/mode3/mode3_css_centering_catastrophe_1795698061.mp4",
+          "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261126_130058/mode3/mode3_css_centering_catastrophe_1795698061_metadata.txt",
+          "title": "CSS Centering Catastrophe",
+          "rank": 1,
+          "composite_upload_score": 96.0
+        }
+      },
+      "total_batch_seconds": 65.1
     }
   ],
   "last_updated": "2026-11-10T03:41:28.437558",
