@@ -60,7 +60,8 @@
     "the bizarre reason why your brain trusts prices you see online",
     "aws secrets on github yikes",
     "the bizarre reason why your choices change when you see celebrity brands",
-    "css centering catastrophe"
+    "css centering catastrophe",
+    "the bizarre reason why your thanksgiving plans make you feel nostalgic"
   ],
   "clipped_youtube_ids": [
     "dNIef2fGLQY",
@@ -3800,6 +3801,44 @@
         }
       },
       "total_batch_seconds": 65.1
+    },
+    {
+      "batch_id": "batch_20261126_130000",
+      "timestamp": "2026-11-26T13:00:00.448786",
+      "batch_dir": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261126_130000",
+      "modes_completed": [
+        "mode2_fallback"
+      ],
+      "total_videos": 1,
+      "mode1": {},
+      "mode2": {
+        "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261126_130000/mode2_fallback/the_bizarre_reason_why_your_thanksgiving_en_1795698161.mp4",
+        "title": "Thanksgiving Nostalgia Explained",
+        "source_title": "Thanksgiving Nostalgia Explained",
+        "source_channel": "Google Trends RSS",
+        "source_url": "N/A",
+        "duration": 12.4,
+        "viral_score": 90,
+        "status": "SUCCESS",
+        "hook_sentence": "",
+        "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261126_130000/mode2_fallback/the_bizarre_reason_why_your_thanksgiving_en_1795698161_metadata.txt",
+        "is_fallback": true,
+        "topic": "The Bizarre Reason Why Your Thanksgiving Plans Make You Feel Nostalgic",
+        "clips_count": 1,
+        "selected_clip": {
+          "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261126_130000/mode2_fallback/the_bizarre_reason_why_your_thanksgiving_en_1795698161.mp4",
+          "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261126_130000/mode2_fallback/the_bizarre_reason_why_your_thanksgiving_en_1795698161_metadata.txt",
+          "title": "Thanksgiving Nostalgia Explained",
+          "rank": 1,
+          "composite_upload_score": 95.0
+        },
+        "clips": [],
+        "execution_seconds": 0.0
+      },
+      "errors": [
+        "Mode 2 Clipper Failed: yt-dlp slice download failed: WARNING: [youtube] No title found in player responses; falling back to title from initial data. Other metadata may also be missing\nERROR: [youtube] tHE9JKkQPGw: Sign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies\n"
+      ],
+      "total_batch_seconds": 170.4
     }
   ],
   "last_updated": "2026-11-10T03:41:28.437558",
