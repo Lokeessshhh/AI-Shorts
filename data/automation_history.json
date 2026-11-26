@@ -3742,6 +3742,36 @@
       },
       "errors": [],
       "total_batch_seconds": 299.2
+    },
+    {
+      "batch_id": "batch_20261126_125736",
+      "timestamp": "2026-11-26T12:57:36.859714",
+      "batch_dir": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261126_125736",
+      "modes_completed": [],
+      "total_videos": 0,
+      "mode1": {
+        "video_path": "",
+        "title": "Autonomous Highlight",
+        "source_title": "Autonomous Highlight",
+        "source_channel": "AI Shorts Studio",
+        "source_url": "N/A",
+        "duration": 45.0,
+        "viral_score": 90,
+        "status": "FAILED",
+        "hook_sentence": "",
+        "metadata_path": null,
+        "is_fallback": false,
+        "topic": "The Surprising Connection Between Thanksgiving and Food Choices",
+        "clips_count": 1,
+        "selected_clip": {},
+        "clips": [],
+        "execution_seconds": 0.0
+      },
+      "mode2": {},
+      "errors": [
+        "Mode 1 Generation Failed: Topic rejected by quality gate (Score 68/100): Total score 68/100 is below the 75-point quality threshold."
+      ],
+      "total_batch_seconds": 6.4
     }
   ],
   "last_updated": "2026-11-10T03:41:28.437558",
