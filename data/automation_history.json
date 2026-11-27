@@ -61,7 +61,8 @@
     "aws secrets on github yikes",
     "the bizarre reason why your choices change when you see celebrity brands",
     "css centering catastrophe",
-    "the bizarre reason why your thanksgiving plans make you feel nostalgic"
+    "the bizarre reason why your thanksgiving plans make you feel nostalgic",
+    "the bizarre reason why we emotionally invest in black friday deals"
   ],
   "clipped_youtube_ids": [
     "dNIef2fGLQY",
@@ -3839,6 +3840,36 @@
         "Mode 2 Clipper Failed: yt-dlp slice download failed: WARNING: [youtube] No title found in player responses; falling back to title from initial data. Other metadata may also be missing\nERROR: [youtube] tHE9JKkQPGw: Sign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies\n"
       ],
       "total_batch_seconds": 170.4
+    },
+    {
+      "batch_id": "batch_20261127_125339",
+      "timestamp": "2026-11-27T12:53:39.169754",
+      "batch_dir": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261127_125339",
+      "modes_completed": [
+        "mode1_facts"
+      ],
+      "total_videos": 1,
+      "mode1": {
+        "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261127_125339/mode1_facts/the_bizarre_reason_why_we_emotionally_in_en_1795784071.mp4",
+        "title": "The Psychology of Black Friday",
+        "source_title": "The Psychology of Black Friday",
+        "source_channel": "AI Shorts Studio",
+        "source_url": "N/A",
+        "duration": 16.11,
+        "viral_score": 90,
+        "status": "SUCCESS",
+        "hook_sentence": "",
+        "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261127_125339/mode1_facts/the_bizarre_reason_why_we_emotionally_in_en_1795784071_metadata.txt",
+        "is_fallback": false,
+        "topic": "The Bizarre Reason Why We Emotionally Invest in Black Friday Deals",
+        "clips_count": 1,
+        "selected_clip": {},
+        "clips": [],
+        "execution_seconds": 60.3
+      },
+      "mode2": {},
+      "errors": [],
+      "total_batch_seconds": 62.0
     }
   ],
   "last_updated": "2026-11-10T03:41:28.437558",
