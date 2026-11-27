@@ -3870,6 +3870,33 @@
       "mode2": {},
       "errors": [],
       "total_batch_seconds": 62.0
+    },
+    {
+      "batch_id": "batch_20261127_125827",
+      "timestamp": "2026-11-27T12:58:27.642988",
+      "batch_dir": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261127_125827",
+      "modes_completed": [
+        "mode3"
+      ],
+      "total_videos": 1,
+      "mode1": {},
+      "mode2": {},
+      "errors": [],
+      "mode3": {
+        "status": "SUCCESS",
+        "title": "ChatGPT's Midnight Breakdown",
+        "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261127_125827/mode3/mode3_chatgpts_midnight_breakdown_1795784310.mp4",
+        "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261127_125827/mode3/mode3_chatgpts_midnight_breakdown_1795784310_metadata.txt",
+        "duration": 27.1,
+        "selected_clip": {
+          "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261127_125827/mode3/mode3_chatgpts_midnight_breakdown_1795784310.mp4",
+          "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261127_125827/mode3/mode3_chatgpts_midnight_breakdown_1795784310_metadata.txt",
+          "title": "ChatGPT's Midnight Breakdown",
+          "rank": 1,
+          "composite_upload_score": 96.0
+        }
+      },
+      "total_batch_seconds": 97.3
     }
   ],
   "last_updated": "2026-11-10T03:41:28.437558",
