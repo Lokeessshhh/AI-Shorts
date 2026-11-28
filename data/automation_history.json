@@ -64,7 +64,8 @@
     "the bizarre reason why your thanksgiving plans make you feel nostalgic",
     "the bizarre reason why we emotionally invest in black friday deals",
     "the bizarre reason why your brain loves college football scores more than other sports",
-    "quantum banking negative twist"
+    "quantum banking negative twist",
+    "the bizarre reason why your brain loves predicting sports outcomes"
   ],
   "clipped_youtube_ids": [
     "dNIef2fGLQY",
@@ -4075,6 +4076,44 @@
         }
       },
       "total_batch_seconds": 64.7
+    },
+    {
+      "batch_id": "batch_20261128_120840",
+      "timestamp": "2026-11-28T12:08:40.594266",
+      "batch_dir": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261128_120840",
+      "modes_completed": [
+        "mode2_fallback"
+      ],
+      "total_videos": 1,
+      "mode1": {},
+      "mode2": {
+        "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261128_120840/mode2_fallback/the_bizarre_reason_why_your_brain_loves__en_1795867955.mp4",
+        "title": "Why Your Brain Loves Predictions",
+        "source_title": "Why Your Brain Loves Predictions",
+        "source_channel": "Google Trends RSS",
+        "source_url": "N/A",
+        "duration": 14.3,
+        "viral_score": 90,
+        "status": "SUCCESS",
+        "hook_sentence": "",
+        "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261128_120840/mode2_fallback/the_bizarre_reason_why_your_brain_loves__en_1795867955_metadata.txt",
+        "is_fallback": true,
+        "topic": "The Bizarre Reason Why Your Brain Loves Predicting Sports Outcomes",
+        "clips_count": 1,
+        "selected_clip": {
+          "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261128_120840/mode2_fallback/the_bizarre_reason_why_your_brain_loves__en_1795867955.mp4",
+          "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261128_120840/mode2_fallback/the_bizarre_reason_why_your_brain_loves__en_1795867955_metadata.txt",
+          "title": "Why Your Brain Loves Predictions",
+          "rank": 1,
+          "composite_upload_score": 95.0
+        },
+        "clips": [],
+        "execution_seconds": 0.0
+      },
+      "errors": [
+        "Mode 2 Clipper Failed: yt-dlp slice download failed: WARNING: [youtube] No title found in player responses; falling back to title from initial data. Other metadata may also be missing\nERROR: [youtube] mLf3KYTkGuA: Sign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies\n"
+      ],
+      "total_batch_seconds": 246.9
     }
   ],
   "last_updated": "2026-11-10T03:41:28.437558",
