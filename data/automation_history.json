@@ -63,7 +63,8 @@
     "css centering catastrophe",
     "the bizarre reason why your thanksgiving plans make you feel nostalgic",
     "the bizarre reason why we emotionally invest in black friday deals",
-    "the bizarre reason why your brain loves college football scores more than other sports"
+    "the bizarre reason why your brain loves college football scores more than other sports",
+    "quantum banking negative twist"
   ],
   "clipped_youtube_ids": [
     "dNIef2fGLQY",
@@ -4047,6 +4048,33 @@
       "mode2": {},
       "errors": [],
       "total_batch_seconds": 78.2
+    },
+    {
+      "batch_id": "batch_20261128_121124",
+      "timestamp": "2026-11-28T12:11:24.035787",
+      "batch_dir": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261128_121124",
+      "modes_completed": [
+        "mode3"
+      ],
+      "total_videos": 1,
+      "mode1": {},
+      "mode2": {},
+      "errors": [],
+      "mode3": {
+        "status": "SUCCESS",
+        "title": "Quantum Banking: A Negative Twist",
+        "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261128_121124/mode3/mode3_quantum_banking_a_negative_twist_1795867887.mp4",
+        "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261128_121124/mode3/mode3_quantum_banking_a_negative_twist_1795867887_metadata.txt",
+        "duration": 28.4,
+        "selected_clip": {
+          "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261128_121124/mode3/mode3_quantum_banking_a_negative_twist_1795867887.mp4",
+          "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261128_121124/mode3/mode3_quantum_banking_a_negative_twist_1795867887_metadata.txt",
+          "title": "Quantum Banking: A Negative Twist",
+          "rank": 1,
+          "composite_upload_score": 96.0
+        }
+      },
+      "total_batch_seconds": 64.7
     }
   ],
   "last_updated": "2026-11-10T03:41:28.437558",
