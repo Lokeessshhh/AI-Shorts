@@ -62,7 +62,8 @@
     "the bizarre reason why your choices change when you see celebrity brands",
     "css centering catastrophe",
     "the bizarre reason why your thanksgiving plans make you feel nostalgic",
-    "the bizarre reason why we emotionally invest in black friday deals"
+    "the bizarre reason why we emotionally invest in black friday deals",
+    "the bizarre reason why your brain loves college football scores more than other sports"
   ],
   "clipped_youtube_ids": [
     "dNIef2fGLQY",
@@ -4016,6 +4017,36 @@
       },
       "errors": [],
       "total_batch_seconds": 203.9
+    },
+    {
+      "batch_id": "batch_20261128_120505",
+      "timestamp": "2026-11-28T12:05:05.325856",
+      "batch_dir": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261128_120505",
+      "modes_completed": [
+        "mode1_facts"
+      ],
+      "total_videos": 1,
+      "mode1": {
+        "video_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261128_120505/mode1_facts/the_bizarre_reason_why_your_brain_loves__en_1795867569.mp4",
+        "title": "Why College Football Scores Hook Us",
+        "source_title": "Why College Football Scores Hook Us",
+        "source_channel": "AI Shorts Studio",
+        "source_url": "N/A",
+        "duration": 13.1,
+        "viral_score": 90,
+        "status": "SUCCESS",
+        "hook_sentence": "",
+        "metadata_path": "/home/runner/work/AI-Shorts/AI-Shorts/output/batch_20261128_120505/mode1_facts/the_bizarre_reason_why_your_brain_loves__en_1795867569_metadata.txt",
+        "is_fallback": false,
+        "topic": "The Bizarre Reason Why Your Brain Loves College Football Scores More Than Other Sports",
+        "clips_count": 1,
+        "selected_clip": {},
+        "clips": [],
+        "execution_seconds": 75.4
+      },
+      "mode2": {},
+      "errors": [],
+      "total_batch_seconds": 78.2
     }
   ],
   "last_updated": "2026-11-10T03:41:28.437558",
